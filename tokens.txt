@@ -1,0 +1,53 @@
+tokens = [
+#Tipos:
+‘STRING’,
+‘FLOAT’,
+‘BOOL’
+‘INT’,
+‘VAR’,
+#Funciones:
+‘MULTIESCALAR’,
+‘CAPITALIZAR’,
+‘COLINEALES’,’
+‘PRINT’,
+‘LENGTH’,
+#Operadores Del sistema:
+‘BEGIN’,
+‘END’,
+‘WHILE’,
+‘FOR’,
+‘IF’,
+‘THEN’,
+‘ELSE’,
+‘DO’,
+‘RES’,
+‘RETURN’,
+‘DOBLEPUNTO’,
+‘PUNTOCOMA’,
+‘COMA’,
+‘COMENT’,
+'LLLAVE', 
+'RLLAVE' ,
+‘LPAREN’,
+‘RPAREN,
+‘LCORCHETE’,
+‘RCORCHETE’,
+‘INTERR’, 			# “?”
+#Operadores Lógicos:
+‘TRUE’,
+‘FALSE’,
+‘AND’,
+‘OR’,
+‘NOT’,
+#Operadores Matem:
+‘MAS’,
+‘MULTI’,
+‘DIV’,
+‘RESTA’,
+‘EXP’,
+‘MOD’,
+‘IGUAL’,
+‘MENOR’,
+‘MAYOR’
+]
+ 
