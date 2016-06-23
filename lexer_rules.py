@@ -9,8 +9,6 @@ reserved = {
 'do' : 'DO',
 'res' : 'RES',
 'return' : 'RETURN',
-'true' : 'TRUE',
-'false' : 'FALSE',
 'and' : 'AND',
 'or' : 'OR',
 'not' : 'NOT'
@@ -42,7 +40,7 @@ tokens = [
 #Tipos:
 'STRING',
 'FLOAT',
-#'BOOL'
+'BOOL'
 'INT',
 'VAR',
 #Funciones:
@@ -75,6 +73,10 @@ t_DIVEQ = r"/="
 t_MASMAS = r"\+\+"
 t_MENOSMENOS = r"--"
 
+def t_BOOL(token) : 
+    r"true | false"
+    token.value = bool(token.value)
+    return token
 
 def t_INT(token) : 
 	r"[-]?[1-9][0-9]*"

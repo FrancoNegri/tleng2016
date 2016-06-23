@@ -165,6 +165,99 @@ def p_param(subexpressions):
 def p_param(subexpressions):
 	'param : '
 
+# ---------------------------------------------------------------------------------------
+
+# Expresiones booleanas
+
+# ExpBool -> Or ? ExpBool : ExpBool  | Or
+def p_expBool(subexpressions):
+	'expBool : or ? expBool : expBool'
+
+def p_expBool(subexpressions):
+	'expBool : or'
+
+# Or -> Or or And | And
+def p_or(subexpressions):
+	'or : or OR and'
+
+def p_or(subexpressions):
+	'or : and'
+
+# And ->  And and Eq | Eq
+def p_and(subexpressions):
+	'and : and AND eq'
+
+def p_and(subexpressions):
+	'and : eq'
+
+# Eq -> Eq == TBool |  Eq != TBool | Mayor 
+def p_eq(subexpressions):
+	'eq : eq EQEQ tBool'
+
+def p_eq(subexpressions):
+	'eq : eq DISTINTO tBool'
+
+def p_eq(subexpressions):
+	'eq : mayor'
+
+# Mayor -> TCompare > TCompare | Menor
+def p_mayor(subexpressions):
+	'mayor : tCompare > tCompare'
+	type_token1 = subexpressions[1].type
+	type_token2 = subexpressions[2].type
+	if type_token1 != "int" or type_token2 != "int":
+		raise SemanticException("Se esperaba tipo int")
+
+def p_mayor(subexpressions):
+	'mayor : menor'
+
+# Menor -> TCompare < TCompare | Not 
+def p_menor(subexpressions):
+	'menor : tCompare < tCompare'
+
+def p_menor(subexpressions):
+	'menor : not'
+
+# Not ->  not Not | TBool 
+def p_not(subexpressions):
+	'not :  NOT not'
+
+def p_not(subexpressions):
+	'not :  tBool'
+
+# TBool -> (ExpBool) | bool | VarYVals | FuncBool
+def p_tBool(subexpressions):
+	'tBool : ( expBool )'
+
+def p_tBool(subexpressions):
+	'tBool : BOOL'
+
+def p_tBool(subexpressions):
+	'tBool : varsYvals'
+
+def p_tBool(subexpressions):
+	'tBool : funcBool'
+
+# TCompare -> EMat | VarsOps | VarYVals
+def p_tCompare(subexpressions):
+	'tCompare : eMat'
+	subexpressions[0] = {"type" : "int"}
+
+def p_tCompare(subexpressions):
+	'tCompare : varsOps'
+	varsOps = subexpressions[1]
+	subexpressions[0] = {"type" : varsOps["type"]}
+
+def p_tCompare(subexpressions):
+	'tCompare : varYVals'
+	varYVals = subexpressions[1]
+	subexpressions[0] = {"type" : varYVals["type"]}
+
+# Le saco funcInt ya que esta en eMat
+
+#--------------------------------------------------------------------------------------
+
+
 
 
 
