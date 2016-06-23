@@ -1,56 +1,65 @@
+
+
 Gramática:
-G → S;G | CtrlG
-S →  VarOps | Func
+G → SG | CtrlG
+S →  VarOps ; | Func ;
 Ctrl → IF| Loop
 
-Control:
-IF→ if(T) then Bloque else Bloque
+Loop → while(ExpBool) Bloque | do Bloque while(ExpBool); | for(VarAsig; ExpBool; )Bloque
 
-TControl → ExpBool | VarsOps | VarAsign
+Control:
+IF→ if(ExpBool) then Bloque else Bloque
+Bloque → S | {G}
+
 
 Funciones
-Func → multiplicacionEscalar(Vec, EMat, M) | capitalizar(ExpString) | colineales(Vec,Vec )| print(V) | length(Vec)
+Func → FuncReturn | FuncVoid
+FuncReturn → FuncInt | FuncString | FuncBool
+FuncInt → multiplicacionEscalar(Vec, EMat, M) | length(Vec)
+FuncString → capitalizar(ExpString)
+FuncBool → colineales(Vec,Vec )
+FuncVoid → print(V) 
 
 Vectores  y variables
 Vec →  var = [Elem] 
+Elem→ Valores, Elem | Valores
+Valores → EMat | ExpBool | ExpString | VarYVals | FuncReturn
 VarYVals → var | VecVal
 VecVal →  var M
 M → [int] | [int] M
 // vec se coloca en el lexer
 M → ExpBool | 𝝺
-Elem→ T, Elem | T
-T → EMat | ExpBool | ExpString | var
+
 
 Operaciones binarias enteros:
 EMat → EMat + P | EMat - P | P
 P → P * Exp | P / Exp | P % Exp | Exp
 Exp → Exp ^ ISing | ISing
-ISing → -Par | +Par | Par
-Par → (EMat) | int | VarYVals | float | VarsOps 
+ISing → -Paren | +Paren | Paren
+Paren → (EMat) | int | VarYVals | float | VarsOps | VarYVals | FuncInt
 
 Operaciones con strings
-ExpString → ExpString + string | string | VarYVals 
+ExpString → ExpString + string | string | VarYVals | FuncString
 
 /* U -> var | var[int] */
 
 
 Registros:
 Reg → {U}
-U -> campo: T, U | campo: T
+U -> campo: Valores, U | campo: Valores
 
  alumno = {nombre:"Juan Perez", edad:23};
 
 Operadores de variables:
 VarsOps → --SMM | ++SMM | SMM
-SMM → ParV++ | ParV-- | ParV
-ParV → VarYVals 
+SMM → VarYVals++ | VarYVals--
 
  Asignaciones:
-VarAsig → SIgual *= TAsign | SIgual /= TAsign | SIgual
-SIgual → Asig += TAsign |  Asig -= TAsign | Asig
-Asig → var = TAsign  | var = VarAsig	| var = Vec 	 	
+VarAsig → SIgual *= Valores | SIgual /= Valores | SIgual
+SIgual → Asig += Valores |  Asig -= Valores | Asig
+Asig → var = Valores  | var = Valores    | var = Vec          
+
 // (para generar a = b += 1)
-TAsign → EMat | VarsOps | ExpBool
 //a = v *= [1,2,3]
 
 Op booleanas
@@ -62,5 +71,5 @@ Mayor → TCompare > TCompare | TCompare >= TCompare | Menor
 Menor → TCompare < TCompare | TCompare <= TCompare | Not 
 // (not 1 < 2 != not (1 < 2))
 Not →  not Not | TBool 
-TBool → (ExpBool) | bool | VarYVals 
-TCompare → EMat | VarsOps
+TBool → (ExpBool) | bool | VarYVals | FuncBool
+TCompare → EMat | VarsOps | VarYVals | FuncInt
