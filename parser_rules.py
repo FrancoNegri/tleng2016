@@ -257,10 +257,18 @@ def p_tCompare(subexpressions):
 
 #--------------------------------------------------------------------------------------
 
+# Funciones auxiliares 
 
+# Chequea si una lista de subexpresiones tienen igual tipo
+# Usar como chequearTipo("int", *subexps)
+def chequearTipo(type, *subexps):
+	subexps = list(subexps)
 
+	for subexp in subexps:
+		if subexp["type"] != type:
+			return False
 
-
+	return True
 
 
 
