@@ -16,6 +16,28 @@ reserved = {
 'not' : 'NOT'
 }
 
+literals = [
+'+',
+'-',
+'*',
+'/',
+'^',
+'%',
+'<',
+'>',
+'=',
+'!',
+'{',
+'}',
+'(',
+')',
+'[',
+']',
+'?',
+':',
+';',
+]
+
 tokens = [
 #Tipos:
 'STRING',
@@ -30,34 +52,29 @@ tokens = [
 'PRINT',
 'LENGTH',
 #Operadores Del sistema:
-'DOBLEPUNTO',
-'PUNTOCOMA',
-'COMA',
-'COMENT',
-'LLLAVE', 
-'RLLAVE' ,
-'LPAREN',
-'RPAREN',
-'LCORCHETE',
-'RCORCHETE',
-'INTERR',             
-# ?
-#Operadores Matem:
-'MAS',
-'MULTI',
-'DIV',
-'RESTA',
-'EXP',
-'MOD',
-'IGUAL',
-'MENOR',
-'MAYOR',
+'COMMENT',
 'ID',
+'EQEQ',
+'DISTINTO',
+'MENOSEQ',
+'MASEQ',
+'MULEQ',
+'DIVEQ',
+'MASMAS',
+'MENOSMENOS'
 ] + list(reserved.values())
 
 t_STRING = r''' " .* " '''
 
-t_MAS = r"\+"
+t_EQEQ = r"=="
+t_DISTINTO = r"!="
+t_MENOSEQ = r"-="
+t_MASEQ = r"\+="
+t_MULEQ = r"\*="
+t_DIVEQ = r"/="
+t_MASMAS = r"\+\+"
+t_MENOSMENOS = r"--"
+
 
 def t_INT(token) : 
 	r"[-]?[1-9][0-9]*"
