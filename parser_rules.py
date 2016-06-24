@@ -238,17 +238,17 @@ def p_sMM(subexpressions):
 
 #VarAsig -> SIgual *= Valores | SIgual /= Valores | SIgual
 def p_varAsig1(subexpressions):
-	'''varAsig : valores MULEQ varAsig'''
+	'''varAsig : sIgual MULEQ varAsig'''
 def p_varAsig2(subexpressions):
-	'''varAsig : valores DIVEQ varAsig'''
+	'''varAsig : sIgual DIVEQ varAsig'''
 def p_varAsig3(subexpressions):
 	'''varAsig : sIgual'''
 
 #SIgual -> Asig '+'= Valores |  Asig -= Valores | Asig
 def p_sIgual1(subexpressions):
-	'''sIgual : valores MASEQ sIgual'''
+	'''sIgual : asig MASEQ sIgual'''
 def p_sIgual2(subexpressions):
-	'''sIgual : valores MENOSEQ sIgual'''
+	'''sIgual : asig MENOSEQ sIgual'''
 def p_sIgual3(subexpressions):
 	'''sIgual : asig'''
 
