@@ -270,13 +270,12 @@ def p_error(token):
 
 # Funciones auxiliares 
 
-# Chequea si una lista de subexpresiones tienen igual tipo
-# Usar como chequearTipo("int", *subexps)
-def chequearTipo(type, *subexps):
-	subexps = list(subexps)
+# Chequea si todos los elementos de la lista de subexpresiones son de 
+# algun tipo de la lista tipos
+def chequearTipo(subexps, tipos):
 
 	for subexp in subexps:
-		if subexp["type"] != type:
+		if subexp["type"] not in tipos:
 			return False
 
 	return True
