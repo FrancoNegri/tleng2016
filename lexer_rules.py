@@ -42,7 +42,6 @@ tokens = [
 'FLOAT',
 'BOOL',
 'INT',
-'VAR',
 #Funciones:
 'MULTIESCALAR',
 'CAPITALIZAR',

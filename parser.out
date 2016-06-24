@@ -15,11 +15,10 @@ Unused terminals:
     MULEQ
     END
     ELSE
-    BOOLINT
     ID
     IF
-    MULTIESCALAR
     CAPITALIZAR
+    MULTIESCALAR
     LENGTH
 
 Grammar
@@ -119,7 +118,7 @@ Terminals, with rules where they appear
 ?                    : 55
 AND                  : 59
 BEGIN                : 
-BOOLINT              : 
+BOOL                 : 71
 CAPITALIZAR          : 
 COLINEALES           : 
 COMMENT              : 
@@ -133,6 +132,7 @@ FLOAT                : 16
 FOR                  : 
 ID                   : 
 IF                   : 
+INT                  : 14 51 52
 LENGTH               : 
 MASEQ                : 34
 MASMAS               : 27 29
@@ -158,9 +158,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
-BOOL                 : 71
 FuncString           : 22
-INT                  : 14 51 52
 POREQ                : 31
 and                  : 57 58 59
 asig                 : 34 35 36

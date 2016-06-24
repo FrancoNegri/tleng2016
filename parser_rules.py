@@ -110,15 +110,15 @@ def p_sIgual3(subexpressions):
 
 #Asig -> var = Valores  | var = Vec          
 def p_asig1(subexpressions):
-	'''asig : VAR '=' valores'''
+	'''asig : ID '=' valores'''
 def p_asig2(subexpressions):
-	'''asig : VAR '=' vec '''
+	'''asig : ID '=' vec '''
 
 #Vectores  y variables
 
 #Vec ->  var = [Elem] 
 def p_vec1(subexpressions):
-	'''vec : VAR '=' '[' elem ']' '''
+	'''vec : ID '=' '[' elem ']' '''
 #Elem-> Valores, Elem | Valores
 def p_elem1(subexpressions):
 	'''elem : valores ',' elem'''
@@ -143,13 +143,13 @@ def p_valores6(subexpressions):
 
 #VarYVals -> var | VecVal
 def p_varYvals1(subexpressions):
-	'''varYvals : VAR'''
+	'''varYvals : ID'''
 def p_varYvals2(subexpressions):
 	'''varYvals : vecVal'''
 
 #VecVal ->  var M
 def p_vecVal1(subexpressions):
-	'''vecVal : VAR m'''		
+	'''vecVal : ID m'''		
 
 #M -> [int] | [int] M
 
