@@ -22,6 +22,10 @@ def p_sentencia1(subexpressions):
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
+# Faltaban las asignaciones
+def p_sentencia2(subexpressions):
+	'''sentencia : varAsig ';' '''
+
 #Ctrl -> IF| Loop
 def p_ctrl1(subexpressions):
 	'''ctrl : if'''
@@ -148,16 +152,42 @@ def p_m2(subexpressions):
 #VarsOps -> --SMM | '+''+'SMM | SMM
 def p_varsOps1(subexpressions):
 	'''varsOps : MENOSMENOS sMM'''
+
 def p_varsOps2(subexpressions):
 	'''varsOps : MASMAS sMM'''
+
 def p_varsOps3(subexpressions):
 	'''varsOps : sMM'''
 
-#SMM -> VarYVals'++' | VarYVals--
+# Aca hay un problema, varYVals contiene a valores de vectores, que no
+# pueden aplicarse ++ o --
+# Ademas faltan los operadores prefijos
+# SMM -> VarYVals++ | VarYVals--
+# Lo cambio por
+# SMM -> ID++ | ID-- | ++ID | --ID
 def p_sMM1(subexpressions):
-	'''sMM : varYVals MASMAS'''
+	'''sMM : ID MASMAS'''
+	tokens = [subexpressions[1]]
+	if not chequearTipo(tokens, ["int"]):
+		raise SemanticException("Se esperaba tipo int")
+
 def p_sMM2(subexpressions):
-	'''sMM : varYVals MENOSMENOS'''
+	'''sMM : ID MENOSMENOS'''
+	tokens = [subexpressions[1]]
+	if not chequearTipo(tokens, ["int"]):
+		raise SemanticException("Se esperaba tipo int")
+
+def p_sMM3(subexpressions):
+	'''sMM : MASMAS ID'''
+	tokens = [subexpressions[2]]
+	if not chequearTipo(tokens, ["int"]):
+		raise SemanticException("Se esperaba tipo int")
+
+def p_sMM4(subexpressions):
+	'''sMM : MENOSMENOS ID'''
+	tokens = [subexpressions[2]]
+	if not chequearTipo(tokens, ["int"]):
+		raise SemanticException("Se esperaba tipo int")
 
 #-----------------------------------------------------------------------------
 #Asignaciones:
@@ -183,6 +213,10 @@ def p_asig1(subexpressions):
 	'''asig : ID '=' valores'''
 def p_asig2(subexpressions):
 	'''asig : ID '=' vec '''
+
+# Falta el caso base, los ID
+def p_asig2(subexpressions):
+	'''asig : ID '''
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
