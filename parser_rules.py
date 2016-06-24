@@ -204,7 +204,7 @@ def p_eq3(subexpressions):
 def p_mayor1(subexpressions):
 	'''mayor : tCompare '>' tCompare'''
 	tokens = [subexpressions[1], subexpressions[3]]
-	if chequearTipo(tokens, ["int", "float"]):
+	if not chequearTipo(tokens, ["int", "float"]):
 		raise SemanticException("Se esperaba tipo int o float")
 
 def p_mayor2(subexpressions):
