@@ -1,7 +1,7 @@
 from lexer_rules import tokens
 
 # Simbolo inicial
-start = g
+start = 'g'
 
 # ---------------------------------------------------------------------------------------
 #Sentencias:
@@ -9,8 +9,12 @@ start = g
 #G -> SG | CtrlG
 def p_g1(subexpressions):
 	'''g : sentencia g'''
+
 def p_g2(subexpressions):
 	'''g : ctrl g'''
+
+def p_g3(subexpressions):
+	'''g : empty'''
 
 #S ->  VarOps ; | Func ;
 def p_sentencia1(subexpressions):
@@ -67,21 +71,32 @@ def p_funcReturn2(subexpressions):
 def p_funcReturn3(subexpressions):
 	'''funcReturn : funcBool'''
 
-# FuncInt -> multiplicacionEscalar(Vec, EMat, M) | length(Vec)
+# FuncInt -> multiplicacionEscalar(Vec, EMat, Param) | length(Vec)
 def p_funcInt1(subexpressions):
-	'''funcInt : multiplicacionEscalar '(' vec, eMat, m '''
+	'''funcInt : MULTIESCALAR '(' vec ',' eMat ',' param ')' '''
+
+def p_funcInt2(subexpressions):
+	'''funcInt : LENGTH '(' vec ')' '''
 
 # FuncString -> capitalizar(ExpString)
+def p_funcString(subexpressions):
+	'''funcString : CAPITALIZAR '(' expString ')' '''
+
 # FuncBool -> colineales(Vec,Vec )
-# FuncVoid -> print(V) 
+def p_funcBool(subexpressions):
+	'''funcBool : COLINEALES '(' vec ',' vec ')' '''
+
+# FuncVoid -> print(Valores) 
+def p_funcVoid(subexpressions):
+	'''funcVoid : PRINT '(' valores ')' '''
 
 #M -> ExpBool | lambda
 #Este M no tiene nada que ver con el M de arriba, que se usa en el parametro de una funcion. Lo cambio
-def p_param1(subexpressions):
-	'''param : expBool'''
+def p_param(subexpressions):
+	'''param : empty'''
 
-def p_param2(subexpressions):
-	'''param : '''
+def p_empty(subexpressions):
+	'''empty : '''
 
 #-----------------------------------------------------------------------------
 #Vectores  y variables
@@ -105,17 +120,17 @@ def p_valores2(subexpressions):
 def p_valores3(subexpressions):
 	'''valores : expString'''
 def p_valores4(subexpressions):
-	'''valores : varYvals'''
+	'''valores : varYVals'''
 def p_valores5(subexpressions):
 	'''valores : funcReturn'''
 def p_valores6(subexpressions):
 	'''valores : reg'''
 
 #VarYVals -> var | VecVal
-def p_varYvals1(subexpressions):
-	'''varYvals : ID'''
-def p_varYvals2(subexpressions):
-	'''varYvals : vecVal'''
+def p_varYVals1(subexpressions):
+	'''varYVals : ID'''
+def p_varYVals2(subexpressions):
+	'''varYVals : vecVal'''
 
 #VecVal ->  var M
 def p_vecVal1(subexpressions):
@@ -140,16 +155,16 @@ def p_varsOps3(subexpressions):
 
 #SMM -> VarYVals'++' | VarYVals--
 def p_sMM1(subexpressions):
-	'''sMM : varYvals MASMAS'''
+	'''sMM : varYVals MASMAS'''
 def p_sMM2(subexpressions):
-	'''sMM : varYvals MENOSMENOS'''
+	'''sMM : varYVals MENOSMENOS'''
 
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
 #VarAsig -> SIgual *= Valores | SIgual /= Valores | SIgual
 def p_varAsig1(subexpressions):
-	'''varAsig : sIgual POREQ valores'''
+	'''varAsig : sIgual MULEQ valores'''
 def p_varAsig2(subexpressions):
 	'''varAsig : sIgual DIVEQ valores'''
 def p_varAsig3(subexpressions):
@@ -212,7 +227,7 @@ def p_paren1(subexpressions):
 def p_paren2(subexpressions):
 	'''paren : INT'''
 def p_paren3(subexpressions):
-	'''paren : varsYvals'''
+	'''paren : varYVals'''
 def p_paren4(subexpressions):
 	'''paren : FLOAT'''
 def p_paren5(subexpressions):
@@ -229,7 +244,7 @@ def p_expString1(subexpressions):
 def p_expString2(subexpressions):
 	'''expString : STRING'''
 def p_expString3(subexpressions):
-	'''expString : varsYvals'''
+	'''expString : varYVals'''
 def p_expString4(subexpressions):
 	'''expString : funcString'''
 
@@ -318,7 +333,7 @@ def p_tBool4(subexpressions):
 	'''tBool : BOOL'''
 
 def p_tBool5(subexpressions):
-	'''tBool : varsYvals'''
+	'''tBool : varYVals'''
 	tokens = [subexpressions[1]]
 	if not chequearTipo(tokens, ["bool"]):
 		raise SemanticException("Se esperaba tipo bool")
