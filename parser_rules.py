@@ -1,4 +1,8 @@
 from lexer_rules import tokens
+
+# Simbolo inicial
+start = g
+
 # ---------------------------------------------------------------------------------------
 #Sentencias:
 
@@ -17,7 +21,7 @@ def p_sentencia2(subexpressions):
 #Ctrl -> IF| Loop
 def p_ctrl1(subexpressions):
 	'''ctrl : if'''
-def p_ctr2l(subexpressions):
+def p_ctrl2(subexpressions):
 	'''ctrl : loop'''
 
 #Loop -> while(ExpBool) Bloque | do Bloque while(ExpBool); | for(VarAsig; ExpBool; )Bloque
@@ -43,8 +47,129 @@ def p_bloque1(subexpressions):
 def p_bloque2(subexpressions):
 	'''bloque : '{' g '}' '''
 
+#-----------------------------------------------------------------------------
+#Funciones
 
+# Func -> FuncReturn | FuncVoid
+def p_func1(subexpressions):
+	'''func : funcReturn'''
 
+def p_func2(subexpressions):
+	'''func : funcVoid'''
+
+# FuncReturn -> FuncInt | FuncString | FuncBool
+def p_funcReturn1(subexpressions):
+	'''funcReturn : funcInt'''
+
+def p_funcReturn2(subexpressions):
+	'''funcReturn : funcString'''
+
+def p_funcReturn3(subexpressions):
+	'''funcReturn : funcBool'''
+
+# FuncInt -> multiplicacionEscalar(Vec, EMat, M) | length(Vec)
+def p_funcInt1(subexpressions):
+	'''funcInt : multiplicacionEscalar '(' vec, eMat, m '''
+
+# FuncString -> capitalizar(ExpString)
+# FuncBool -> colineales(Vec,Vec )
+# FuncVoid -> print(V) 
+
+#M -> ExpBool | lambda
+#Este M no tiene nada que ver con el M de arriba, que se usa en el parametro de una funcion. Lo cambio
+def p_param1(subexpressions):
+	'''param : expBool'''
+
+def p_param2(subexpressions):
+	'''param : '''
+
+#-----------------------------------------------------------------------------
+#Vectores  y variables
+
+#Vec ->  var = [Elem] 
+def p_vec1(subexpressions):
+	'''vec : ID '=' '[' elem ']' '''
+#Elem-> Valores, Elem | Valores
+def p_elem1(subexpressions):
+	'''elem : valores ',' elem'''
+def p_elem2(subexpressions):
+	'''elem : valores'''
+
+#Valores -> EMat | ExpBool | ExpString | VarYVals | FuncReturn | Reg
+#Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
+#Tambien falta ver el caso , que dice en el tp, siguiente: alumno.nombre = "asd"
+def p_valores1(subexpressions):
+	'''valores : eMat'''
+def p_valores2(subexpressions):
+	'''valores : expBool'''
+def p_valores3(subexpressions):
+	'''valores : expString'''
+def p_valores4(subexpressions):
+	'''valores : varYvals'''
+def p_valores5(subexpressions):
+	'''valores : funcReturn'''
+def p_valores6(subexpressions):
+	'''valores : reg'''
+
+#VarYVals -> var | VecVal
+def p_varYvals1(subexpressions):
+	'''varYvals : ID'''
+def p_varYvals2(subexpressions):
+	'''varYvals : vecVal'''
+
+#VecVal ->  var M
+def p_vecVal1(subexpressions):
+	'''vecVal : ID m'''		
+
+#M -> [int] | [int] M
+
+def p_m1(subexpressions):
+	'''m : '[' INT ']' '''
+def p_m2(subexpressions):
+	''' m : '[' INT ']' m '''
+
+#-----------------------------------------------------------------------------
+#Operadores de variables:
+#VarsOps -> --SMM | '+''+'SMM | SMM
+def p_varsOps1(subexpressions):
+	'''varsOps : MENOSMENOS sMM'''
+def p_varsOps2(subexpressions):
+	'''varsOps : MASMAS sMM'''
+def p_varsOps3(subexpressions):
+	'''varsOps : sMM'''
+
+#SMM -> VarYVals'++' | VarYVals--
+def p_sMM1(subexpressions):
+	'''sMM : varYvals MASMAS'''
+def p_sMM2(subexpressions):
+	'''sMM : varYvals MENOSMENOS'''
+
+#-----------------------------------------------------------------------------
+#Asignaciones:
+
+#VarAsig -> SIgual *= Valores | SIgual /= Valores | SIgual
+def p_varAsig1(subexpressions):
+	'''varAsig : sIgual POREQ valores'''
+def p_varAsig2(subexpressions):
+	'''varAsig : sIgual DIVEQ valores'''
+def p_varAsig3(subexpressions):
+	'''varAsig : sIgual'''
+
+#SIgual -> Asig '+'= Valores |  Asig -= Valores | Asig
+def p_sIgual1(subexpressions):
+	'''sIgual : asig MASEQ valores'''
+def p_sIgual2(subexpressions):
+	'''sIgual : asig MENOSEQ valores'''
+def p_sIgual3(subexpressions):
+	'''sIgual : asig'''
+
+#Asig -> var = Valores  | var = Vec          
+def p_asig1(subexpressions):
+	'''asig : ID '=' valores'''
+def p_asig2(subexpressions):
+	'''asig : ID '=' vec '''
+
+#-----------------------------------------------------------------------------
 #Operaciones binarias enteras
 
 #EMat -> EMat '+' P | EMat - P | P
@@ -95,6 +220,7 @@ def p_paren5(subexpressions):
 def p_paren6(subexpressions):
 	'''paren : funcInt'''
 
+#-----------------------------------------------------------------------------
 #Operaciones con strings
 
 #ExpString -> ExpString '+' string | string | VarYVals | FuncString
@@ -105,8 +231,9 @@ def p_expString2(subexpressions):
 def p_expString3(subexpressions):
 	'''expString : varsYvals'''
 def p_expString4(subexpressions):
-	'''expString : FuncString'''
+	'''expString : funcString'''
 
+#-----------------------------------------------------------------------------
 #Registros:
 #Reg -> {U}
 def p_reg(subexpressions):
@@ -120,98 +247,9 @@ def p_campos1(subexpressions):
 def p_campos2(subexpressions):
 	'''campos : valores'''
 
-#Operadores de variables:
-#VarsOps -> --SMM | '+''+'SMM | SMM
-def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS sMM'''
-def p_varsOps2(subexpressions):
-	'''varsOps : MASMAS sMM'''
-def p_varsOps3(subexpressions):
-	'''varsOps : sMM'''
 
-#SMM -> VarYVals'++' | VarYVals--
-def p_sMM1(subexpressions):
-	'''sMM : varYvals MASMAS'''
-def p_sMM2(subexpressions):
-	'''sMM : varYvals MENOSMENOS'''
-
-#Asignaciones:
-
-#VarAsig -> SIgual *= Valores | SIgual /= Valores | SIgual
-def p_varAsig1(subexpressions):
-	'''varAsig : sIgual POREQ valores'''
-def p_varAsig2(subexpressions):
-	'''varAsig : sIgual DIVEQ valores'''
-def p_varAsig3(subexpressions):
-	'''varAsig : sIgual'''
-
-#SIgual -> Asig '+'= Valores |  Asig -= Valores | Asig
-def p_sIgual1(subexpressions):
-	'''sIgual : asig MASEQ valores'''
-def p_sIgual2(subexpressions):
-	'''sIgual : asig MENOSEQ valores'''
-def p_sIgual3(subexpressions):
-	'''sIgual : asig'''
-
-#Asig -> var = Valores  | var = Vec          
-def p_asig1(subexpressions):
-	'''asig : ID '=' valores'''
-def p_asig2(subexpressions):
-	'''asig : ID '=' vec '''
-
-#Vectores  y variables
-
-#Vec ->  var = [Elem] 
-def p_vec1(subexpressions):
-	'''vec : ID '=' '[' elem ']' '''
-#Elem-> Valores, Elem | Valores
-def p_elem1(subexpressions):
-	'''elem : valores ',' elem'''
-def p_elem2(subexpressions):
-	'''elem : valores'''
-
-#Valores -> EMat | ExpBool | ExpString | VarYVals | FuncReturn | Reg
-#Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
-#Tambien falta ver el caso , que dice en el tp, siguiente: alumno.nombre = "asd"
-def p_valores1(subexpressions):
-	'''valores : eMat'''
-def p_valores2(subexpressions):
-	'''valores : expBool'''
-def p_valores3(subexpressions):
-	'''valores : expString'''
-def p_valores4(subexpressions):
-	'''valores : varYvals'''
-def p_valores5(subexpressions):
-	'''valores : funcReturn'''
-def p_valores6(subexpressions):
-	'''valores : reg'''
-
-#VarYVals -> var | VecVal
-def p_varYvals1(subexpressions):
-	'''varYvals : ID'''
-def p_varYvals2(subexpressions):
-	'''varYvals : vecVal'''
-
-#VecVal ->  var M
-def p_vecVal1(subexpressions):
-	'''vecVal : ID m'''		
-
-#M -> [int] | [int] M
-
-def p_m1(subexpressions):
-	'''m : '[' INT ']' '''
-def p_m2(subexpressions):
-	''' m : '[' INT ']' m '''
-
-#M -> ExpBool | lambda
-#Este M no tiene nada que ver con el M de arriba, que se usa en el parametro de una funcion. Lo cambio
-def p_param1(subexpressions):
-	'''param : expBool'''
-def p_param2(subexpressions):
-	'''param : '''
 
 # ---------------------------------------------------------------------------------------
-
 # Expresiones booleanas
 
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
@@ -306,6 +344,7 @@ def p_tCompare3(subexpressions):
 # Le saco funcInt ya que esta en eMat
 
 #--------------------------------------------------------------------------------------
+# Caso error
 
 def p_error(token):
     message = "[Syntax error]"
@@ -317,7 +356,6 @@ def p_error(token):
     raise Exception(message)
 
 #------------------------------------------------------------------------------
-
 # Funciones auxiliares 
 
 # Chequea si todos los elementos de la lista de subexpresiones son de 
