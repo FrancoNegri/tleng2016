@@ -257,6 +257,17 @@ def p_tCompare3(subexpressions):
 
 #--------------------------------------------------------------------------------------
 
+def p_error(token):
+    message = "[Syntax error]"
+    if token is not None:
+        message += "\ntype:" + token.type
+        message += "\nvalue:" + str(token.value)
+        message += "\nline:" + str(token.lineno)
+        message += "\nposition:" + str(token.lexpos)
+    raise Exception(message)
+
+#------------------------------------------------------------------------------
+
 # Funciones auxiliares 
 
 # Chequea si una lista de subexpresiones tienen igual tipo
