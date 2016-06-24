@@ -32,12 +32,15 @@ def p_sentencia1(subexpressions):
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
-# Faltaban las asignaciones y el print
+# Faltaban las asignaciones, el print y el return
 def p_sentencia3(subexpressions):
 	'''sentencia : varAsig ';' '''
 
 def p_sentencia4(subexpressions):
 	'''sentencia : funcVoid ';' '''
+
+def p_sentencia5(subexpressions):
+	'''sentencia : RETURN ';' '''
 
 #Ctrl -> IF| Loop
 def p_ctrl1(subexpressions):
@@ -53,7 +56,6 @@ def p_loop2(subexpressions):
 	'''loop : DO bloque WHILE '(' expBool ')' ';' '''
 def p_loop3(subexpressions):
 	'''loop : FOR '(' varAsig ';' expBool ';' varsOps ')' bloque '''
-
 
 # ---------------------------------------------------------------------------------------
 #Control:
@@ -117,10 +119,10 @@ def p_funcVoid(subexpressions):
 
 #M -> ExpBool | lambda
 #Este M no tiene nada que ver con el M de arriba, que se usa en el parametro de una funcion. Lo cambio
-def p_param(subexpressions):
+def p_param1(subexpressions):
 	'''param : expBool'''
 
-def p_param(subexpressions):
+def p_param2(subexpressions):
 	'''param : empty'''
 
 def p_empty(subexpressions):
@@ -173,29 +175,37 @@ def p_m2(subexpressions):
 
 #-----------------------------------------------------------------------------
 #Operadores de variables:
-#VarsOps -> --SMM | '+''+'SMM | SMM
+#VarsOps -> --SMM | ++SMM | SMM
 def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS sMM'''
+	'''varsOps : MENOSMENOS sMM 
+	| MASMAS sMM
+	| sMM'''
+	if len(subexpressions) > 2:
+		indexSMM = 2
+	else:
+		indexSMM = 1
 
-def p_varsOps2(subexpressions):
-	'''varsOps : MASMAS sMM'''
+	variable = subexpressions[indexSMM]
+	tipoVariable = variable["type"]
+	nombreVariable = variable["name"]
 
-def p_varsOps3(subexpressions):
-	'''varsOps : sMM'''
+	if tipoVariable == "none":
+		raise Exception('Variable "' + nombreVariable + '" no inicializada')
+	if tipoVariable != "int":
+		raise Exception("Se esperaba tipo int")
 
+# SMM -> ID++ | ID--
 # Aca hay un problema, varYVals contiene a valores de vectores, que no
 # pueden aplicarse ++ o --
-def p_sMM1(subexpressions):
-	'''sMM : ID MASMAS'''
-	tokens = [subexpressions[1]]
-	if not chequearTipo(tokens, ["int"]):
-		raise SemanticException("Se esperaba tipo int")
-
-def p_sMM2(subexpressions):
-	'''sMM : ID MENOSMENOS'''
-	tokens = [subexpressions[1]]
-	if not chequearTipo(tokens, ["int"]):
-		raise SemanticException("Se esperaba tipo int")
+# Tambien falta el caso base ID
+def p_sMM(subexpressions):
+	'''sMM : ID MASMAS
+	| ID MENOSMENOS
+	| ID'''
+	variable = subexpressions[1]
+	tipoVariable = variable["type"]
+	nombreVariable = variable["name"]
+	subexpressions[0] = {"type" : tipoVariable, "name": nombreVariable}
 
 #-----------------------------------------------------------------------------
 #Asignaciones:
@@ -223,7 +233,7 @@ def p_asig2(subexpressions):
 	'''asig : ID '=' vec '''
 
 # Falta el caso base, los ID
-def p_asig2(subexpressions):
+def p_asig3(subexpressions):
 	'''asig : ID '''
 
 #-----------------------------------------------------------------------------
