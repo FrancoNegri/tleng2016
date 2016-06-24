@@ -213,6 +213,9 @@ def p_mayor2(subexpressions):
 # Menor -> TCompare < TCompare | Not 
 def p_menor3(subexpressions):
 	'''menor : tCompare '<' tCompare'''
+	tokens = [subexpressions[1], subexpressions[3]]
+	if not chequearTipo(tokens, ["int", "float"]):
+		raise SemanticException("Se esperaba tipo int o float")
 
 def p_menor4(subexpressions):
 	'''menor : not'''
@@ -233,6 +236,9 @@ def p_tBool4(subexpressions):
 
 def p_tBool5(subexpressions):
 	'''tBool : varsYvals'''
+	tokens = [subexpressions[1]]
+	if not chequearTipo(tokens, ["bool"]):
+		raise SemanticException("Se esperaba tipo bool")
 
 def p_tBool6(subexpressions):
 	'''tBool : funcBool'''
