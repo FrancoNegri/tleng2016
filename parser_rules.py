@@ -1,5 +1,15 @@
 from lexer_rules import tokens
 
+# Para el arbol sintactico
+class Node:
+    def __init__(self,type,children=None,leaf=None):
+         self.type = type
+         if children:
+              self.children = children
+         else:
+              self.children = [ ]
+         self.leaf = leaf
+
 # Simbolo inicial
 start = 'g'
 
@@ -22,9 +32,12 @@ def p_sentencia1(subexpressions):
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
-# Faltaban las asignaciones
-def p_sentencia2(subexpressions):
+# Faltaban las asignaciones y el print
+def p_sentencia3(subexpressions):
 	'''sentencia : varAsig ';' '''
+
+def p_sentencia4(subexpressions):
+	'''sentencia : funcVoid ';' '''
 
 #Ctrl -> IF| Loop
 def p_ctrl1(subexpressions):
@@ -45,9 +58,14 @@ def p_loop3(subexpressions):
 # ---------------------------------------------------------------------------------------
 #Control:
 
-#IF-> if(ExpBool) then Bloque else Bloque
+# Modifico para que el else sea opcional
+# IF-> if(ExpBool) then Bloque Else
+# Else -> else Bloque | lambda
 def p_if(subexpressions):
-	'''if : IF '(' expBool ')' THEN bloque ELSE bloque '''
+	'''if : IF '(' expBool ')' THEN bloque else'''
+
+def p_else(subexpressions):
+	'''else :  '''
 
 #Bloque -> S | {G}
 def p_bloque1(subexpressions):
@@ -96,6 +114,9 @@ def p_funcVoid(subexpressions):
 
 #M -> ExpBool | lambda
 #Este M no tiene nada que ver con el M de arriba, que se usa en el parametro de una funcion. Lo cambio
+def p_param(subexpressions):
+	'''param : expBool'''
+
 def p_param(subexpressions):
 	'''param : empty'''
 
@@ -161,10 +182,6 @@ def p_varsOps3(subexpressions):
 
 # Aca hay un problema, varYVals contiene a valores de vectores, que no
 # pueden aplicarse ++ o --
-# Ademas faltan los operadores prefijos
-# SMM -> VarYVals++ | VarYVals--
-# Lo cambio por
-# SMM -> ID++ | ID-- | ++ID | --ID
 def p_sMM1(subexpressions):
 	'''sMM : ID MASMAS'''
 	tokens = [subexpressions[1]]
@@ -174,18 +191,6 @@ def p_sMM1(subexpressions):
 def p_sMM2(subexpressions):
 	'''sMM : ID MENOSMENOS'''
 	tokens = [subexpressions[1]]
-	if not chequearTipo(tokens, ["int"]):
-		raise SemanticException("Se esperaba tipo int")
-
-def p_sMM3(subexpressions):
-	'''sMM : MASMAS ID'''
-	tokens = [subexpressions[2]]
-	if not chequearTipo(tokens, ["int"]):
-		raise SemanticException("Se esperaba tipo int")
-
-def p_sMM4(subexpressions):
-	'''sMM : MENOSMENOS ID'''
-	tokens = [subexpressions[2]]
 	if not chequearTipo(tokens, ["int"]):
 		raise SemanticException("Se esperaba tipo int")
 
