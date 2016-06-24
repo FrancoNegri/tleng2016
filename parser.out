@@ -1,0 +1,199 @@
+Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DO
+    COLINEALES
+    RETURN
+    THEN
+    RES
+    WHILE
+    PRINT
+    COMMENT
+    BEGIN
+    FOR
+    MULEQ
+    END
+    ELSE
+    BOOLINT
+    ID
+    IF
+    MULTIESCALAR
+    CAPITALIZAR
+    LENGTH
+
+Grammar
+
+Rule 0     S' -> eMat
+Rule 1     eMat -> eMat + p
+Rule 2     eMat -> eMat - p
+Rule 3     eMat -> p
+Rule 4     p -> p * exp
+Rule 5     p -> p / exp
+Rule 6     p -> p % exp
+Rule 7     p -> exp
+Rule 8     exp -> exp ^ iSing
+Rule 9     exp -> iSing
+Rule 10    iSing -> - paren
+Rule 11    iSing -> + paren
+Rule 12    iSing -> paren
+Rule 13    paren -> ( eMat )
+Rule 14    paren -> INT
+Rule 15    paren -> varsYvals
+Rule 16    paren -> FLOAT
+Rule 17    paren -> varsOps
+Rule 18    paren -> funcInt
+Rule 19    expString -> expString + STRING
+Rule 20    expString -> STRING
+Rule 21    expString -> varsYvals
+Rule 22    expString -> FuncString
+Rule 23    reg -> { campos }
+Rule 24    campos -> STRING : valores , campos
+Rule 25    campos -> valores
+Rule 26    varsOps -> MENOSMENOS sMM
+Rule 27    varsOps -> MASMAS sMM
+Rule 28    varsOps -> sMM
+Rule 29    sMM -> varYvals MASMAS
+Rule 30    sMM -> varYvals MENOSMENOS
+Rule 31    varAsig -> sIgual POREQ valores
+Rule 32    varAsig -> sIgual DIVEQ valores
+Rule 33    varAsig -> sIgual
+Rule 34    sIgual -> asig MASEQ valores
+Rule 35    sIgual -> asig MENOSEQ valores
+Rule 36    sIgual -> asig
+Rule 37    asig -> VAR = valores
+Rule 38    asig -> VAR = vec
+Rule 39    vec -> VAR = [ elem ]
+Rule 40    elem -> valores , elem
+Rule 41    elem -> valores
+Rule 42    valores -> eMat
+Rule 43    valores -> expBool
+Rule 44    valores -> expString
+Rule 45    valores -> varYvals
+Rule 46    valores -> funcReturn
+Rule 47    valores -> reg
+Rule 48    varYvals -> VAR
+Rule 49    varYvals -> vecVal
+Rule 50    vecVal -> VAR m
+Rule 51    m -> [ INT ]
+Rule 52    m -> [ INT ] m
+Rule 53    param -> expBool
+Rule 54    param -> <empty>
+Rule 55    expBool -> or ? expBool : expBool
+Rule 56    expBool -> or
+Rule 57    or -> or OR and
+Rule 58    or -> and
+Rule 59    and -> and AND eq
+Rule 60    and -> eq
+Rule 61    eq -> eq EQEQ tBool
+Rule 62    eq -> eq DISTINTO tBool
+Rule 63    eq -> mayor
+Rule 64    mayor -> tCompare > tCompare
+Rule 65    mayor -> menor
+Rule 66    menor -> tCompare < tCompare
+Rule 67    menor -> not
+Rule 68    not -> NOT not
+Rule 69    not -> tBool
+Rule 70    tBool -> ( expBool )
+Rule 71    tBool -> BOOL
+Rule 72    tBool -> varsYvals
+Rule 73    tBool -> funcBool
+Rule 74    tCompare -> eMat
+Rule 75    tCompare -> varsOps
+Rule 76    tCompare -> varYVals
+
+Terminals, with rules where they appear
+
+%                    : 6
+(                    : 13 70
+)                    : 13 70
+*                    : 4
++                    : 1 11 19
+,                    : 24 40
+-                    : 2 10
+/                    : 5
+:                    : 24 55
+<                    : 66
+=                    : 37 38 39
+>                    : 64
+?                    : 55
+AND                  : 59
+BEGIN                : 
+BOOLINT              : 
+CAPITALIZAR          : 
+COLINEALES           : 
+COMMENT              : 
+DISTINTO             : 62
+DIVEQ                : 32
+DO                   : 
+ELSE                 : 
+END                  : 
+EQEQ                 : 61
+FLOAT                : 16
+FOR                  : 
+ID                   : 
+IF                   : 
+LENGTH               : 
+MASEQ                : 34
+MASMAS               : 27 29
+MENOSEQ              : 35
+MENOSMENOS           : 26 30
+MULEQ                : 
+MULTIESCALAR         : 
+NOT                  : 68
+OR                   : 57
+PRINT                : 
+RES                  : 
+RETURN               : 
+STRING               : 19 20 24
+THEN                 : 
+VAR                  : 37 38 39 48 50
+WHILE                : 
+[                    : 39 51 52
+]                    : 39 51 52
+^                    : 8
+error                : 
+{                    : 23
+}                    : 23
+
+Nonterminals, with rules where they appear
+
+BOOL                 : 71
+FuncString           : 22
+INT                  : 14 51 52
+POREQ                : 31
+and                  : 57 58 59
+asig                 : 34 35 36
+campos               : 23 24
+eMat                 : 1 2 13 42 74 0
+elem                 : 39 40
+eq                   : 59 60 61 62
+exp                  : 4 5 6 7 8
+expBool              : 43 53 55 55 70
+expString            : 19 44
+funcBool             : 73
+funcInt              : 18
+funcReturn           : 46
+iSing                : 8 9
+m                    : 50 52
+mayor                : 63
+menor                : 65
+not                  : 67 68
+or                   : 55 56 57
+p                    : 1 2 3 4 5 6
+param                : 
+paren                : 10 11 12
+reg                  : 47
+sIgual               : 31 32 33
+sMM                  : 26 27 28
+tBool                : 61 62 69
+tCompare             : 64 64 66 66
+valores              : 24 25 31 32 34 35 37 40 41
+varAsig              : 
+varYVals             : 76
+varYvals             : 29 30 45
+varsOps              : 17 75
+varsYvals            : 15 21 72
+vec                  : 38
+vecVal               : 49
+

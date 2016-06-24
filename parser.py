@@ -3,9 +3,10 @@ import parser_rules
 
 from sys import argv, exit
 
-from ply import all
 #from ply.lex import lex
 #from ply.yacc import yacc
+from ply.lex import lex
+from ply.yacc import yacc
 
 
 def dump_ast(ast, output_file):

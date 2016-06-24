@@ -1,0 +1,7 @@
+digraph {
+node[width=1.5, height=1.5, shape="circle", label="+"] n1;
+node[width=1.5, height=1.5, shape="circle", label="num: 1"] n2;
+node[width=1.5, height=1.5, shape="circle", label="num: 1"] n3;
+n1 -> n2;
+n1 -> n3;
+}
