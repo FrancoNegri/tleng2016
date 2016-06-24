@@ -64,8 +64,11 @@ def p_loop3(subexpressions):
 def p_if(subexpressions):
 	'''if : IF '(' expBool ')' THEN bloque else'''
 
-def p_else(subexpressions):
-	'''else :  '''
+def p_else1(subexpressions):
+	'''else : ELSE bloque '''
+
+def p_else2(subexpressions):
+	'''else : '''
 
 #Bloque -> S | {G}
 def p_bloque1(subexpressions):
