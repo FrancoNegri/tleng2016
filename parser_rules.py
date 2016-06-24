@@ -26,7 +26,7 @@ def p_g2(subexpressions):
 def p_g3(subexpressions):
 	'''g : empty'''
 
-#S ->  VarOps ; | Func ;
+#S ->  VarOps ; | Func ;| return ;| varAsig;
 def p_sentencia1(subexpressions):
 	'''sentencia : varsOps ';' '''
 def p_sentencia2(subexpressions):
@@ -36,8 +36,9 @@ def p_sentencia2(subexpressions):
 def p_sentencia3(subexpressions):
 	'''sentencia : varAsig ';' '''
 
-def p_sentencia4(subexpressions):
-	'''sentencia : funcVoid ';' '''
+#Esta ya esta capturada en func
+#def p_sentencia4(subexpressions):
+#	'''sentencia : funcVoid ';' '''
 
 def p_sentencia5(subexpressions):
 	'''sentencia : RETURN ';' '''
@@ -70,7 +71,7 @@ def p_else1(subexpressions):
 	'''else : ELSE bloque '''
 
 def p_else2(subexpressions):
-	'''else : '''
+	'''else : empty'''
 
 #Bloque -> S | {G}
 def p_bloque1(subexpressions):
@@ -99,6 +100,9 @@ def p_funcReturn3(subexpressions):
 	'''funcReturn : funcBool'''
 
 # FuncInt -> multiplicacionEscalar(Vec, EMat, Param) | length(Vec)
+
+#vec en realidad es la definicion de un vector o sea, a = [1,1]. Esto puede tener sentido o no, pero tambien podriamos pasarle una variable_
+#que ya es un vector como multiescalar(vector,2,) 
 def p_funcInt1(subexpressions):
 	'''funcInt : MULTIESCALAR '(' vec ',' eMat ',' param ')' '''
 
@@ -131,7 +135,10 @@ def p_empty(subexpressions):
 #-----------------------------------------------------------------------------
 #Vectores  y variables
 
-#Vec ->  var = [Elem] 
+#Esta produccion creo que no tiene sentido, porque en las producciones de asignaciones hacemos:
+#asig -> var =  vec o sea a = a = [1,2]. Deberia quedar solo la parte entre corchetes, la lista. Esto tendria sentido para cuando hacemos tambien:
+#multiescalar([1,2,3],mas cosas) eso tendria mas sentido que hacer una asignacion de vector en el primer parametros
+#Vec ->  id = [Elem] 
 def p_vec1(subexpressions):
 	'''vec : ID '=' '[' elem ']' '''
 #Elem-> Valores, Elem | Valores
@@ -142,7 +149,7 @@ def p_elem2(subexpressions):
 
 #Valores -> EMat | ExpBool | ExpString | VarYVals | FuncReturn | Reg
 #Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
-#Tambien falta ver el caso , que dice en el tp, siguiente: alumno.nombre = "asd"
+
 def p_valores1(subexpressions):
 	'''valores : eMat'''
 def p_valores2(subexpressions):
@@ -155,6 +162,9 @@ def p_valores5(subexpressions):
 	'''valores : funcReturn'''
 def p_valores6(subexpressions):
 	'''valores : reg'''
+#Esto faltaba si se quiere hacer algo como variable = alumno.nombre. O sea, tiene sentido que alumno.nombre sea un valor
+def p_valores7(subexpressions):
+	'''valores : ID '.' ID '''
 
 #VarYVals -> var | VecVal
 def p_varYVals1(subexpressions):
@@ -172,6 +182,20 @@ def p_m1(subexpressions):
 	'''m : '[' INT ']' '''
 def p_m2(subexpressions):
 	''' m : '[' INT ']' m '''
+
+#Registros:
+#Reg -> {U}
+def p_reg(subexpressions):
+	'''reg :  '{' campos '}' '''
+
+#U -> campo: Valores, U | campo: Valores
+#campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
+#Me parece que mejore el campo es un ID (!)
+def p_campos1(subexpressions):
+	'''campos : ID ':' valores ',' campos'''
+def p_campos2(subexpressions):
+	'''campos : valores'''
+
 
 #-----------------------------------------------------------------------------
 #Operadores de variables:
@@ -210,31 +234,37 @@ def p_sMM(subexpressions):
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
+#ACA HAGO CAMBIOS RELEVANTES!
+#Dejo las producciones comentadas como estaban antes, y defino en python como "creo" que deberia ir 
+# esto en c+++ se puede a *=b += c*= 5 y aca no se podia.
+
 #VarAsig -> SIgual *= Valores | SIgual /= Valores | SIgual
 def p_varAsig1(subexpressions):
-	'''varAsig : sIgual MULEQ valores'''
+	'''varAsig : valores MULEQ varAsig'''
 def p_varAsig2(subexpressions):
-	'''varAsig : sIgual DIVEQ valores'''
+	'''varAsig : valores DIVEQ varAsig'''
 def p_varAsig3(subexpressions):
 	'''varAsig : sIgual'''
 
 #SIgual -> Asig '+'= Valores |  Asig -= Valores | Asig
 def p_sIgual1(subexpressions):
-	'''sIgual : asig MASEQ valores'''
+	'''sIgual : valores MASEQ sIgual'''
 def p_sIgual2(subexpressions):
-	'''sIgual : asig MENOSEQ valores'''
+	'''sIgual : valores MENOSEQ sIgual'''
 def p_sIgual3(subexpressions):
 	'''sIgual : asig'''
 
-#Asig -> var = Valores  | var = Vec          
+#Asig -> var = Valores  | var = Vec   
+     
 def p_asig1(subexpressions):
-	'''asig : ID '=' valores'''
+	'''asig : ID '=' asig'''
+#Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)	
 def p_asig2(subexpressions):
-	'''asig : ID '=' vec '''
-
-# Falta el caso base, los ID
+	'''asig : ID '.' ID '=' asig'''
 def p_asig3(subexpressions):
-	'''asig : ID '''
+	'''asig : vec'''
+def p_asig4(subexpressions):
+	'''asig : valores '''
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
@@ -301,19 +331,6 @@ def p_expString4(subexpressions):
 	'''expString : funcString'''
 
 #-----------------------------------------------------------------------------
-#Registros:
-#Reg -> {U}
-def p_reg(subexpressions):
-	'''reg :  '{' campos '}' '''
-
-#U -> campo: Valores, U | campo: Valores
-#campo no es nada en la gramatica, pero creo que en realidad es cualquier string
-#La segunda aparicion de : creara conflictos?
-def p_campos1(subexpressions):
-	'''campos : STRING ':' valores ',' campos'''
-def p_campos2(subexpressions):
-	'''campos : valores'''
-
 
 
 # ---------------------------------------------------------------------------------------
