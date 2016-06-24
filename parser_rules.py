@@ -213,8 +213,6 @@ def p_varsOps1(subexpressions):
 	tipoVariable = variable["type"]
 	nombreVariable = variable["name"]
 
-	if tipoVariable == "none":
-		raise Exception('Variable "' + nombreVariable + '" no inicializada')
 	if tipoVariable != "int":
 		raise Exception("Se esperaba tipo int")
 
