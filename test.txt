@@ -1,1 +1,1 @@
-#este progrma anda bien
+if(5+5) then a else b

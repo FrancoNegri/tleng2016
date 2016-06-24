@@ -40,7 +40,7 @@ tokens = [
 #Tipos:
 'STRING',
 'FLOAT',
-'BOOL'
+'BOOL',
 'INT',
 'VAR',
 #Funciones:
