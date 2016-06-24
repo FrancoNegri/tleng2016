@@ -1,4 +1,49 @@
 from lexer_rules import tokens
+# ---------------------------------------------------------------------------------------
+#Sentencias:
+
+#G -> SG | CtrlG
+def p_g1(subexpressions):
+	'''g : sentencia g'''
+def p_g2(subexpressions):
+	'''g : ctrl g'''
+
+#S ->  VarOps ; | Func ;
+def p_sentencia1(subexpressions):
+	'''sentencia : varsOps ';' '''
+def p_sentencia2(subexpressions):
+	'''sentencia : func ';' '''
+
+#Ctrl -> IF| Loop
+def p_ctrl1(subexpressions):
+	'''ctrl : if'''
+def p_ctr2l(subexpressions):
+	'''ctrl : loop'''
+
+#Loop -> while(ExpBool) Bloque | do Bloque while(ExpBool); | for(VarAsig; ExpBool; )Bloque
+#en el tercer parametro del for pongo varOps, pero en realidad puede ser mas general(!), es lo que discutimos en clase.
+def p_loop1(subexpressions):
+	'''loop : WHILE '(' expBool ')' bloque'''
+def p_loop2(subexpressions):
+	'''loop : DO bloque WHILE '(' expBool ')' ';' '''
+def p_loop3(subexpressions):
+	'''loop : FOR '(' varAsig ';' expBool ';' varsOps ')' bloque '''
+
+
+# ---------------------------------------------------------------------------------------
+#Control:
+
+#IF-> if(ExpBool) then Bloque else Bloque
+def p_if(subexpressions):
+	'''if : IF '(' expBool ')' THEN bloque ELSE bloque '''
+
+#Bloque -> S | {G}
+def p_bloque1(subexpressions):
+	'''bloque : sentencia '''
+def p_bloque2(subexpressions):
+	'''bloque : '{' g '}' '''
+
+
 
 #Operaciones binarias enteras
 
