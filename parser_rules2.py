@@ -84,7 +84,7 @@ def p_loop3(subexpressions):
 # IF-> if(ExpBool) then Bloque Else
 # Else -> else Bloque | lambda
 def p_if(subexpressions):
-	'''if : IF '(' varExpresion ')' THEN bloque else'''
+	'''if : IF '(' varExpresion ')' bloque else'''
 
 def p_else1(subexpressions):
 	'''else : ELSE bloque '''
