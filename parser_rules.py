@@ -259,11 +259,23 @@ def p_varAsig10(subexpressions):
 	'''varAsig : ID '=' valores '''
 
 precedence = (
-    ('right', 'MULEQ','DIVEQ'),
+    ('right','?'),
+    ('left','OR'),
+    ('left','AND'),
+    ('left','EQEQ','DISTINTO'),
+	('left', '<', '>'),
+	('right', 'MULEQ','DIVEQ'),
     ('right', 'MASEQ','MENOSEQ'),
-    ('right', '='),
-    
+	('right', '='),
+	('left', '+','-'),
+	('left','*','/','%'),
+	('left', '^'),
+	('left','UNIMAS', 'UNIMENOS'),
+	('left','NOT'),    
+	('left','MASMAS','MENOSMENOS'),
+	('left','MASMASIZQ','MENOSMENOSIZQ')        
 )
+
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
