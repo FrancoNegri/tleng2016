@@ -43,11 +43,6 @@ tokens = [
 'BOOL',
 'INT',
 #Funciones:
-'MULTIESCALAR',
-'CAPITALIZAR',
-'COLINEALES',
-'PRINT',
-'LENGTH',
 #Operadores Del sistema:
 'COMMENT',
 'ID',
@@ -79,15 +74,16 @@ def t_BOOL(token) :
     token.value = bool(token.value)
     return token
 
+def t_FLOAT(token):
+    r"[-]?[0-9] \. [0-9]*"
+    token.value = float(token.value)
+    return token
+
 def t_INT(token) : 
-	r"[-]?[1-9][0-9]*"
+	r"[-]?[0-9][0-9]*"
 	token.value = int(token.value)
 	return token
 
-def t_FLOAT(token):
-	r"[-]?[1-9] \. [0-9]*"
-	token.value = float(token.value)
-	return token
 
 def t_ID(token):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
