@@ -61,6 +61,8 @@ tokens = [
 'MENOSMENOS'
 ] + list(reserved.values())
 
+variablesConTipo = []
+
 t_STRING = r''' " .* " '''
 
 t_EQEQ = r"=="
@@ -96,9 +98,9 @@ def t_NEWLINE(token):
   r"\n+"
   token.lexer.lineno += len(token.value)
 
-def t_COMMENT(t):
+def t_COMMENT(token):
     r'\#.*'
-    pass
+    return token
 
 t_ignore  = ' \t'
 
