@@ -75,7 +75,7 @@ def p_loop1(subexpressions):
 def p_loop2(subexpressions):
 	'''loop : DO bloque WHILE '(' varExpresion ')' ';' '''
 def p_loop3(subexpressions):
-	'''loop : FOR '(' varExpresion ';' varExpresion ';' varOps ')' bloque '''
+	'''loop : FOR '(' varAsig ';' varExpresion ';' varOps ')' bloque '''
 
 # ---------------------------------------------------------------------------------------
 #Control:

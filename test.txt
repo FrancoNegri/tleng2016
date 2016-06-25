@@ -1,2 +1,3 @@
-a=b*=caas_s;
-return;
+for(i=1; i<a;i++){
+    b = b+10*i;
+
