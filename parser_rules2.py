@@ -122,6 +122,7 @@ def p_varExpresion(subexpressions):
 	| varOps 
 	| vec
 	| reg
+	| vars
 	'''
 
 def p_tipos(subexpressions):
@@ -129,7 +130,7 @@ def p_tipos(subexpressions):
 	| FLOAT 
 	| STRING 
 	| BOOL 
-	| ID'''
+	'''
 
 def p_vec(subexpressions):
 	'''vec : '[' elem ']'  
@@ -222,28 +223,30 @@ def p_empty(subexpressions):
 
 
 def p_varAsig1(subexpressions):
-	'''varAsig : ID MENOSEQ varAsig '''
+	'''varAsig : vars MENOSEQ varAsig '''
 def p_varAsig2(subexpressions):
-	'''varAsig : ID MASEQ varAsig '''
+	'''varAsig : vars MASEQ varAsig '''
 def p_varAsig3(subexpressions):
-	'''varAsig : ID MULEQ varAsig '''
+	'''varAsig : vars MULEQ varAsig '''
 def p_varAsig4(subexpressions):
-	'''varAsig : ID DIVEQ varAsig '''
+	'''varAsig : vars DIVEQ varAsig '''
 def p_varAsig5(subexpressions):
-	'''varAsig : ID '=' varAsig'''	
+	'''varAsig : vars '=' varAsig'''	
 #Casos base
 def p_varAsig6(subexpressions):
-	'''varAsig : ID MASEQ varExpresion '''	
+	'''varAsig : vars MASEQ varExpresion '''	
 def p_varAsig7(subexpressions):
-	'''varAsig : ID MENOSEQ varExpresion '''	
+	'''varAsig : vars MENOSEQ varExpresion '''	
 def p_varAsig8(subexpressions):
-	'''varAsig : ID MULEQ varExpresion '''	
+	'''varAsig : vars MULEQ varExpresion '''	
 def p_varAsig9(subexpressions):
-	'''varAsig : ID DIVEQ varExpresion '''	
+	'''varAsig : vars DIVEQ varExpresion '''	
 def p_varAsig10(subexpressions):
-	'''varAsig : ID '=' varExpresion '''
+	'''varAsig : vars '=' varExpresion '''
 
-
+def p_vars(subexpressions):
+	'''vars : ID
+	| RES'''
 
 #--------------------------------------------------------------------------------------
 # Caso error
