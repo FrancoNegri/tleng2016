@@ -203,7 +203,9 @@ def p_campos2(subexpressions):
 def p_varsOps1(subexpressions):
 	'''varsOps : MENOSMENOS sMM 
 	| MASMAS sMM
-	| sMM'''
+	| sMM 
+	| MENOSMENOS varYVals
+	| MASMAS varYVals'''
 	if len(subexpressions) > 2:
 		indexSMM = 2
 	else:
@@ -221,9 +223,8 @@ def p_varsOps1(subexpressions):
 # pueden aplicarse ++ o --
 # Tambien falta el caso base ID
 def p_sMM(subexpressions):
-	'''sMM : ID MASMAS
-	| ID MENOSMENOS
-	| ID'''
+	'''sMM : varYVals MASMAS
+	| varYVals MENOSMENOS'''
 	variable = subexpressions[1]
 	tipoVariable = variable["type"]
 	nombreVariable = variable["name"]
