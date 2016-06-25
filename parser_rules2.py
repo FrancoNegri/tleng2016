@@ -156,10 +156,10 @@ def p_U(subexpressions):
 #Operadores de variables:
 #varOps -> --SMM | ++SMM | SMM
 def p_varOps1(subexpressions):
-	'''varOps : '+' '+' ID 
-	| '-' '-' ID 
-	| ID '+' '+' 
-	| ID '-' '-'
+	'''varOps : MASMAS ID 
+	| MENOSMENOS ID 
+	| ID MASMAS 
+	| ID MENOSMENOS
 	'''
 
 #-----------------------------------------------------------------------------

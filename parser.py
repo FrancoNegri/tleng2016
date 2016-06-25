@@ -50,5 +50,6 @@ if __name__ == "__main__":
     ast = parser.parse(text, lexer)
 
     output_file = open(argv[2], "w")
-    dump_ast(ast, output_file)
+    #dump_ast(ast, output_file)
+	
     output_file.close()
