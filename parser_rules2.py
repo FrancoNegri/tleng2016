@@ -26,8 +26,6 @@ precedence = (
 	('left', '^'),
 	('left','UNIMAS', 'UNIMENOS'),
 	('left','NOT'),	
-	('left','MASMAS','MENOSMENOS'),
-	('left','MASMASIZQ','MENOSMENOSIZQ'),		
 )
 
 def p_varYVals(subexpressions):
@@ -70,6 +68,49 @@ def p_varExpresion(subexpressions):
 	| funcInt 
 	| funcBool 
 	| funcString'''
+
+#-----------------------------------------------------------------------------
+#Operadores de variables:
+#VarsOps -> --SMM | ++SMM | SMM
+def p_varsOps1(subexpressions):
+	'''varsOps : MENOSMENOS sMM 
+	| MASMAS sMM
+	| sMM 
+	| MENOSMENOS varYVals 
+	| MASMAS varYVals'''
+def p_sMM(subexpressions):
+	'''sMM : varYVals MASMAS
+	| varYVals MENOSMENOS'''
+
+#-----------------------------------------------------------------------------
+#Asignaciones:
+
+#ACA HAGO CAMBIOS RELEVANTES!
+
+
+def p_varAsig1(subexpressions):
+	'''varAsig : ID MENOSEQ varAsig '''
+def p_varAsig2(subexpressions):
+	'''varAsig : ID MASEQ varAsig '''
+def p_varAsig3(subexpressions):
+	'''varAsig : ID MULEQ varAsig '''
+def p_varAsig4(subexpressions):
+	'''varAsig : ID DIVEQ varAsig '''
+def p_varAsig5(subexpressions):
+	'''varAsig : ID '=' varAsig'''	
+#Casos base
+def p_varAsig6(subexpressions):
+	'''varAsig : ID MASEQ valores '''	
+def p_varAsig7(subexpressions):
+	'''varAsig : ID MENOSEQ valores '''	
+def p_varAsig8(subexpressions):
+	'''varAsig : ID MULEQ valores '''	
+def p_varAsig9(subexpressions):
+	'''varAsig : ID DIVEQ valores '''	
+def p_varAsig10(subexpressions):
+	'''varAsig : ID '=' valores '''
+
+
 
 #--------------------------------------------------------------------------------------
 # Caso error

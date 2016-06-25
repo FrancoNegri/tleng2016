@@ -11,17 +11,12 @@ Unused terminals:
     COMMENT
     BEGIN
     FOR
-    MASEQ
-    MULEQ
-    DIVEQ
     END
     ELSE
     IF
     AND
-    MENOSEQ
     MULTIESCALAR
     NOT
-    MENOSMENOS
 
 Grammar
 
@@ -55,6 +50,23 @@ Rule 26    varExpresion -> STRING
 Rule 27    varExpresion -> funcInt
 Rule 28    varExpresion -> funcBool
 Rule 29    varExpresion -> funcString
+Rule 30    varsOps -> MENOSMENOS sMM
+Rule 31    varsOps -> MASMAS sMM
+Rule 32    varsOps -> sMM
+Rule 33    varsOps -> MENOSMENOS varYVals
+Rule 34    varsOps -> MASMAS varYVals
+Rule 35    sMM -> varYVals MASMAS
+Rule 36    sMM -> varYVals MENOSMENOS
+Rule 37    varAsig -> ID MENOSEQ varAsig
+Rule 38    varAsig -> ID MASEQ varAsig
+Rule 39    varAsig -> ID MULEQ varAsig
+Rule 40    varAsig -> ID DIVEQ varAsig
+Rule 41    varAsig -> ID = varAsig
+Rule 42    varAsig -> ID MASEQ valores
+Rule 43    varAsig -> ID MENOSEQ valores
+Rule 44    varAsig -> ID MULEQ valores
+Rule 45    varAsig -> ID DIVEQ valores
+Rule 46    varAsig -> ID = valores
 
 Terminals, with rules where they appear
 
@@ -67,6 +79,7 @@ Terminals, with rules where they appear
 /                    : 9
 :                    : 14
 <                    : 19
+=                    : 41 46
 >                    : 18
 ?                    : 14
 AND                  : 
@@ -76,22 +89,22 @@ CAPITALIZAR          : 5
 COLINEALES           : 4
 COMMENT              : 
 DISTINTO             : 17
-DIVEQ                : 
+DIVEQ                : 40 45
 DO                   : 
 ELSE                 : 
 END                  : 
 EQEQ                 : 16
 FLOAT                : 24
 FOR                  : 
-ID                   : 1 2
+ID                   : 1 2 37 38 39 40 41 42 43 44 45 46
 IF                   : 
 INT                  : 23
 LENGTH               : 3
-MASEQ                : 
-MASMAS               : 2
-MENOSEQ              : 
-MENOSMENOS           : 
-MULEQ                : 
+MASEQ                : 38 42
+MASMAS               : 2 31 34 35
+MENOSEQ              : 37 43
+MENOSMENOS           : 30 33 36
+MULEQ                : 39 44
 MULTIESCALAR         : 
 NOT                  : 
 OR                   : 15
@@ -109,7 +122,11 @@ Nonterminals, with rules where they appear
 funcBool             : 28
 funcInt              : 27
 funcString           : 29
+sMM                  : 30 31 32
+valores              : 42 43 44 45 46
+varAsig              : 37 38 39 40 41
 varExpresion         : 6 6 7 7 8 8 9 9 10 10 11 11 12 13 14 14 14 15 15 16 16 17 17 18 18 19 19 20
 varOps               : 22
-varYVals             : 21 0
+varYVals             : 21 33 34 35 36 0
+varsOps              : 
 
