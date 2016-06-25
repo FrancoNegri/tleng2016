@@ -11,7 +11,13 @@ reserved = {
 'return' : 'RETURN',
 'and' : 'AND',
 'or' : 'OR',
-'not' : 'NOT'
+'not' : 'NOT',
+'print' : 'PRINT',
+'multiescalar': 'MULTIESCALAR',
+'capitalizar': 'CAPITALIZAR',
+'colineales': 'COLINEALES',
+'print': 'PRINT',
+'length': 'LENGTH',
 }
 
 literals = [
@@ -42,7 +48,6 @@ tokens = [
 'FLOAT',
 'BOOL',
 'INT',
-#Funciones:
 #Operadores Del sistema:
 'COMMENT',
 'ID',
@@ -80,10 +85,9 @@ def t_FLOAT(token):
     return token
 
 def t_INT(token) : 
-	r"[-]?[0-9][0-9]*"
+	r"[-]?[1-9][0-9]* | 0"
 	token.value = int(token.value)
 	return token
-
 
 def t_ID(token):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
