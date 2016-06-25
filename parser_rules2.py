@@ -10,7 +10,23 @@ class Node:
               self.children = [ ]
          self.leaf = leaf
 
+# Simbolo inicial
 
+precedence = (
+	('right','?'),
+	('left','OR'),
+	('left','AND'),
+	('left','EQEQ','DISTINTO'),
+	('left' '<', '>'),
+	('right', 'MULEQ','DIVEQ'),
+	('right', 'MASEQ','MENOSEQ'),
+	('right', '='),
+	('left', '+','-'),
+	('left','*','/','%'),
+	('left', '^'),
+	('left','UNIMAS', 'UNIMENOS'),
+	('left','NOT'),	
+)
 
 # Simbolo inicial
 start = 'g'
@@ -31,7 +47,7 @@ def p_g3(subexpressions):
 
 #S ->  VarOps ; | Func ;| return ;| varAsig;
 def p_sentencia1(subexpressions):
-	'''sentencia : varsOps ';' '''
+	'''sentencia : varOps ';' '''
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
@@ -55,11 +71,11 @@ def p_ctrl2(subexpressions):
 #Loop -> while(ExpBool) Bloque | do Bloque while(ExpBool); | for(VarAsig; ExpBool; )Bloque
 #en el tercer parametro del for pongo varOps, pero en realidad puede ser mas general(!), es lo que discutimos en clase.
 def p_loop1(subexpressions):
-	'''loop : WHILE '(' varExpresion')' bloque'''
+	'''loop : WHILE '(' varExpresion ')' bloque'''
 def p_loop2(subexpressions):
 	'''loop : DO bloque WHILE '(' varExpresion ')' ';' '''
 def p_loop3(subexpressions):
-	'''loop : FOR '(' varExpresion ';' varExpresion ';' varOps')' bloque '''
+	'''loop : FOR '(' varExpresion ';' varExpresion ';' varOps ')' bloque '''
 
 # ---------------------------------------------------------------------------------------
 #Control:
@@ -82,6 +98,69 @@ def p_bloque1(subexpressions):
 def p_bloque2(subexpressions):
 	'''bloque : '{' g '}' '''
 
+#----------------------------------------------------------
+def p_varExpresion(subexpressions):
+	'''varExpresion : varExpresion '+' varExpresion 
+	| varExpresion '-' varExpresion 
+	| varExpresion '*' varExpresion 
+	| varExpresion '/' varExpresion 
+	| varExpresion '%' varExpresion 
+	| varExpresion '^' varExpresion 
+	| '(' '-' '(' varExpresion ')' ')' %prec UNIMENOS
+	| '(' '+' '(' varExpresion ')' ')' %prec UNIMAS
+	| varExpresion '?' varExpresion ':' varExpresion 
+	| varExpresion OR varExpresion 
+	| varExpresion EQEQ varExpresion 
+	| varExpresion DISTINTO varExpresion 
+	| varExpresion '>' varExpresion 
+	| varExpresion '<' varExpresion 
+	| '(' varExpresion ')' 
+	| tipos
+	| funcReturn
+	| varOps 
+	| vec
+	| ID m
+	| reg
+	'''
+
+def p_tipos(subexpressions):
+	'''tipos : INT 
+	| FLOAT 
+	| STRING 
+	| BOOL 
+	| ID'''
+
+def p_vec(subexpressions):
+	'''vec : '[' elem ']'  
+	| ID m'''
+
+def p_elem(subexpressions):
+	'''elem : varExpresion ',' elem
+	| varExpresion
+	'''
+
+def p_m(subexpressions):
+	'''m : '[' varExpresion ']'
+	| m '[' varExpresion ']' '''
+
+def p_reg(subexpressions):
+	'''reg : '{' campos '}' 
+	| ID '.' ID'''
+
+def p_U(subexpressions):
+	'''campos : ID ':' varExpresion ',' campos 
+	| ID ':' varExpresion '''
+
+#-----------------------------------------------------------------------------
+#Operadores de variables:
+#varOps -> --SMM | ++SMM | SMM
+def p_varOps1(subexpressions):
+	'''varOps : '+' '+' ID 
+	| '-' '-' ID 
+	| ID '+' '+' 
+	| ID '-' '-'
+	'''
+
 #-----------------------------------------------------------------------------
 #Funciones
 
@@ -102,7 +181,7 @@ def p_funcReturn2(subexpressions):
 def p_funcReturn3(subexpressions):
 	'''funcReturn : funcBool'''
 
-# FuncInt -> multiplicacionEscalar(ID, EMat, Param) | length(Vec)
+# FuncInt -> multiplicacionEscalar(Vec, EMat, Param) | length(Vec)
 
 #vec en realidad es la definicion de un vector o sea, a = [1,1]. Esto puede tener sentido o no, pero tambien podriamos pasarle una variable_
 #que ya es un vector como multiescalar(vector,2,) 
@@ -135,69 +214,6 @@ def p_param2(subexpressions):
 def p_empty(subexpressions):
 	'''empty : '''
 
-
-precedence = (
-	('right','?'),
-	('left','OR'),
-	('left','AND'),
-	('left','EQEQ','DISTINTO'),
-	('left' '<', '>'),
-	('right', 'MULEQ','DIVEQ'),
-	('right', 'MASEQ','MENOSEQ'),
-	('right', '='),
-	('left', '+','-'),
-	('left','*','/','%'),
-	('left', '^'),
-	('left','UNIMAS', 'UNIMENOS'),
-	('left','NOT'),	
-)
-
-
-def p_funcInt(subexpressions):
-	'''funcInt : LENGTH'''
-
-def p_funcBool(subexpressions):
-	'''funcBool : COLINEALES'''
-
-def p_funcString(subexpressions):
-	'''funcString : CAPITALIZAR'''
-
-def p_varExpresion(subexpressions):
-	'''varExpresion : varExpresion '+' varExpresion 
-	| varExpresion '-' varExpresion 
-	| varExpresion '*' varExpresion 
-	| varExpresion '/' varExpresion 
-	| varExpresion '%' varExpresion 
-	| varExpresion '^' varExpresion 
-	| '(' '-' '(' varExpresion ')' ')' %prec UNIMENOS
-	| '(' '+' '(' varExpresion ')' ')' %prec UNIMAS
-	| varExpresion '?' varExpresion ':' varExpresion 
-	| varExpresion OR varExpresion 
-	| varExpresion EQEQ varExpresion 
-	| varExpresion DISTINTO varExpresion 
-	| varExpresion '>' varExpresion 
-	| varExpresion '<' varExpresion 
-	| '(' varExpresion ')' 
-	| varYVals 
-	| varOps 
-	| INT 
-	| FLOAT 
-	| BOOL 
-	| STRING 
-	| funcInt 
-	| funcBool 
-	| funcString'''
-
-#-----------------------------------------------------------------------------
-#Operadores de variables:
-#VarsOps -> --SMM | ++SMM | SMM
-def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS ID
-	| MASMAS ID
-	| ID MASMAS 
-	| ID MENOSMENOS'''
-
-
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
@@ -216,16 +232,15 @@ def p_varAsig5(subexpressions):
 	'''varAsig : ID '=' varAsig'''	
 #Casos base
 def p_varAsig6(subexpressions):
-	'''varAsig : ID MASEQ valores '''	
+	'''varAsig : ID MASEQ varExpresion '''	
 def p_varAsig7(subexpressions):
-	'''varAsig : ID MENOSEQ valores '''	
+	'''varAsig : ID MENOSEQ varExpresion '''	
 def p_varAsig8(subexpressions):
-	'''varAsig : ID MULEQ valores '''	
+	'''varAsig : ID MULEQ varExpresion '''	
 def p_varAsig9(subexpressions):
-	'''varAsig : ID DIVEQ valores '''	
+	'''varAsig : ID DIVEQ varExpresion '''	
 def p_varAsig10(subexpressions):
-	'''varAsig : ID '=' valores '''
-
+	'''varAsig : ID '=' varExpresion '''
 
 
 
