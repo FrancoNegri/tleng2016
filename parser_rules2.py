@@ -136,7 +136,6 @@ def p_empty(subexpressions):
 	'''empty : '''
 
 
-
 precedence = (
 	('right','?'),
 	('left','OR'),
@@ -193,14 +192,11 @@ def p_varExpresion(subexpressions):
 #Operadores de variables:
 #VarsOps -> --SMM | ++SMM | SMM
 def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS sMM 
-	| MASMAS sMM
-	| sMM 
-	| MENOSMENOS varYVals 
-	| MASMAS varYVals'''
-def p_sMM(subexpressions):
-	'''sMM : varYVals MASMAS
-	| varYVals MENOSMENOS'''
+	'''varsOps : MENOSMENOS ID
+	| MASMAS ID
+	| ID MASMAS 
+	| ID MENOSMENOS'''
+
 
 #-----------------------------------------------------------------------------
 #Asignaciones:
