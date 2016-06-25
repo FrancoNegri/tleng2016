@@ -109,6 +109,8 @@ def p_varExpresion(subexpressions):
 	| '(' '-' '(' varExpresion ')' ')' %prec UNIMENOS
 	| '(' '+' '(' varExpresion ')' ')' %prec UNIMAS
 	| varExpresion '?' varExpresion ':' varExpresion 
+	| varExpresion AND varExpresion
+	| NOT varExpresion
 	| varExpresion OR varExpresion 
 	| varExpresion EQEQ varExpresion 
 	| varExpresion DISTINTO varExpresion 
@@ -119,7 +121,6 @@ def p_varExpresion(subexpressions):
 	| funcReturn
 	| varOps 
 	| vec
-	| ID m
 	| reg
 	'''
 
