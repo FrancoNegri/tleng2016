@@ -18,17 +18,18 @@ start = 'g'
 
 #G -> SG | CtrlG
 def p_g1(subexpressions):
-	'''g : sentencia g'''
+	'''g : sentencia  '''
 
 def p_g2(subexpressions):
 	'''g : ctrl g'''
 
 def p_g3(subexpressions):
 	'''g : empty'''
+#En c++, hacer 5+5; esta bien
 
 #S ->  VarOps ; | Func ;| return ;| varAsig;
 def p_sentencia1(subexpressions):
-	'''sentencia : varsOps ';' '''
+	'''sentencia : varsOps  ';' '''
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
@@ -65,7 +66,7 @@ def p_loop3(subexpressions):
 # IF-> if(ExpBool) then Bloque Else
 # Else -> else Bloque | lambda
 def p_if(subexpressions):
-	'''if : IF '(' expBool ')' THEN bloque else'''
+	'''if : IF '(' expBool ')' bloque else'''
 
 def p_else1(subexpressions):
 	'''else : ELSE bloque '''
@@ -75,7 +76,7 @@ def p_else2(subexpressions):
 
 #Bloque -> S | {G}
 def p_bloque1(subexpressions):
-	'''bloque : sentencia '''
+	'''bloque : sentencia ';' '''
 def p_bloque2(subexpressions):
 	'''bloque : '{' g '}' '''
 
@@ -140,7 +141,7 @@ def p_empty(subexpressions):
 #multiescalar([1,2,3],mas cosas) eso tendria mas sentido que hacer una asignacion de vector en el primer parametros
 #Vec ->  id = [Elem] 
 def p_vec1(subexpressions):
-	'''vec : ID '=' '[' elem ']' '''
+	'''vec : '[' elem ']' '''
 #Elem-> Valores, Elem | Valores
 def p_elem1(subexpressions):
 	'''elem : valores ',' elem'''
@@ -188,7 +189,7 @@ def p_m2(subexpressions):
 def p_reg(subexpressions):
 	'''reg :  '{' campos '}' '''
 
-#U -> campo: Valores, U | campo: Valores
+#U -> campo: Valores, U | campof: Valores
 #campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
 #Me parece que mejore el campo es un ID (!)
 def p_campos1(subexpressions):
@@ -201,81 +202,39 @@ def p_campos2(subexpressions):
 #Operadores de variables:
 #VarsOps -> --SMM | ++SMM | SMM
 def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS sMM 
-	| MASMAS sMM
-	| sMM 
-	| MENOSMENOS varYVals
-	| MASMAS varYVals'''
-	if len(subexpressions) > 2:
-		indexSMM = 2
-	else:
-		indexSMM = 1
-
-	variable = subexpressions[indexSMM]
-	tipoVariable = variable["type"]
-	nombreVariable = variable["name"]
-
-	if tipoVariable != "int":
-		raise Exception("Se esperaba tipo int")
-
-# SMM -> ID++ | ID--
-# Aca hay un problema, varYVals contiene a valores de vectores, que no
-# pueden aplicarse ++ o --
-# Tambien falta el caso base ID
-def p_sMM(subexpressions):
-	'''sMM : varYVals MASMAS
+	'''varsOps : MENOSMENOS varYVals 
+	| MASMAS varYVals
+	| varYVals MASMAS 
 	| varYVals MENOSMENOS'''
-	variable = subexpressions[1]
-	tipoVariable = variable["type"]
-	nombreVariable = variable["name"]
-	subexpressions[0] = {"type" : tipoVariable, "name": nombreVariable}
+	
 
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
-#ACA HAGO CAMBIOS RELEVANTES!
-
+#Dejo las asignaciones no ambiguas como estaban antes
 
 def p_varAsig1(subexpressions):
-	'''varAsig : ID MENOSEQ varAsig '''
-def p_varAsig2(subexpressions):
-	'''varAsig : ID MASEQ varAsig '''
-def p_varAsig3(subexpressions):
-	'''varAsig : ID MULEQ varAsig '''
-def p_varAsig4(subexpressions):
-	'''varAsig : ID DIVEQ varAsig '''
-def p_varAsig5(subexpressions):
-	'''varAsig : ID '=' varAsig'''	
-#Casos base
-def p_varAsig6(subexpressions):
-	'''varAsig : ID MASEQ valores '''	
-def p_varAsig7(subexpressions):
-	'''varAsig : ID MENOSEQ valores '''	
-def p_varAsig8(subexpressions):
-	'''varAsig : ID MULEQ valores '''	
-def p_varAsig9(subexpressions):
-	'''varAsig : ID DIVEQ valores '''	
-def p_varAsig10(subexpressions):
-	'''varAsig : ID '=' valores '''
+	'''varAsig : ID MULEQ varAsig 
+	| asig MULEQ varAsig 
+	| ID MULEQ valores
+	| asig'''
+	
 
-precedence = (
-    ('right','?'),
-    ('left','OR'),
-    ('left','AND'),
-    ('left','EQEQ','DISTINTO'),
-	('left', '<', '>'),
-	('right', 'MULEQ','DIVEQ'),
-    ('right', 'MASEQ','MENOSEQ'),
-	('right', '='),
-	('left', '+','-'),
-	('left','*','/','%'),
-	('left', '^'),
-	('left','UNIMAS', 'UNIMENOS'),
-	('left','NOT'),    
-	('left','MASMAS','MENOSMENOS'),
-	('left','MASMASIZQ','MENOSMENOSIZQ')        
-)
+#SIgual -> Asig += sIgual | Asig
+# def p_sIgual1(subexpressions):
+# 	'''sIgual : asig MASEQ sIgual
+# 	| ID MASEQ valores	
+# 	| asig '''
 
+
+     
+def p_asig1(subexpressions):
+	'''asig : ID '=' asig
+	| ID '=' valores '''
+
+#Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)	
+#def p_asig2(subexpressions):
+#	'''asig : ID '.' ID '=' asig'''
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras

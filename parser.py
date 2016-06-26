@@ -1,5 +1,5 @@
 import lexer_rules
-import parser_rules2
+import parser_rules
 
 from sys import argv, exit
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     input_file.close()
 
     lexer = lex(module=lexer_rules)
-    parser = yacc(module=parser_rules2)
+    parser = yacc(module=parser_rules)
 
     ast = parser.parse(text, lexer)
 
