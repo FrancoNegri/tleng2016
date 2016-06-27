@@ -110,9 +110,9 @@ def p_funcInt1(subexpressions):
 def p_funcInt2(subexpressions):
 	'''funcInt : LENGTH '(' vec ')' '''
 
-# FuncString -> capitalizar(ExpString)
+# FuncString -> capitalizar(eMat)
 def p_funcString(subexpressions):
-	'''funcString : CAPITALIZAR '(' expString ')' '''
+	'''funcString : CAPITALIZAR '(' eMat ')' '''
 
 # FuncBool -> colineales(Vec,Vec )
 def p_funcBool(subexpressions):
@@ -148,13 +148,12 @@ def p_elem1(subexpressions):
 def p_elem2(subexpressions):
 	'''elem : valores'''
 
-#Valores -> EMat | ExpBool | ExpString | VarYVals | FuncReturn | Reg
+#Valores -> EMat | ExpBool | eMat | VarYVals | FuncReturn | Reg
 #Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
 
 def p_valores(subexpressions):
   '''valores : eMat
   | expBool
-  | expString
   | reg
   | INT
   | STRING
@@ -252,15 +251,17 @@ def p_finVarAsig(subexpressions):
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
 
-#EMat -> EMat '+' P | EMat - P | P
-
+# Coloco string aqui, luego chequeamos tipos para cuando se use
+# las operaciones solo para INT
 def p_valoresMat(subexpressions):
   '''valoresMat : INT
   | FLOAT
   | funcInt
   | varYVals
-  | varsOps'''
+  | varsOps
+  | STRING'''
 
+#EMat -> EMat '+' P | EMat - P | P
 def p_eMat(subexpressions):
     '''eMat : eMat '+' p
     | eMat '-' p
@@ -310,21 +311,6 @@ def p_iSing(subexpressions):
 #Paren -> (EMat) | int | VarYVals | float | VarsOps| FuncInt
 def p_paren1(subexpressions):
 	'''paren : '(' eMat ')' '''
-
-#-----------------------------------------------------------------------------
-#Operaciones con strings
-
-def p_valoresString(subexpressions):
-  '''valoresString : STRING
-  | funcString
-  | varYVals
-  | varsOps'''
-
-#ExpString -> ExpString '+' string | string | VarYVals | FuncString
-def p_expString1(subexpressions):
-  '''expString : expString '+' valoresString
-  | valoresString '+' valoresString '''
-
 
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
