@@ -1,1 +1,15 @@
-m = (4);
+if (false)
+for (; true; )
+for (; false; ) {
+if (true)
+if (false) {
+f = "donde estoy?";
+}
+else {
+for (c = b; b > c; b = c)
+a = a;
+}
+}
+else
+for (; true; )
+f = "NO";

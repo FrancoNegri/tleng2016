@@ -16,9 +16,17 @@ start = 'g'
 # ---------------------------------------------------------------------------------------
 #Sentencias:
 
-#G -> SG | CtrlG
+
+#Generalizo la gramatica con linea, puede ser una sentencia o un comentario
 def p_g1(subexpressions):
-	'''g : sentencia g  '''
+	'''g : linea g  '''
+
+def p_linea(subexpressions):
+  '''linea : com
+  | sentencia '''
+
+def p_com(subexpressions):
+  '''com : COMMENT'''
 
 def p_g2(subexpressions):
 	'''g : ctrl g'''
@@ -55,7 +63,24 @@ def p_loop1(subexpressions):
 def p_loop2(subexpressions):
 	'''loop : DO bloque WHILE '(' expBool ')' ';' '''
 def p_loop3(subexpressions):
-	'''loop : FOR '(' varAsig ';' expBool ';' varsOps ')' bloque '''
+	'''loop : FOR '(' primParam ';' cosaBooleana ';' tercerParam ')' bloque '''
+
+#Este puede ser util para otras cosas de mas abajo. Ver como reemplazar !
+
+def p_cosaBooleana(subexpressions):
+  '''cosaBooleana : expBool
+  | valoresBool'''
+
+def p_primParam(subexpressions):
+  '''primParam : varAsig
+  | empty'''
+
+def p_tercerParam(subexpressions):
+  '''tercerParam : varsOps
+  | varAsig
+  | func
+  | empty'''
+
 
 # ---------------------------------------------------------------------------------------
 #Control:
@@ -64,7 +89,7 @@ def p_loop3(subexpressions):
 # IF-> if(ExpBool) then Bloque Else
 # Else -> else Bloque | lambda
 def p_if(subexpressions):
-	'''if : IF '(' expBool ')' bloque else'''
+	'''if : IF '(' cosaBooleana ')' bloque else'''
 
 def p_else1(subexpressions):
 	'''else : ELSE bloque '''
@@ -72,9 +97,14 @@ def p_else1(subexpressions):
 def p_else2(subexpressions):
 	'''else : empty'''
 
-#Bloque -> S | {G}
+#Generalizo con linea. Por ej el caso que sigue antes no se podia generar con sentencia.
+# for (d = b; b != c; a = b)
+#   # Co
+#   # men
+#   # tario
+#   e = 10;
 def p_bloque1(subexpressions):
-	'''bloque : sentencia ';' '''
+	'''bloque : linea  '''
 def p_bloque2(subexpressions):
 	'''bloque : '{' g '}' '''
 
