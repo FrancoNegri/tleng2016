@@ -160,8 +160,13 @@ def p_valores(subexpressions):
   | BOOL
   | varYVals
   | varsOps
-  | ID '.' ID'''
+  | ID '.' valoresCampos
+  | RES'''
 
+def p_valoresCampos(subexpressions):
+	'''valoresCampos : ID
+	| END
+	| BEGIN'''
 #VarYVals -> var | VecVal
 def p_varYVals1(subexpressions):
 	'''varYVals : ID'''
@@ -207,41 +212,16 @@ def p_varsOps1(subexpressions):
 #Asignaciones:
 
 #Dejo las asignaciones no ambiguas como estaban antes
+def p_valoresAsig(subexpressions):
+  '''valoresAsig : ID
+  | valores'''
 
-def p_varAsig1(subexpressions):
-  '''varAsig : ID MULEQ varAsig 
-  | masmenAsig MULEQ varAsig 
-  | masmenAsig MULEQ ID
-  | masmenAsig MULEQ valores
-  | masmenAsig DIVEQ varAsig 
-  | masmenAsig DIVEQ ID
-  | masmenAsig DIVEQ valores
-  | finVarAsig
-  | masmenAsig'''
-  
-
-
-
-def p_masmenAsig(subexpressions):
-  '''masmenAsig : ID MASEQ masmenAsig 
-  | ID MENOSEQ masmenAsig
-  | ID MASEQ ID
-  | ID MENOSEQ ID
-  | asig'''
-     
-def p_asig1(subexpressions):
-  '''asig : ID '=' asig
-  | ID '=' ID '''
-
-
-def p_finVarAsig(subexpressions):
-  '''finVarAsig : ID '=' valores
-  | ID MASEQ valores
-  | ID MENOSEQ valores
-  | ID MULEQ valores
-  | ID MULEQ ID
-  | ID DIVEQ valores
-  | ID DIVEQ ID'''
+def p_varAsig(subexpressions):
+  '''varAsig : ID MULEQ valoresAsig
+  | ID DIVEQ valoresAsig
+  | ID MASEQ valoresAsig
+  | ID MENOSEQ valoresAsig
+  | ID '=' valoresAsig'''
 
 #Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)  
 #def p_asig2(subexpressions):
