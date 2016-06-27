@@ -147,13 +147,14 @@ def p_elem2(subexpressions):
 	'''elem : valores'''
 
 #Valores -> EMat | ExpBool | eMat | VarYVals | FuncReturn | Reg
-#Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
+
 
 def p_valores(subexpressions):
   '''valores : eMat
   | expBool
   | reg
   | INT
+  | FLOAT
   | STRING
   | BOOL
   | varYVals
@@ -178,10 +179,16 @@ def p_vecVal1(subexpressions):
 
 #M -> [int] | [int] M
 
+#Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
+#Entonces, mas general deberia poder pasar g[h[t[a]]] mientras los tipos anden :)
 def p_m1(subexpressions):
 	'''m : '[' INT ']' '''
 def p_m2(subexpressions):
 	''' m : '[' INT ']' m '''
+def p_m3(subexpressions):
+  ''' m : '[' varYVals ']' m '''
+def p_m4(subexpressions):
+  ''' m : '[' varYVals ']' '''
 
 #Registros:
 #Reg -> {U}
@@ -214,12 +221,14 @@ def p_varsOps1(subexpressions):
 def p_valoresAsig(subexpressions):
   '''valoresAsig : valores'''
 
+#Aca pongo varYvals por este caso g[a] = b;
+
 def p_varAsig(subexpressions):
-  '''varAsig : ID MULEQ valoresAsig
-  | ID DIVEQ valoresAsig
-  | ID MASEQ valoresAsig
-  | ID MENOSEQ valoresAsig
-  | ID '=' valoresAsig
+  '''varAsig : varYVals MULEQ valoresAsig
+  | varYVals DIVEQ valoresAsig
+  | varYVals MASEQ valoresAsig
+  | varYVals MENOSEQ valoresAsig
+  | varYVals '=' valoresAsig
   | ID '.' ID '=' valoresAsig'''
 
 
