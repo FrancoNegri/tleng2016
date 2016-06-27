@@ -299,17 +299,30 @@ def p_paren1(subexpressions):
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
 
+#Aca agrego int y float y emat porque si no lo que sigue no se puede generar
+#(x > 5 ? y : 10) o f ? 3 : x + 5
+#Esto tambien daria lugar a cosas como 
+#(2? 3 : 4) que tiene cierto sentido (porque 2 es siempre true). Si no, se puede filtrar con atributos.
+
 def p_valoresBool(subexpressions):
   '''valoresBool : BOOL
   | funcBool
   | varYVals
-  | varsOps'''
+  | varsOps
+  | eMat
+  | INT
+  | FLOAT'''
 
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
+#Aca agrego combinaciones que faltaban
 def p_expBool(subexpressions):
-  '''expBool : or '?' expBool ':' expBool
-  | valoresBool '?' expBool ':' expBool
+  '''expBool : or '?' expBool ':' expBool  
+  | or '?' expBool ':' valoresBool
+  | or '?' valoresBool ':' expBool
   | or '?' valoresBool ':' valoresBool
+  | valoresBool '?' expBool ':' expBool
+  | valoresBool '?' valoresBool ':' expBool
+  | valoresBool '?' expBool ':' valoresBool
   | valoresBool '?' valoresBool ':' valoresBool
   | or'''
 
@@ -342,30 +355,33 @@ def p_eq(subexpressions):
   | mayor'''
 
 # TCompare -> EMat | VarsOps | VarYVals
+#Aca agrego para que puedan aparecer ints o floats solos por ej 5 < 5, emat no lo captura
 def p_tCompare(subexpressions):
   '''tCompare : eMat
   | varsOps
-  | varYVals'''
+  | varYVals
+  | INT 
+  | FLOAT'''
 
 # Mayor -> TCompare > TCompare | Menor
 def p_mayor(subexpressions):
   '''mayor : tCompare '>' tCompare
   | menor'''
 
-  if len(subexpressions) > 2:
-    tokens = [subexpressions[1], subexpressions[3]]
-    if not chequearTipo(tokens, ["int", "float"]):
-      raise SemanticException("Se esperaba tipo int o float")
+  # if len(subexpressions) > 2:
+  #   tokens = [subexpressions[1], subexpressions[3]]
+  #   if not chequearTipo(tokens, ["int", "float"]):
+  #     raise SemanticException("Se esperaba tipo int o float")
 
 
 # Menor -> TCompare < TCompare | Not 
 def p_menor3(subexpressions):
   '''menor : tCompare '<' tCompare
   | not'''
-  if len(subexpressions) > 2:
-    tokens = [subexpressions[1], subexpressions[3]]
-    if not chequearTipo(tokens, ["int", "float"]):
-      raise SemanticException("Se esperaba tipo int o float")
+  # if len(subexpressions) > 2:
+  #   tokens = [subexpressions[1], subexpressions[3]]
+  #   if not chequearTipo(tokens, ["int", "float"]):
+  #     raise SemanticException("Se esperaba tipo int o float")
 
 # Not ->  not Not | TBool 
 def p_not(subexpressions):
@@ -376,10 +392,10 @@ def p_not(subexpressions):
 # TBool -> (ExpBool) | bool | VarYVals | FuncBool
 def p_parenBool(subexpressions):
   '''parenBool : '(' expBool ')' '''
-  if len(subexpressions) == 2:
-    tokens = [subexpressions[1]]
-    if not chequearTipo(tokens, ["bool"]):
-      raise SemanticException("Se esperaba tipo bool")
+  # if len(subexpressions) == 2:
+  #   tokens = [subexpressions[1]]
+  #   if not chequearTipo(tokens, ["bool"]):
+  #     raise SemanticException("Se esperaba tipo bool")
 
 #--------------------------------------------------------------------------------------
 # Caso error
