@@ -18,14 +18,13 @@ start = 'g'
 
 #G -> SG | CtrlG
 def p_g1(subexpressions):
-	'''g : sentencia  '''
+	'''g : sentencia g  '''
 
 def p_g2(subexpressions):
 	'''g : ctrl g'''
 
 def p_g3(subexpressions):
 	'''g : empty'''
-#En c++, hacer 5+5; esta bien
 
 #S ->  VarOps ; | Func ;| return ;| varAsig;
 def p_sentencia1(subexpressions):
@@ -33,13 +32,12 @@ def p_sentencia1(subexpressions):
 def p_sentencia2(subexpressions):
 	'''sentencia : func ';' '''
 
-# Faltaban las asignaciones, el print y el return
+#Esta tendria que ir para mi
+#def p_sentencia3(subexpressions):
+# '''sentencia : valores ';' '''
+
 def p_sentencia3(subexpressions):
 	'''sentencia : varAsig ';' '''
-
-#Esta ya esta capturada en func
-#def p_sentencia4(subexpressions):
-#	'''sentencia : funcVoid ';' '''
 
 def p_sentencia5(subexpressions):
 	'''sentencia : RETURN ';' '''
@@ -160,6 +158,7 @@ def p_valores(subexpressions):
   | BOOL
   | varYVals
   | varsOps
+  | vec
   | ID '.' valoresCampos
   | RES'''
 
@@ -221,7 +220,7 @@ def p_varAsig(subexpressions):
   | ID MASEQ valoresAsig
   | ID MENOSEQ valoresAsig
   | ID '=' valoresAsig
-  | ID '.' ID '=' valores'''
+  | ID '.' ID '=' valoresAsig'''
 
 
 #-----------------------------------------------------------------------------
