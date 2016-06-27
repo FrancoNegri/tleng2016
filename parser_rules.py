@@ -216,9 +216,16 @@ def p_varsOps1(subexpressions):
 def p_varAsig1(subexpressions):
 	'''varAsig : ID MULEQ varAsig 
 	| asig MULEQ varAsig 
-	| ID MULEQ valores
+	| asig MULEQ ID
+	| asig MULEQ valores
+	| finVarAsig
 	| asig'''
 	
+def p_finVarAsig(subexpressions):
+	'''finVarAsig : ID '=' valores
+	| ID MULEQ valores
+	| ID MULEQ ID'''
+
 
 #SIgual -> Asig += sIgual | Asig
 # def p_sIgual1(subexpressions):
@@ -230,7 +237,7 @@ def p_varAsig1(subexpressions):
      
 def p_asig1(subexpressions):
 	'''asig : ID '=' asig
-	| ID '=' valores '''
+	| ID '=' ID '''
 
 #Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)	
 #def p_asig2(subexpressions):
