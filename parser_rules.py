@@ -151,21 +151,17 @@ def p_elem2(subexpressions):
 #Valores -> EMat | ExpBool | ExpString | VarYVals | FuncReturn | Reg
 #Aca agrego que los valores sean registros. Dentro de las asignaciones se debe poder hacer  alumno  = {nombre: "asd"}
 
-def p_valores1(subexpressions):
-	'''valores : eMat'''
-def p_valores2(subexpressions):
-	'''valores : expBool'''
-def p_valores3(subexpressions):
-	'''valores : expString'''
-def p_valores4(subexpressions):
-	'''valores : varYVals'''
-def p_valores5(subexpressions):
-	'''valores : funcReturn'''
-def p_valores6(subexpressions):
-	'''valores : reg'''
-#Esto faltaba si se quiere hacer algo como variable = alumno.nombre. O sea, tiene sentido que alumno.nombre sea un valor
-def p_valores7(subexpressions):
-	'''valores : ID '.' ID '''
+def p_valores(subexpressions):
+  '''valores : eMat
+  | expBool
+  | expString
+  | reg
+  | INT
+  | STRING
+  | BOOL
+  | varYVals
+  | varsOps
+  | ID '.' ID'''
 
 #VarYVals -> var | VecVal
 def p_varYVals1(subexpressions):
@@ -214,204 +210,206 @@ def p_varsOps1(subexpressions):
 #Dejo las asignaciones no ambiguas como estaban antes
 
 def p_varAsig1(subexpressions):
-	'''varAsig : ID MULEQ varAsig 
-	| masmenAsig MULEQ varAsig 
-	| masmenAsig MULEQ ID
-	| masmenAsig MULEQ valores
-	| masmenAsig DIVEQ varAsig 
-	| masmenAsig DIVEQ ID
-	| masmenAsig DIVEQ valores
-	| finVarAsig
-	| masmenAsig'''
-	
+  '''varAsig : ID MULEQ varAsig 
+  | masmenAsig MULEQ varAsig 
+  | masmenAsig MULEQ ID
+  | masmenAsig MULEQ valores
+  | masmenAsig DIVEQ varAsig 
+  | masmenAsig DIVEQ ID
+  | masmenAsig DIVEQ valores
+  | finVarAsig
+  | masmenAsig'''
+  
 
 
 
 def p_masmenAsig(subexpressions):
-	'''masmenAsig : ID MASEQ masmenAsig 
-	| ID MENOSEQ masmenAsig
-	| ID MASEQ ID
-	| ID MENOSEQ ID
-	| asig'''
+  '''masmenAsig : ID MASEQ masmenAsig 
+  | ID MENOSEQ masmenAsig
+  | ID MASEQ ID
+  | ID MENOSEQ ID
+  | asig'''
      
 def p_asig1(subexpressions):
-	'''asig : ID '=' asig
-	| ID '=' ID '''
+  '''asig : ID '=' asig
+  | ID '=' ID '''
 
 
 def p_finVarAsig(subexpressions):
-	'''finVarAsig : ID '=' valores
-	| ID MASEQ valores
-	| ID MENOSEQ valores
-	| ID MULEQ valores
-	| ID MULEQ ID
-	| ID DIVEQ valores
-	| ID DIVEQ ID'''
+  '''finVarAsig : ID '=' valores
+  | ID MASEQ valores
+  | ID MENOSEQ valores
+  | ID MULEQ valores
+  | ID MULEQ ID
+  | ID DIVEQ valores
+  | ID DIVEQ ID'''
 
-#Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)	
+#Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)  
 #def p_asig2(subexpressions):
-#	'''asig : ID '.' ID '=' asig'''
+# '''asig : ID '.' ID '=' asig'''
+
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
 
 #EMat -> EMat '+' P | EMat - P | P
 
-def p_eMat_plus(subexpressions):
-    '''eMat : eMat '+' p'''
-def p_eMat_minus(subexpressions):
-    '''eMat : eMat '-' p'''
+def p_valoresMat(subexpressions):
+  '''valoresMat : INT
+  | FLOAT
+  | funcInt
+  | varYVals
+  | varsOps'''
+
 def p_eMat(subexpressions):
-    '''eMat : p'''
+    '''eMat : eMat '+' p
+    | eMat '-' p
+    | valoresMat '+' p
+    | valoresMat '-' p
+    | eMat '+' valoresMat
+    | eMat '-' valoresMat
+    | valoresMat '+' valoresMat
+    | valoresMat '-' valoresMat
+    | p'''
 
 #P -> P * Exp | P / Exp | P % Exp | Exp
 
-def p_p1(subexpressions):
-    '''p : p '*' exp'''
-def p_p2(subexpressions):
-    '''p : p '/' exp'''
-def p_p3(subexpressions):
-    '''p : p '%' exp'''
-def p_p4(subexpressions):
-    '''p : exp'''
+def p_p(subexpressions):
+    '''p : p '*' exp
+    | p '/' exp
+    | p '%' exp
+    | valoresMat '*' exp
+    | valoresMat '/' exp
+    | valoresMat '%' exp
+    | p '*' valoresMat
+    | p '/' valoresMat
+    | p '%' valoresMat
+    | valoresMat '*' valoresMat
+    | valoresMat '/' valoresMat
+    | valoresMat '%' valoresMat
+    | exp
+    '''
 
 #Exp -> Exp ^ ISing | ISing
 def p_exp(subexpressions):
-	'''exp : exp '^' iSing'''
-def p_exp2(subexpressions):
-	'''exp : iSing'''
+	'''exp : exp '^' iSing
+  | valoresMat '^' iSing
+  | exp '^' valoresMat
+  | valoresMat '^' valoresMat
+  | iSing'''
 
 #ISing -> -Paren | '+'Paren | Paren
-def p_iSing1(subexpressions):
-	'''iSing : '-' paren'''
-def p_iSing2(subexpressions):
-	'''iSing : '+' paren'''
-def p_iSing3(subexpressions):
-	'''iSing : paren'''
+def p_iSing(subexpressions):
+	'''iSing : '-' paren
+  | '+' paren
+  | '-' valoresMat
+  | '+' valoresMat
+  | paren
+  '''
 
 #Paren -> (EMat) | int | VarYVals | float | VarsOps| FuncInt
 def p_paren1(subexpressions):
 	'''paren : '(' eMat ')' '''
-def p_paren2(subexpressions):
-	'''paren : INT'''
-def p_paren3(subexpressions):
-	'''paren : varYVals'''
-def p_paren4(subexpressions):
-	'''paren : FLOAT'''
-def p_paren5(subexpressions):
-	'''paren : varsOps'''
-def p_paren6(subexpressions):
-	'''paren : funcInt'''
 
 #-----------------------------------------------------------------------------
 #Operaciones con strings
 
+def p_valoresString(subexpressions):
+  '''valoresString : STRING
+  | funcString
+  | varYVals
+  | varsOps'''
+
 #ExpString -> ExpString '+' string | string | VarYVals | FuncString
 def p_expString1(subexpressions):
-	'''expString : expString '+' STRING'''
-def p_expString2(subexpressions):
-	'''expString : STRING'''
-def p_expString3(subexpressions):
-	'''expString : varYVals'''
-def p_expString4(subexpressions):
-	'''expString : funcString'''
-
-#-----------------------------------------------------------------------------
+  '''expString : expString '+' valoresString
+  | valoresString '+' valoresString '''
 
 
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
 
-# ExpBool -> Or ? ExpBool : ExpBool  | Or
-def p_expBool1(subexpressions):
-	'''expBool : or '?' expBool ':' expBool'''
+def p_valoresBool(subexpressions):
+  '''valoresBool : BOOL
+  | funcBool
+  | varYVals
+  | varsOps'''
 
-def p_expBool2(subexpressions):
-	'''expBool : or'''
+# ExpBool -> Or ? ExpBool : ExpBool  | Or
+def p_expBool(subexpressions):
+  '''expBool : or '?' expBool ':' expBool
+  | valoresBool '?' expBool ':' expBool
+  | or '?' valoresBool ':' valoresBool
+  | valoresBool '?' valoresBool ':' valoresBool
+  | or'''
 
 # Or -> Or or And | And
 def p_or1(subexpressions):
-	'''or : or OR and'''
-
-def p_or2(subexpressions):
-	'''or : and'''
+  '''or : or OR and
+  | valoresBool OR and
+  | or OR valoresBool
+  | valoresBool OR valoresBool
+  | and'''
 
 # And ->  And and Eq | Eq
-def p_and1(subexpressions):
-	'''and : and AND eq'''
-
-def p_and2(subexpressions):
-	'''and : eq'''
+def p_and(subexpressions):
+  '''and : and AND eq
+  | valoresBool AND eq
+  | and AND valoresBool
+  | valoresBool AND valoresBool
+  | eq'''
 
 # Eq -> Eq == TBool |  Eq != TBool | Mayor 
-def p_eq1(subexpressions):
-	'''eq : eq EQEQ tBool'''
+def p_eq(subexpressions):
+  '''eq : eq EQEQ parenBool
+  | eq DISTINTO parenBool
+  | valoresBool EQEQ parenBool
+  | valoresBool DISTINTO parenBool
+  | eq EQEQ valoresBool
+  | eq DISTINTO valoresBool
+  | valoresBool EQEQ valoresBool
+  | valoresBool DISTINTO valoresBool
+  | mayor'''
 
-def p_eq2(subexpressions):
-	'''eq : eq DISTINTO tBool'''
-
-def p_eq3(subexpressions):
-	'''eq : mayor'''
+# TCompare -> EMat | VarsOps | VarYVals
+def p_tCompare(subexpressions):
+  '''tCompare : eMat
+  | varsOps
+  | varYVals'''
 
 # Mayor -> TCompare > TCompare | Menor
-def p_mayor1(subexpressions):
-	'''mayor : tCompare '>' tCompare'''
-	tokens = [subexpressions[1], subexpressions[3]]
-	if not chequearTipo(tokens, ["int", "float"]):
-		raise SemanticException("Se esperaba tipo int o float")
+def p_mayor(subexpressions):
+  '''mayor : tCompare '>' tCompare
+  | menor'''
 
-def p_mayor2(subexpressions):
-	'''mayor : menor'''
+  if len(subexpressions) > 2:
+    tokens = [subexpressions[1], subexpressions[3]]
+    if not chequearTipo(tokens, ["int", "float"]):
+      raise SemanticException("Se esperaba tipo int o float")
+
 
 # Menor -> TCompare < TCompare | Not 
 def p_menor3(subexpressions):
-	'''menor : tCompare '<' tCompare'''
-	tokens = [subexpressions[1], subexpressions[3]]
-	if not chequearTipo(tokens, ["int", "float"]):
-		raise SemanticException("Se esperaba tipo int o float")
-
-def p_menor4(subexpressions):
-	'''menor : not'''
+  '''menor : tCompare '<' tCompare
+  | not'''
+  if len(subexpressions) > 2:
+    tokens = [subexpressions[1], subexpressions[3]]
+    if not chequearTipo(tokens, ["int", "float"]):
+      raise SemanticException("Se esperaba tipo int o float")
 
 # Not ->  not Not | TBool 
-def p_not1(subexpressions):
-	'''not :  NOT not'''
-
-def p_not2(subexpressions):
-	'''not :  tBool'''
+def p_not(subexpressions):
+  '''not :  NOT not
+  | NOT valoresBool
+  | parenBool'''
 
 # TBool -> (ExpBool) | bool | VarYVals | FuncBool
-def p_tBool3(subexpressions):
-	'''tBool : '(' expBool ')' '''
-
-def p_tBool4(subexpressions):
-	'''tBool : BOOL'''
-
-def p_tBool5(subexpressions):
-	'''tBool : varYVals'''
-	tokens = [subexpressions[1]]
-	if not chequearTipo(tokens, ["bool"]):
-		raise SemanticException("Se esperaba tipo bool")
-
-def p_tBool6(subexpressions):
-	'''tBool : funcBool'''
-
-# TCompare -> EMat | VarsOps | VarYVals
-def p_tCompare1(subexpressions):
-	'''tCompare : eMat'''
-	subexpressions[0] = {"type" : "int"}
-
-def p_tCompare2(subexpressions):
-	'''tCompare : varsOps'''
-	varsOps = subexpressions[1]
-	subexpressions[0] = {"type" : varsOps["type"]}
-
-def p_tCompare3(subexpressions):
-	'''tCompare : varYVals'''
-	varYVals = subexpressions[1]
-	subexpressions[0] = {"type" : varYVals["type"]}
-
-# Le saco funcInt ya que esta en eMat
+def p_parenBool(subexpressions):
+  '''parenBool : '(' expBool ')' '''
+  if len(subexpressions) == 2:
+    tokens = [subexpressions[1]]
+    if not chequearTipo(tokens, ["bool"]):
+      raise SemanticException("Se esperaba tipo bool")
 
 #--------------------------------------------------------------------------------------
 # Caso error
