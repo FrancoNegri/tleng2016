@@ -213,19 +213,15 @@ def p_varsOps1(subexpressions):
 
 #Dejo las asignaciones no ambiguas como estaban antes
 def p_valoresAsig(subexpressions):
-  '''valoresAsig : ID
-  | valores'''
+  '''valoresAsig : valores'''
 
 def p_varAsig(subexpressions):
   '''varAsig : ID MULEQ valoresAsig
   | ID DIVEQ valoresAsig
   | ID MASEQ valoresAsig
   | ID MENOSEQ valoresAsig
-  | ID '=' valoresAsig'''
-
-#Esto seria para el caso alumno.nombre = "asd" o bien alumno.edad = a = b = c *= 5 (?)  
-#def p_asig2(subexpressions):
-# '''asig : ID '.' ID '=' asig'''
+  | ID '=' valoresAsig
+  | ID '.' ID '=' valores'''
 
 
 #-----------------------------------------------------------------------------
