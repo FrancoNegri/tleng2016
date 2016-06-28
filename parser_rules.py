@@ -198,6 +198,12 @@ def p_m3(subexpressions):
   ''' m : '[' varYVals ']' m '''
 def p_m4(subexpressions):
   ''' m : '[' varYVals ']' '''
+# a[3*4]
+def p_m5(subexpressions):
+ ''' m : '[' eMat ']' m '''
+def p_m6(subexpressions):
+ ''' m : '[' eMat ']' '''
+
 
 #Registros:
 #Reg -> {U}
@@ -303,7 +309,11 @@ def p_iSing(subexpressions):
 
 #Paren -> (EMat) | int | VarYVals | float | VarsOps| FuncInt
 def p_paren1(subexpressions):
-	'''paren : '(' eMat ')' '''
+	'''paren : '(' eMat ')' 
+  | '(' valoresMat ')'
+  '''
+   
+
 
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
