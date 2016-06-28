@@ -12,7 +12,7 @@ reserved = {
 'OR' : 'OR',
 'NOT' : 'NOT',
 'print' : 'PRINT',
-'multiescalar': 'MULTIESCALAR',
+'multiplicacionEscalar': 'MULTIESCALAR',
 'capitalizar': 'CAPITALIZAR',
 'colineales': 'COLINEALES',
 'print': 'PRINT',
