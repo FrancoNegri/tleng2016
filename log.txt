@@ -1,0 +1,777 @@
+Generating LALR tables
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 52, in <module>
+    output_file = open(argv[2], "w")
+IOError: [Errno 2] No such file or directory: 'testing/TEST/testing/assigns.i.out'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 52, in <module>
+    output_file = open(argv[2], "w")
+IOError: [Errno 2] No such file or directory: 'testing/TEST/testing/for.i.out'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 52, in <module>
+    output_file = open(argv[2], "w")
+IOError: [Errno 2] No such file or directory: 'testing/TEST/testing/unaSent.i.out'
+Traceback (most recent call last):
+  File "parser.py", line 52, in <module>
+    output_file = open(argv[2], "w")
+IOError: [Errno 2] No such file or directory: 'testing/TEST/testing/variasSent.i.out'
+Traceback (most recent call last):
+  File "parser.py", line 52, in <module>
+    output_file = open(argv[2], "w")
+IOError: [Errno 2] No such file or directory: 'testing/TEST/testing/while.i.out'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:18
+position:325
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:8
+position:114
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:IF
+value:if
+line:12
+position:107
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:5
+position:79
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/franckn/trabajosPracticos/tleng2016/parser_rules.py", line 410, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:}
+value:}
+line:1
+position:31
