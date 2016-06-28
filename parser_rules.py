@@ -344,14 +344,14 @@ def p_and(subexpressions):
 
 # Eq -> Eq == TBool |  Eq != TBool | Mayor 
 def p_eq(subexpressions):
-  '''eq : eq EQEQ parenBool
-  | eq DISTINTO parenBool
-  | valoresBool EQEQ parenBool
-  | valoresBool DISTINTO parenBool
-  | eq EQEQ valoresBool
-  | eq DISTINTO valoresBool
-  | valoresBool EQEQ valoresBool
-  | valoresBool DISTINTO valoresBool
+  '''eq : eq EQEQ mayor
+  | eq DISTINTO mayor
+  | tCompare EQEQ mayor
+  | tCompare DISTINTO mayor
+  | eq EQEQ tCompare
+  | eq DISTINTO tCompare
+  | tCompare EQEQ tCompare
+  | tCompare DISTINTO tCompare
   | mayor'''
 
 # TCompare -> EMat | VarsOps | VarYVals
