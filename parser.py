@@ -47,7 +47,7 @@ if __name__ == "__main__":
     lexer = lex(module=lexer_rules)
     parser = yacc(module=parser_rules)
 
-    ast = parser.parse(text, lexer,debug=1)
+    ast = parser.parse(text, lexer,debug=0)
 
     output_file = open(argv[2], "w")
     #dump_ast(ast, output_file)

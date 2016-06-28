@@ -38,7 +38,7 @@ def p_bloqueCerrado(subexpressions):
 
 def p_lCerrada(subexpressions):
   '''lCerrada : sentencia
-  | COMMENT lCerrada
+  | COMMENT
   | IF '(' cosaBooleana ')' bloqueCerrado ELSE bloqueCerrado
   | loop bloqueCerrado 
   | DO bloqueCerrado WHILE '(' cosaBooleana ')' ';' '''
