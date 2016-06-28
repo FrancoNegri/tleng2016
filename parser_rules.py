@@ -317,22 +317,13 @@ def p_valoresBool(subexpressions):
   | funcBool
   | varYVals
   | varsOps
-  | eMat
-  | INT
-  | STRING
-  | FLOAT'''
+  '''
 
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
 #Aca agrego combinaciones que faltaban
 def p_expBool(subexpressions):
-  '''expBool : or '?' expBool ':' expBool  
-  | or '?' expBool ':' valoresBool
-  | or '?' valoresBool ':' expBool
-  | or '?' valoresBool ':' valoresBool
-  | valoresBool '?' expBool ':' expBool
-  | valoresBool '?' valoresBool ':' expBool
-  | valoresBool '?' expBool ':' valoresBool
-  | valoresBool '?' valoresBool ':' valoresBool
+  '''expBool : or '?' valores ':' valores  
+  | valoresBool '?' valores ':' valores
   | or'''
 
 # Or -> Or or And | And
