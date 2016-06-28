@@ -168,6 +168,7 @@ def p_valores(subexpressions):
   | varYVals
   | varsOps
   | vec
+  | ternario
   | ID '.' valoresCampos
   | RES'''
 
@@ -321,16 +322,16 @@ def p_valoresBool(subexpressions):
 
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
 #Aca agrego combinaciones que faltaban
-def p_expBool(subexpressions):
-  '''expBool : or '?' valores ':' valores  
-  | valoresBool '?' valores ':' valores
-  | or'''
+def p_ternario(subexpressions):
+  '''ternario : valoresBool '?' valores ':' valores  
+  | expBool '?' valores ':' valores
+  | '(' ternario ')' '''
 
 # Or -> Or or And | And
-def p_or1(subexpressions):
-  '''or : or OR and
+def p_expBool(subexpressions):
+  '''expBool : expBool OR and
   | valoresBool OR and
-  | or OR valoresBool
+  | expBool OR valoresBool
   | valoresBool OR valoresBool
   | and'''
 
