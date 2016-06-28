@@ -154,8 +154,6 @@ def p_elem1(subexpressions):
 def p_elem2(subexpressions):
 	'''elem : valores'''
 
-
-
 def p_valores(subexpressions):
   '''valores : eMat
   | expBool
@@ -168,15 +166,33 @@ def p_valores(subexpressions):
   | varYVals
   | varsOps
   | vec
-  | ternario
-  | ID '.' valoresCampos
+  | ternarioVars
+  | '(' ternarioVars ')'
+  | atributos
   | RES'''
 
-def p_valoresCampos(subexpressions):
-	'''valoresCampos : ID
-	| END
-	| BEGIN'''
+def p_atributos(subexpressions):
+  '''atributos : ID '.' valoresCampos'''
 
+def p_valoresCampos(subexpressions):
+  '''valoresCampos : ID
+  | END
+  | BEGIN'''
+
+def p_ternarioVars(subexpressions):
+  '''ternarioVars : valoresBool '?' valoresTernarioVars ':' valoresTernarioVars  
+  | expBool '?' valoresTernarioVars ':' valoresTernarioVars
+  '''
+
+
+def p_valoresTernarioVars(subexpressions):
+  '''valoresTernarioVars : varsOps
+  | varYVals
+  | reg
+  | vec
+  | ternarioVars
+  | atributos
+  | RES'''
 #VarYVals -> var | VecVal
 def p_varYVals1(subexpressions):
 	'''varYVals : ID'''
@@ -258,7 +274,21 @@ def p_valoresMat(subexpressions):
   | funcInt
   | varYVals
   | varsOps
-  | STRING'''
+  | STRING
+  | '(' ternarioMat ')'
+  '''
+def p_ternarioMat(subexpressions):
+  '''ternarioMat : valoresBool '?' valoresTernarioMat ':' valoresTernarioMat  
+  | expBool '?' valoresTernarioMat ':' valoresTernarioMat
+  '''
+
+def p_valoresTernarioMat(subexpressions):
+  '''valoresTernarioMat : INT
+  | FLOAT
+  | funcInt
+  | STRING
+  | eMat
+  | ternarioMat'''
 
 #EMat -> EMat '+' P | EMat - P | P
 def p_eMat(subexpressions):
@@ -328,8 +358,21 @@ def p_valoresBool(subexpressions):
   | funcBool
   | varYVals
   | varsOps
+  | '(' ternarioBool ')'
   '''
 
+def p_ternarioBool(subexpressions):
+  '''ternarioBool : valoresBool '?' valoresTernarioBool ':' valoresTernarioBool  
+  | expBool '?' valoresTernarioBool ':' valoresTernarioBool
+  '''
+
+def p_valoresTernarioBool(subexpressions):
+  '''valoresTernarioBool : BOOL
+  | funcBool
+  | ternarioBool
+  | expBool
+  '''
+  
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
 #Aca agrego combinaciones que faltaban
 def p_ternario(subexpressions):
