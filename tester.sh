@@ -3,7 +3,7 @@ rm errores.txt 2> /dev/null
 echo "Escribiendo errores en errores.txt"
 for f in testing/*.i
 do
-	python parser.py $f $f.out 2>> errores.txt
+	python parser.py $f $f.out 2>> errores.txt > /dev/null
 	if [ $? -eq 0 ]
 	then
 		echo "Pasa: " $f
