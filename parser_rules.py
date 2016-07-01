@@ -18,50 +18,83 @@ start = 'g'
 
 #Generalizo la gramatica con linea, puede ser una sentencia o un comentario
 def p_g1(subexpressions):
-	'''g : linea g  '''
+  'g : linea g  '
+  subexpressions[0] = str(subexpressions[1]) + "\n" + str(subexpressions[2]) 
 
 def p_g3(subexpressions):
-	'''g : empty'''
+  '''g : empty'''
+  subexpressions[0] = "\n"
 
 def p_linea(subexpressions):
-  '''linea : lAbierta
-  | lCerrada'''
+  '''linea : lAbierta'''
+  subexpressions[0] = "L abierta"
+
+def p_linea1(subexpressions):
+  '''linea : lCerrada'''
+  subexpressions[0] = subexpressions[1]
+
 
 def p_lAbierta(subexpressions):
-   '''lAbierta : IF '(' cosaBooleana ')' linea
+  '''lAbierta : IF '(' cosaBooleana ')' linea
   | IF '(' cosaBooleana ')' bloqueCerrado ELSE lAbierta 
   | loop  lAbierta '''
+  subexpressions[0] = toString(subexpressions)
 
 def p_bloqueCerrado(subexpressions):
   '''bloqueCerrado : lCerrada
   | '{' g '}' '''
+  subexpressions[0] = toString(subexpressions)
 
-def p_lCerrada(subexpressions):
-  '''lCerrada : sentencia
-  | COMMENT
-  | IF '(' cosaBooleana ')' bloqueCerrado ELSE bloqueCerrado
-  | loop bloqueCerrado 
-  | DO bloqueCerrado WHILE '(' cosaBooleana ')' ';' '''
+def p_lCerrada1(subexpressions):
+  '''lCerrada : sentencia'''
+  subexpressions[0] = toString(subexpressions)
 
+def p_lCerrada2(subexpressions):
+  '''lCerrada : COMMENT'''
+  subexpressions[0] = toString(subexpressions)
+
+def p_lCerrada3(subexpressions):
+  '''lCerrada : IF '(' cosaBooleana ')' bloqueCerrado ELSE bloqueCerrado'''
+  subexpressions[0] = toString(subexpressions)
+
+def p_lCerrada4(subexpressions):
+  '''lCerrada : loop bloqueCerrado '''
+  subexpressions[0] = toString(subexpressions)
+
+def p_lCerrada5(subexpressions):
+  '''lCerrada : DO bloqueCerrado WHILE '(' cosaBooleana ')' ';' '''
+  subexpressions[0] = toString(subexpressions)
 
 def p_sentencia1(subexpressions):
-	'''sentencia : varsOps  ';' '''
+  '''sentencia : varsOps  ';' '''
+  subexpressions[0] = toString(subexpressions)
+
 def p_sentencia2(subexpressions):
-	'''sentencia : func ';' '''
+  '''sentencia : func ';' '''
+  subexpressions[0] = toString(subexpressions)
+
 def p_sentencia3(subexpressions):
-	'''sentencia : varAsig ';' '''
+  '''sentencia : varAsig ';' '''
+  subexpressions[0] = toString(subexpressions)
+
 def p_sentencia4(subexpressions):
-	'''sentencia : RETURN ';' '''
+  '''sentencia : RETURN ';' '''
+  subexpressions[0] = toString(subexpressions)
+
 def p_sentencia5(subexpressions):
   '''sentencia : ';' '''
+  subexpressions[0] = toString(subexpressions)
+
 
 def p_loop1(subexpressions):
   '''loop : WHILE '(' cosaBooleana ')' '''
+  subexpressions[0] = toString(subexpressions)
 #def p_loop2(subexpressions):
  # '''loop : DO lCerrada WHILE '(' expBool ')' ';' '''
+
 def p_loop3(subexpressions):
   '''loop : FOR '(' primParam ';' cosaBooleana ';' tercerParam ')' '''
-
+  subexpressions[0] = toString(subexpressions)
 
 #en el tercer parametro del for pongo varOps, pero en realidad puede ser mas general(!), es lo que discutimos en clase.
 
@@ -70,17 +103,19 @@ def p_loop3(subexpressions):
 def p_cosaBooleana(subexpressions):
   '''cosaBooleana : expBool
   | valoresBool'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_primParam(subexpressions):
   '''primParam : varAsig
   | empty'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_tercerParam(subexpressions):
   '''tercerParam : varsOps
   | varAsig
   | func
   | empty'''
-
+  subexpressions[0] = toString(subexpressions)
 
 # ---------------------------------------------------------------------------------------
 #Control:
@@ -88,22 +123,29 @@ def p_tercerParam(subexpressions):
 #-----------------------------------------------------------------------------
 #Funciones
 
+
 # Func -> FuncReturn | FuncVoid
 def p_func1(subexpressions):
-	'''func : funcReturn'''
+  '''func : funcReturn'''
+  subexpressions[0] = subexpressions[1]
 
 def p_func2(subexpressions):
-	'''func : funcVoid'''
+  '''func : funcVoid'''
+  subexpressions[0] = subexpressions[1]
+
 
 # FuncReturn -> FuncInt | FuncString | FuncBool
 def p_funcReturn1(subexpressions):
-	'''funcReturn : funcInt'''
+  '''funcReturn : funcInt'''
+  subexpressions[0] = subexpressions[1]
 
 def p_funcReturn2(subexpressions):
-	'''funcReturn : funcString'''
+  '''funcReturn : funcString'''
+  subexpressions[0] = subexpressions[1]
 
 def p_funcReturn3(subexpressions):
-	'''funcReturn : funcBool'''
+  '''funcReturn : funcBool'''
+  subexpressions[0] = subexpressions[1]
 
 
 
@@ -111,48 +153,61 @@ def p_funcReturn3(subexpressions):
 #La otra opcion es ir separando , x ej, la primera recibiria un emat o valorMat. Asi con los otros
 
 def p_funcInt1(subexpressions):
-	'''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
+  '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 
 def p_funcInt2(subexpressions):
-	'''funcInt : LENGTH '(' valores ')' '''
+  '''funcInt : LENGTH '(' valores ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 # FuncString -> capitalizar(eMat)
 #Aca lo mismo que en la de arriba, recibe un "string"
 
 def p_funcString(subexpressions):
-	'''funcString : CAPITALIZAR '(' valores ')' '''
+  '''funcString : CAPITALIZAR '(' valores ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 # FuncBool -> colineales(Vec,Vec )
 def p_funcBool(subexpressions):
-	'''funcBool : COLINEALES '(' valores ',' valores ')' '''
+  '''funcBool : COLINEALES '(' valores ',' valores ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 # FuncVoid -> print(Valores) 
 def p_funcVoid(subexpressions):
-	'''funcVoid : PRINT '(' valores ')' '''
+  '''funcVoid : PRINT '(' valores ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 #Parametros de las funciones:
 
 def p_param1(subexpressions):
-	'''param : ',' valores'''
+  '''param : ',' valores'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_param2(subexpressions):
-	'''param : empty'''
+  '''param : empty'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_empty(subexpressions):
-	'''empty : '''
+  '''empty : '''
+  subexpressions[0] = toString(subexpressions)
 
 #-----------------------------------------------------------------------------
 #Vectores  y variables
 
 
 def p_vec1(subexpressions):
-	'''vec : '[' elem ']' '''
+  '''vec : '[' elem ']' '''
+  subexpressions[0] = toString(subexpressions)
+
 #Elem-> Valores, Elem | Valores
 def p_elem1(subexpressions):
-	'''elem : valores ',' elem'''
+  '''elem : valores ',' elem'''
+  subexpressions[0] = toString(subexpressions)
+
 def p_elem2(subexpressions):
-	'''elem : valores'''
+  '''elem : valores'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_valores(subexpressions):
   '''valores : eMat
@@ -170,20 +225,23 @@ def p_valores(subexpressions):
   | '(' ternarioVars ')'
   | atributos
   | RES'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_valoresCampos(subexpressions):
   '''valoresCampos : varYVals
   | END
   | BEGIN'''
+  subexpressions[0] = toString(subexpressions)
 
 def p_ternarioVars(subexpressions):
   '''ternarioVars : valoresBool '?' valoresTernarioVars ':' valoresTernarioVars  
   | expBool '?' valoresTernarioVars ':' valoresTernarioVars
   '''
-
+  subexpressions[0] = toString(subexpressions)
 
 def p_valoresTernarioVars(subexpressions):
   '''valoresTernarioVars : varsOps
@@ -193,66 +251,81 @@ def p_valoresTernarioVars(subexpressions):
   | ternarioVars
   | atributos
   | RES'''
+  subexpressions[0] = toString(subexpressions)
+
 #VarYVals -> var | VecVal
 def p_varYVals1(subexpressions):
-	'''varYVals : ID'''
+  '''varYVals : ID'''
+  subexpressions[0] = toString(subexpressions)
+
 def p_varYVals2(subexpressions):
-	'''varYVals : vecVal
-  	| vecVal '.' varYVals
-	'''
+  '''varYVals : vecVal
+    | vecVal '.' varYVals
+  '''
+  subexpressions[0] = toString(subexpressions)
 
 #VecVal ->  var M
 def p_vecVal1(subexpressions):
-	'''vecVal : ID m'''
-
+  '''vecVal : ID m'''
+  subexpressions[0] = toString(subexpressions)
 
 #Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
 #Entonces, mas general deberia poder pasar g[h[t[a]]] mientras los tipos anden :)
 def p_m1(subexpressions):
-	'''m : '[' INT ']' '''
+  '''m : '[' INT ']' '''
+  subexpressions[0] = toString(subexpressions)
 def p_m2(subexpressions):
-	''' m : '[' INT ']' m '''
+  ''' m : '[' INT ']' m '''
+  subexpressions[0] = toString(subexpressions)
 def p_m3(subexpressions):
   ''' m : '[' varYVals ']' m '''
+  subexpressions[0] = toString(subexpressions)
 def p_m4(subexpressions):
   ''' m : '[' varYVals ']' '''
+  subexpressions[0] = toString(subexpressions)
 # a[3*4]
 def p_m5(subexpressions):
  ''' m : '[' eMat ']' m '''
+ subexpressions[0] = toString(subexpressions)
 def p_m6(subexpressions):
  ''' m : '[' eMat ']' '''
+ subexpressions[0] = toString(subexpressions)
 
 
 #Registros:
 #Reg -> {U}
 def p_reg(subexpressions):
-	'''reg :  '{' campos '}' '''
+  '''reg :  '{' campos '}' '''
+  subexpressions[0] = toString(subexpressions)
 
 #U -> campo: Valores, U | campof: Valores
 #campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
 #Me parece que mejore el campo es un ID (!)
 def p_campos1(subexpressions):
-	'''campos : ID ':' valores ',' campos'''
+  '''campos : ID ':' valores ',' campos'''
+  subexpressions[0] = toString(subexpressions)
 def p_campos2(subexpressions):
-	'''campos : ID ':' valores'''
+  '''campos : ID ':' valores'''
+  subexpressions[0] = toString(subexpressions)
 
 
 #-----------------------------------------------------------------------------
 #Operadores de variables:
 #VarsOps -> --SMM | ++SMM | SMM
 def p_varsOps1(subexpressions):
-	'''varsOps : MENOSMENOS varYVals 
-	| MASMAS varYVals
-	| varYVals MASMAS 
-	| varYVals MENOSMENOS'''
-	
-
+  '''varsOps : MENOSMENOS varYVals 
+  | MASMAS varYVals
+  | varYVals MASMAS 
+  | varYVals MENOSMENOS'''
+  subexpressions[0] = toString(subexpressions)
+  
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
 #Dejo las asignaciones no ambiguas como estaban antes
 def p_valoresAsig(subexpressions):
   '''valoresAsig : valores'''
+  subexpressions[0] = toString(subexpressions)
 
 #Aca pongo varYvals por este caso g[a] = b;
 
@@ -263,7 +336,7 @@ def p_varAsig(subexpressions):
   | varYVals MENOSEQ valoresAsig
   | varYVals '=' valoresAsig
   | ID '.' ID '=' valoresAsig'''
-
+  subexpressions[0] = toString(subexpressions)
 
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
@@ -279,10 +352,13 @@ def p_valoresMat(subexpressions):
   | STRING
   | '(' ternarioMat ')'
   '''
+  subexpressions[0] = toString(subexpressions)
+
 def p_ternarioMat(subexpressions):
   '''ternarioMat : valoresBool '?' valoresTernarioMat ':' valoresTernarioMat  
   | expBool '?' valoresTernarioMat ':' valoresTernarioMat
   '''
+  subexpressions[0] = toString(subexpressions)
 
 def p_valoresTernarioMat(subexpressions):
   '''valoresTernarioMat : INT
@@ -291,6 +367,7 @@ def p_valoresTernarioMat(subexpressions):
   | STRING
   | eMat
   | ternarioMat'''
+  subexpressions[0] = toString(subexpressions)
 
 #EMat -> EMat '+' P | EMat - P | P
 def p_eMat(subexpressions):
@@ -303,6 +380,7 @@ def p_eMat(subexpressions):
     | valoresMat '+' valoresMat
     | valoresMat '-' valoresMat
     | p'''
+    subexpressions[0] = toString(subexpressions)
 
 #P -> P * Exp | P / Exp | P % Exp | Exp
 
@@ -321,31 +399,33 @@ def p_p(subexpressions):
     | valoresMat '%' valoresMat
     | exp
     '''
+    subexpressions[0] = toString(subexpressions)
 
 #Exp -> Exp ^ ISing | ISing
 def p_exp(subexpressions):
-	'''exp : exp '^' iSing
+  '''exp : exp '^' iSing
   | valoresMat '^' iSing
   | exp '^' valoresMat
   | valoresMat '^' valoresMat
   | iSing'''
+  subexpressions[0] = toString(subexpressions)
 
 #ISing -> -Paren | '+'Paren | Paren
 def p_iSing(subexpressions):
-	'''iSing : '-' paren
+  '''iSing : '-' paren
   | '+' paren
   | '-' valoresMat
   | '+' valoresMat
   | paren
   '''
+  subexpressions[0] = toString(subexpressions)
 
 #Paren -> (EMat) | int | VarYVals | float | VarsOps| FuncInt
 def p_paren1(subexpressions):
-	'''paren : '(' eMat ')' 
+  '''paren : '(' eMat ')' 
   | '(' valoresMat ')'
   '''
-   
-
+  subexpressions[0] = toString(subexpressions)
 
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
@@ -362,11 +442,13 @@ def p_valoresBool(subexpressions):
   | varsOps
   | '(' ternarioBool ')'
   '''
+  subexpressions[0] = toString(subexpressions)
 
 def p_ternarioBool(subexpressions):
   '''ternarioBool : valoresBool '?' valoresTernarioBool ':' valoresTernarioBool  
   | expBool '?' valoresTernarioBool ':' valoresTernarioBool
   '''
+  subexpressions[0] = toString(subexpressions)
 
 def p_valoresTernarioBool(subexpressions):
   '''valoresTernarioBool : BOOL
@@ -374,6 +456,7 @@ def p_valoresTernarioBool(subexpressions):
   | ternarioBool
   | expBool
   '''
+  subexpressions[0] = toString(subexpressions)
   
 # ExpBool -> Or ? ExpBool : ExpBool  | Or
 #Aca agrego combinaciones que faltaban
@@ -381,6 +464,7 @@ def p_ternario(subexpressions):
   '''ternario : valoresBool '?' valores ':' valores  
   | expBool '?' valores ':' valores
   | '(' ternario ')' '''
+  subexpressions[0] = toString(subexpressions)
 
 # Or -> Or or And | And
 def p_expBool(subexpressions):
@@ -389,6 +473,7 @@ def p_expBool(subexpressions):
   | expBool OR valoresBool
   | valoresBool OR valoresBool
   | and'''
+  subexpressions[0] = toString(subexpressions)
 
 # And ->  And and Eq | Eq
 def p_and(subexpressions):
@@ -397,6 +482,7 @@ def p_and(subexpressions):
   | and AND valoresBool
   | valoresBool AND valoresBool
   | eq'''
+  subexpressions[0] = toString(subexpressions)
 
 # Eq -> Eq == TBool |  Eq != TBool | Mayor 
 def p_eq(subexpressions):
@@ -409,6 +495,7 @@ def p_eq(subexpressions):
   | tCompare EQEQ tCompare
   | tCompare DISTINTO tCompare
   | mayor'''
+  subexpressions[0] = toString(subexpressions)
 
 # TCompare -> EMat | VarsOps | VarYVals
 #Aca agrego para que puedan aparecer ints o floats solos por ej 5 < 5, emat no lo captura
@@ -419,11 +506,13 @@ def p_tCompare(subexpressions):
   | INT
   | funcInt 
   | FLOAT'''
+  subexpressions[0] = toString(subexpressions)
 
 # Mayor -> TCompare > TCompare | Menor
 def p_mayor(subexpressions):
   '''mayor : tCompare '>' tCompare
   | menor'''
+  subexpressions[0] = toString(subexpressions)
 
   # if len(subexpressions) > 2:
   #   tokens = [subexpressions[1], subexpressions[3]]
@@ -435,20 +524,22 @@ def p_mayor(subexpressions):
 def p_menor3(subexpressions):
   '''menor : tCompare '<' tCompare
   | not'''
+  subexpressions[0] = toString(subexpressions)
   # if len(subexpressions) > 2:
   #   tokens = [subexpressions[1], subexpressions[3]]
   #   if not chequearTipo(tokens, ["int", "float"]):
   #     raise SemanticException("Se esperaba tipo int o float")
-
 # Not ->  not Not | TBool 
 def p_not(subexpressions):
   '''not :  NOT not
   | NOT valoresBool
   | parenBool'''
+  subexpressions[0] = toString(subexpressions)
 
 # TBool -> (ExpBool) | bool | VarYVals | FuncBool
 def p_parenBool(subexpressions):
   '''parenBool : '(' expBool ')' '''
+  subexpressions[0] = toString(subexpressions)
   # if len(subexpressions) == 2:
   #   tokens = [subexpressions[1]]
   #   if not chequearTipo(tokens, ["bool"]):
@@ -471,13 +562,21 @@ def p_error(token):
 
 # Chequea si todos los elementos de la lista de subexpresiones son de 
 # algun tipo de la lista tipos
+
+
+def toString(subexpressions):
+  res = ""
+  for exp in subexpressions[1:]:
+    res += str(exp)
+  return res
+
 def chequearTipo(subexps, tipos):
 
-	for subexp in subexps:
-		if subexp["type"] not in tipos:
-			return False
+  for subexp in subexps:
+    if subexp["type"] not in tipos:
+      return False
 
-	return True
+  return True
 
 
 
