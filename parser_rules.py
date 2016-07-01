@@ -175,7 +175,7 @@ def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos'''
 
 def p_valoresCampos(subexpressions):
-  '''valoresCampos : ID
+  '''valoresCampos : varYVals
   | END
   | BEGIN'''
 
@@ -197,11 +197,13 @@ def p_valoresTernarioVars(subexpressions):
 def p_varYVals1(subexpressions):
 	'''varYVals : ID'''
 def p_varYVals2(subexpressions):
-	'''varYVals : vecVal'''
+	'''varYVals : vecVal
+  	| vecVal '.' varYVals
+	'''
 
 #VecVal ->  var M
 def p_vecVal1(subexpressions):
-	'''vecVal : ID m'''		
+	'''vecVal : ID m'''
 
 
 #Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
@@ -232,7 +234,7 @@ def p_reg(subexpressions):
 def p_campos1(subexpressions):
 	'''campos : ID ':' valores ',' campos'''
 def p_campos2(subexpressions):
-	'''campos : valores'''
+	'''campos : ID ':' valores'''
 
 
 #-----------------------------------------------------------------------------
@@ -414,7 +416,8 @@ def p_tCompare(subexpressions):
   '''tCompare : eMat
   | varsOps
   | varYVals
-  | INT 
+  | INT
+  | funcInt 
   | FLOAT'''
 
 # Mayor -> TCompare > TCompare | Menor
