@@ -249,6 +249,9 @@ def p_valoresTernarioVars(subexpressions):
   | reg
   | vec
   | ternarioVars
+  | '(' ternarioVars ')'
+  | valoresTernarioMat
+  | valoresTernarioBool
   | atributos
   | RES'''
   subexpressions[0] = toString(subexpressions)
@@ -349,9 +352,7 @@ def p_valoresMat(subexpressions):
   | funcInt
   | varYVals
   | varsOps
-  | STRING
-  | '(' ternarioMat ')'
-  '''
+  | STRING'''
   subexpressions[0] = toString(subexpressions)
 
 def p_ternarioMat(subexpressions):
@@ -365,8 +366,7 @@ def p_valoresTernarioMat(subexpressions):
   | FLOAT
   | funcInt
   | STRING
-  | eMat
-  | ternarioMat'''
+  | eMat'''
   subexpressions[0] = toString(subexpressions)
 
 #EMat -> EMat '+' P | EMat - P | P
@@ -439,9 +439,7 @@ def p_valoresBool(subexpressions):
   '''valoresBool : BOOL
   | funcBool
   | varYVals
-  | varsOps
-  | '(' ternarioBool ')'
-  '''
+  | varsOps'''
   subexpressions[0] = toString(subexpressions)
 
 def p_ternarioBool(subexpressions):
@@ -453,13 +451,10 @@ def p_ternarioBool(subexpressions):
 def p_valoresTernarioBool(subexpressions):
   '''valoresTernarioBool : BOOL
   | funcBool
-  | ternarioBool
   | expBool
   '''
   subexpressions[0] = toString(subexpressions)
   
-# ExpBool -> Or ? ExpBool : ExpBool  | Or
-#Aca agrego combinaciones que faltaban
 def p_ternario(subexpressions):
   '''ternario : valoresBool '?' valores ':' valores  
   | expBool '?' valores ':' valores

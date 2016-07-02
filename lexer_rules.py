@@ -64,7 +64,7 @@ tokens = [
 
 variablesConTipo = []
 
-t_STRING = r''' " .* " '''
+t_STRING = r''' " .*? " '''
 
 t_EQEQ = r"=="
 t_DISTINTO = r"!="
