@@ -555,23 +555,74 @@ def p_error(token):
 #------------------------------------------------------------------------------
 # Funciones auxiliares 
 
-# Chequea si todos los elementos de la lista de subexpresiones son de 
-# algun tipo de la lista tipos
-
-
 def toString(subexpressions):
   res = ""
   for exp in subexpressions[1:]:
     res += str(exp)
   return res
 
+# #chequea si todos los elementos de la lista de subexpresiones son de 
+# algun tipo de la lista tipos
 def chequearTipo(subexps, tipos):
 
-  for subexp in subexps:
-    if subexp["type"] not in tipos:
-      return False
+    for subexp in subexps:
+        if subexp["type"] not in tipos:
+            message = "[] Se esperaba tipo "
+            message += listTypes(tipos)
+            raise Exception(message)
 
-  return True
+    pass
+
+def listTypes(tipos):
+    print tipos
+    if len(tipos) == 1:
+        return tipos[0]
+
+    if len(tipos) == 2:
+        return tipos[0] + " o " + tipos[1]
+
+    message = tipos[0]
+    for i in range(1, len(tipos)-1):
+        message += ", " + tipos[i]
+
+    message += " o " + tipos[len(tipos)-1]
+    return message
+
+# Por cada operador (binario, unario, ternario) hay un chequeador de tipos
+# Pueden usarlo sin importar si hay otro tipo de operador en la misma regla
+# Cada una chequea que sea su tipo de operador el de la expresion,
+# comparando la longitud de la lista
+# Si hay otro operador con la misma cantidad de elementos y no es de estos tipos hay que tener
+# cuidado
+# Cada chequeador, en caso de falla, levanta una excepcion con los tipos esperados
+def chequeadorBinario(subexpressions, tipos):
+    if len(subexpressions) == 4:
+        subexps = [ subexpressions[1], subexpressions[3] ]
+        chequearTipo(subexps, tipos)
+
+    pass
+
+def chequeadorUnarioPrefijo(subexpressions, tipos):
+    if len(subexpressions) == 3:
+        subexps = [ subexpressions[2] ]
+        chequearTipo(subexps, tipos)
+
+    pass
+
+def chequeadorUnarioPostfijo(subexpressions, tipos):
+    if len(subexpressions) == 3:
+        subexps = [ subexpressions[1] ]
+        chequearTipo(subexps, tipos)
+
+    pass
+
+def chequeadorTernario(subexpressions, tipos):
+    if len(subexpressions) == 6:
+
+        if subexpressions[3]["type"] != subexpressions[5]["type"]:
+            raise Exception("Los valores de retorno del operador ? tiene que ser del mismo tipo")
+
+    pass
 
 
 
