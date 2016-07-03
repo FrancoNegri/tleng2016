@@ -62,9 +62,14 @@ tokens = [
 'MENOSMENOS'
 ] + list(reserved.values())
 
-variablesConTipo = []
-
-t_STRING = r''' " .*? " '''
+# t_STRING = r''' " .*? " '''
+def t_STRING(token):
+    r''' " .*? " '''
+    atributos = {}
+    atributos["type"] = "string"
+    atributos["value"] = token.value
+    token.value = atributos
+    return token
 
 t_EQEQ = r"=="
 t_DISTINTO = r"!="
@@ -77,22 +82,35 @@ t_MENOSMENOS = r"--"
 
 def t_BOOL(token) : 
     r"true | false"
-    token.value = bool(token.value)
+    atributos = {}
+    atributos["type"] = "bool"
+    atributos["value"] = token.value
+    token.value = atributos
     return token
 
 def t_FLOAT(token):
     r"[-]?[0-9] \. [0-9]*"
-    token.value = float(token.value)
+    atributos = {}
+    atributos["type"] = "int"
+    atributos["value"] = token.value
+    token.value = atributos
     return token
 
 def t_INT(token) : 
-	r"[-]?[1-9][0-9]* | 0"
-	token.value = int(token.value)
-	return token
+    r"[-]?[1-9][0-9]* | 0"
+    atributos = {}
+    atributos["type"] = "int"
+    atributos["value"] = token.value
+    token.value = atributos
+    return token
 
 def t_ID(token):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
     token.type = reserved.get(token.value,'ID')    # Check for reserved words
+    atributos = {}
+    atributos["value"] = token.value
+    atributos["type"] = "noType"
+    token.value = atributos
     return token
 
 def t_NEWLINE(token):
