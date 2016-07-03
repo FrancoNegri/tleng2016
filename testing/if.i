@@ -1,5 +1,6 @@
-if (true)
+if (true){
 	a = 1;
+}
 
 if (NOT (6 == 5) != (false ? false : false)) {
 	# Co

@@ -16,9 +16,9 @@ start = 'g'
 # ---------------------------------------------------------------------------------------
 #Sentencias:
 
-#Generalizo la gramatica con linea, puede ser una sentencia o un comentario
+#Tengo dudas con
 def p_g1(subexpressions):
-  'g : linea g  '
+  '''g : linea g  '''
   subexpressions[0] = str(subexpressions[1]) + "\n" + str(subexpressions[2]) 
 
 def p_g3(subexpressions):
@@ -26,8 +26,8 @@ def p_g3(subexpressions):
   subexpressions[0] = "\n"
 
 def p_linea(subexpressions):
-  '''linea : lAbierta'''
-  subexpressions[0] = "L abierta"
+  '''linea : lAbierta'''  
+  subexpressions[0] = subexpressions[1]
 
 def p_linea1(subexpressions):
   '''linea : lCerrada'''
@@ -36,33 +36,39 @@ def p_linea1(subexpressions):
 
 def p_lAbierta(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' linea
-  | IF '(' cosaBooleana ')' bloqueCerrado ELSE lAbierta 
+  | IF '(' cosaBooleana ')' '{' g '}' ELSE lAbierta 
+  | IF '(' cosaBooleana ')' lCerrada ELSE lAbierta 
+  | IF '(' cosaBooleana ')' '{' g '}'
   | loop  lAbierta '''
   subexpressions[0] = toString(subexpressions)
 
-def p_bloqueCerrado(subexpressions):
-  '''bloqueCerrado : lCerrada
-  | '{' g '}' '''
-  subexpressions[0] = toString(subexpressions)
-
+#Saco el bloque cerrado, ver si lo puedo meter de vuelta para mas claridad
 def p_lCerrada1(subexpressions):
   '''lCerrada : sentencia'''
   subexpressions[0] = toString(subexpressions)
 
+#UHm, esto esta bien??
 def p_lCerrada2(subexpressions):
-  '''lCerrada : COMMENT'''
+  '''lCerrada : COMMENT lCerrada'''
   subexpressions[0] = toString(subexpressions)
 
+
 def p_lCerrada3(subexpressions):
-  '''lCerrada : IF '(' cosaBooleana ')' bloqueCerrado ELSE bloqueCerrado'''
+  '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE '{' g '}'
+  | IF '(' cosaBooleana ')' lCerrada ELSE '{' g '}'
+  | IF '(' cosaBooleana ')' '{' g '}' ELSE lCerrada
+  | IF '(' cosaBooleana ')' lCerrada ELSE lCerrada
+  '''
   subexpressions[0] = toString(subexpressions)
 
 def p_lCerrada4(subexpressions):
-  '''lCerrada : loop bloqueCerrado '''
+  '''lCerrada : loop '{' g '}' 
+  | loop lCerrada '''
   subexpressions[0] = toString(subexpressions)
 
 def p_lCerrada5(subexpressions):
-  '''lCerrada : DO bloqueCerrado WHILE '(' cosaBooleana ')' ';' '''
+  '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' 
+  | DO lCerrada WHILE '(' valores ')' ';' '''
   subexpressions[0] = toString(subexpressions)
 
 def p_sentencia1(subexpressions):
@@ -85,15 +91,15 @@ def p_sentencia5(subexpressions):
   '''sentencia : ';' '''
   subexpressions[0] = toString(subexpressions)
 
+#Ojo, estoy usando valores, habria que chequear tipos...
 
 def p_loop1(subexpressions):
-  '''loop : WHILE '(' cosaBooleana ')' '''
+  '''loop : WHILE '(' valores ')' '''
   subexpressions[0] = toString(subexpressions)
-#def p_loop2(subexpressions):
- # '''loop : DO lCerrada WHILE '(' expBool ')' ';' '''
+
 
 def p_loop3(subexpressions):
-  '''loop : FOR '(' primParam ';' cosaBooleana ';' tercerParam ')' '''
+  '''loop : FOR '(' primParam ';' valores ';' tercerParam ')' '''
   subexpressions[0] = toString(subexpressions)
 
 #en el tercer parametro del for pongo varOps, pero en realidad puede ser mas general(!), es lo que discutimos en clase.
@@ -221,8 +227,7 @@ def p_valores(subexpressions):
   | varYVals
   | varsOps
   | vec
-  | ternarioVars
-  | '(' ternarioVars ')'
+  | ternario
   | atributos
   | RES'''
   subexpressions[0] = toString(subexpressions)
@@ -239,8 +244,16 @@ def p_valoresCampos(subexpressions):
 
 def p_ternarioVars(subexpressions):
   '''ternarioVars : valoresBool '?' valoresTernarioVars ':' valoresTernarioVars  
+  | valoresBool '?' valoresTernarioVars ':' valoresTernarioMat 
+  | valoresBool '?' valoresTernarioMat ':' valoresTernarioVars
+  | valoresBool '?' valoresTernarioVars ':' valoresTernarioBool 
+  | valoresBool '?' valoresTernarioBool ':' valoresTernarioVars
   | expBool '?' valoresTernarioVars ':' valoresTernarioVars
-  '''
+  | expBool '?' valoresTernarioVars ':' valoresTernarioMat 
+  | expBool '?' valoresTernarioMat ':' valoresTernarioVars
+  | expBool '?' valoresTernarioVars ':' valoresTernarioBool 
+  | expBool '?' valoresTernarioBool ':' valoresTernarioVars  '''
+
   subexpressions[0] = toString(subexpressions)
 
 def p_valoresTernarioVars(subexpressions):
@@ -250,8 +263,6 @@ def p_valoresTernarioVars(subexpressions):
   | vec
   | ternarioVars
   | '(' ternarioVars ')'
-  | valoresTernarioMat
-  | valoresTernarioBool
   | atributos
   | RES'''
   subexpressions[0] = toString(subexpressions)
@@ -352,13 +363,13 @@ def p_valoresMat(subexpressions):
   | funcInt
   | varYVals
   | varsOps
-  | STRING'''
+  | STRING
+  | '(' ternarioMat ')' '''
   subexpressions[0] = toString(subexpressions)
 
 def p_ternarioMat(subexpressions):
   '''ternarioMat : valoresBool '?' valoresTernarioMat ':' valoresTernarioMat  
-  | expBool '?' valoresTernarioMat ':' valoresTernarioMat
-  '''
+  | expBool '?' valoresTernarioMat ':' valoresTernarioMat'''
   subexpressions[0] = toString(subexpressions)
 
 def p_valoresTernarioMat(subexpressions):
@@ -366,7 +377,9 @@ def p_valoresTernarioMat(subexpressions):
   | FLOAT
   | funcInt
   | STRING
-  | eMat'''
+  | eMat
+  | ternarioMat
+  | '(' ternarioMat ')' '''
   subexpressions[0] = toString(subexpressions)
 
 #EMat -> EMat '+' P | EMat - P | P
@@ -430,16 +443,14 @@ def p_paren1(subexpressions):
 # ---------------------------------------------------------------------------------------
 # Expresiones booleanas
 
-#Aca agrego int y float y emat y STRING porque si no lo que sigue no se puede generar
-#(x > 5 ? y : 10) o f ? 3 : x + 5
-#Esto tambien daria lugar a cosas como 
-#(2? 3 : 4) que tiene cierto sentido (porque 2 es siempre true). Si no, se puede filtrar con atributos.
 
 def p_valoresBool(subexpressions):
   '''valoresBool : BOOL
   | funcBool
   | varYVals
-  | varsOps'''
+  | varsOps
+  | '('  ternarioBool ')'
+  |'''
   subexpressions[0] = toString(subexpressions)
 
 def p_ternarioBool(subexpressions):
@@ -451,14 +462,20 @@ def p_ternarioBool(subexpressions):
 def p_valoresTernarioBool(subexpressions):
   '''valoresTernarioBool : BOOL
   | funcBool
+  | ternarioBool
+  | '(' ternarioBool ')'
   | expBool
   '''
   subexpressions[0] = toString(subexpressions)
   
 def p_ternario(subexpressions):
-  '''ternario : valoresBool '?' valores ':' valores  
-  | expBool '?' valores ':' valores
-  | '(' ternario ')' '''
+  '''ternario : ternarioMat
+  | ternarioBool
+  | '(' ternarioMat ')'
+  | '(' ternarioBool ')'
+  | ternarioVars 
+  | '(' ternarioVars ')'
+  '''
   subexpressions[0] = toString(subexpressions)
 
 # Or -> Or or And | And
@@ -492,15 +509,19 @@ def p_eq(subexpressions):
   | mayor'''
   subexpressions[0] = toString(subexpressions)
 
-# TCompare -> EMat | VarsOps | VarYVals
-#Aca agrego para que puedan aparecer ints o floats solos por ej 5 < 5, emat no lo captura
+#Aca pongo que se puedan comparar los ternarios.
+#Comparar dos booleanos tiene sentido para neq y eq pero no  para menor o mayor. Se podria filtrar chequeando tipos?
+ 
 def p_tCompare(subexpressions):
   '''tCompare : eMat
   | varsOps
   | varYVals
   | INT
   | funcInt 
-  | FLOAT'''
+  | FLOAT
+  | '(' ternarioBool ')' 
+  | '(' ternarioMat ')' '''
+
   subexpressions[0] = toString(subexpressions)
 
 # Mayor -> TCompare > TCompare | Menor
@@ -555,74 +576,23 @@ def p_error(token):
 #------------------------------------------------------------------------------
 # Funciones auxiliares 
 
+# Chequea si todos los elementos de la lista de subexpresiones son de 
+# algun tipo de la lista tipos
+
+
 def toString(subexpressions):
   res = ""
   for exp in subexpressions[1:]:
     res += str(exp)
   return res
 
-# #chequea si todos los elementos de la lista de subexpresiones son de 
-# algun tipo de la lista tipos
 def chequearTipo(subexps, tipos):
 
-    for subexp in subexps:
-        if subexp["type"] not in tipos:
-            message = "[] Se esperaba tipo "
-            message += listTypes(tipos)
-            raise Exception(message)
+  for subexp in subexps:
+    if subexp["type"] not in tipos:
+      return False
 
-    pass
-
-def listTypes(tipos):
-    print tipos
-    if len(tipos) == 1:
-        return tipos[0]
-
-    if len(tipos) == 2:
-        return tipos[0] + " o " + tipos[1]
-
-    message = tipos[0]
-    for i in range(1, len(tipos)-1):
-        message += ", " + tipos[i]
-
-    message += " o " + tipos[len(tipos)-1]
-    return message
-
-# Por cada operador (binario, unario, ternario) hay un chequeador de tipos
-# Pueden usarlo sin importar si hay otro tipo de operador en la misma regla
-# Cada una chequea que sea su tipo de operador el de la expresion,
-# comparando la longitud de la lista
-# Si hay otro operador con la misma cantidad de elementos y no es de estos tipos hay que tener
-# cuidado
-# Cada chequeador, en caso de falla, levanta una excepcion con los tipos esperados
-def chequeadorBinario(subexpressions, tipos):
-    if len(subexpressions) == 4:
-        subexps = [ subexpressions[1], subexpressions[3] ]
-        chequearTipo(subexps, tipos)
-
-    pass
-
-def chequeadorUnarioPrefijo(subexpressions, tipos):
-    if len(subexpressions) == 3:
-        subexps = [ subexpressions[2] ]
-        chequearTipo(subexps, tipos)
-
-    pass
-
-def chequeadorUnarioPostfijo(subexpressions, tipos):
-    if len(subexpressions) == 3:
-        subexps = [ subexpressions[1] ]
-        chequearTipo(subexps, tipos)
-
-    pass
-
-def chequeadorTernario(subexpressions, tipos):
-    if len(subexpressions) == 6:
-
-        if subexpressions[3]["type"] != subexpressions[5]["type"]:
-            raise Exception("Los valores de retorno del operador ? tiene que ser del mismo tipo")
-
-    pass
+  return True
 
 
 
