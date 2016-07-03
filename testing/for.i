@@ -1,14 +1,3 @@
-for (a=0; a<10; a++)
-	d = 1;
-
-for (; true; ) {
-	# Co
-	# men
-	# tario
-	b = 2;
-	c = 3;
-}
-
 for (d = b; b != c; a = b)
 	# Co
 	# men

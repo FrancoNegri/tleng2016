@@ -70,12 +70,14 @@ def p_lCerrada3(subexpressions):
   | IF '(' cosaBooleana ')' lCerrada ELSE lCerrada
   | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE lCerrada
   | IF '(' cosaBooleana ')' lCerrada ELSE  COMMENT com lCerrada
-  | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE  COMMENT co mlCerrada '''
+  | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE  COMMENT com lCerrada '''
   subexpressions[0] = toString(subexpressions)
 
 def p_lCerrada4(subexpressions):
   '''lCerrada : loop '{' g '}' 
-  | loop lCerrada '''
+  | loop lCerrada 
+  | loop COMMENT com lCerrada '''
+
   subexpressions[0] = toString(subexpressions)
 
 def p_lCerrada5(subexpressions):
@@ -292,7 +294,8 @@ def p_varYVals2(subexpressions):
 
 #VecVal ->  var M
 def p_vecVal1(subexpressions):
-  '''vecVal : ID m'''
+  '''vecVal : ID m
+  | vec m'''
   subexpressions[0] = toString(subexpressions)
 
 #Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
@@ -596,12 +599,12 @@ def toString(subexpressions):
   res = {}
   res["type"]=""
   res["value"]=[]
-  for exp in subexpressions[1:]:
-    try:
-      #print exp["value"]
-      res["value"].append(str(exp["value"]))
-    except TypeError:
-      res["value"].append(str(exp))
+  # for exp in subexpressions[1:]:
+  #   try:
+  #     #print exp["value"]
+  #     res["value"].append(str(exp["value"]))
+  #   except TypeError:
+  #     res["value"].append(str(exp))
   return res
 
 def chequearTipo(subexps, tipos):
