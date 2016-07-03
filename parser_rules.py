@@ -19,19 +19,19 @@ start = 'g'
 #Tengo dudas con
 def p_g1(subexpressions):
   '''g : linea g  '''
-  subexpressions[0] = str(subexpressions[1]) + "\n" + str(subexpressions[2]) 
+  subexpressions[0] = toString(subexpressions) 
 
 def p_g3(subexpressions):
   '''g : empty'''
-  subexpressions[0] = "\n"
+  subexpressions[0] = toString(subexpressions)
 
 def p_linea(subexpressions):
   '''linea : lAbierta'''  
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 def p_linea1(subexpressions):
   '''linea : lCerrada'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 
 def p_lAbierta(subexpressions):
@@ -133,25 +133,25 @@ def p_tercerParam(subexpressions):
 # Func -> FuncReturn | FuncVoid
 def p_func1(subexpressions):
   '''func : funcReturn'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 def p_func2(subexpressions):
   '''func : funcVoid'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 
 # FuncReturn -> FuncInt | FuncString | FuncBool
 def p_funcReturn1(subexpressions):
   '''funcReturn : funcInt'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 def p_funcReturn2(subexpressions):
   '''funcReturn : funcString'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 def p_funcReturn3(subexpressions):
   '''funcReturn : funcBool'''
-  subexpressions[0] = subexpressions[1]
+  subexpressions[0] = toString(subexpressions)
 
 
 
@@ -581,9 +581,15 @@ def p_error(token):
 
 
 def toString(subexpressions):
-  res = ""
+  res = {}
+  res["type"]=""
+  res["value"]=[]
   for exp in subexpressions[1:]:
-    res += str(exp)
+    try:
+      #print exp["value"]
+      res["value"].append(str(exp["value"]))
+    except TypeError:
+      res["value"].append(str(exp))
   return res
 
 def chequearTipo(subexps, tipos):
