@@ -20,13 +20,17 @@ start = 'g'
 def p_g1(subexpressions):
   '''g : linea g  '''
   subexpressions[0] = toString(subexpressions) 
+def p_g2(subexpressions):
+  '''g : COMMENT g  '''
+  subexpressions[0] = toString(subexpressions) 
+
 
 def p_g3(subexpressions):
   '''g : empty'''
   subexpressions[0] = toString(subexpressions)
 
 def p_linea(subexpressions):
-  '''linea : lAbierta'''  
+  '''linea : lAbierta '''  
   subexpressions[0] = toString(subexpressions)
 
 def p_linea1(subexpressions):
@@ -34,12 +38,13 @@ def p_linea1(subexpressions):
   subexpressions[0] = toString(subexpressions)
 
 
+
 def p_lAbierta(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' linea
   | IF '(' cosaBooleana ')' '{' g '}' ELSE lAbierta 
   | IF '(' cosaBooleana ')' lCerrada ELSE lAbierta 
   | IF '(' cosaBooleana ')' '{' g '}'
-  | loop  lAbierta '''
+  | loop  lAbierta  '''
   subexpressions[0] = toString(subexpressions)
 
 #Saco el bloque cerrado, ver si lo puedo meter de vuelta para mas claridad
@@ -48,17 +53,24 @@ def p_lCerrada1(subexpressions):
   subexpressions[0] = toString(subexpressions)
 
 #UHm, esto esta bien??
-def p_lCerrada2(subexpressions):
-  '''lCerrada : COMMENT lCerrada'''
-  subexpressions[0] = toString(subexpressions)
+# def p_lCerrada2(subexpressions):
+#   '''lCerrada : COMMENT lCerrada'''
+#   subexpressions[0] = toString(subexpressions)
+
+def p_com(subexpressions):
+  '''com : COMMENT com
+  | empty '''
 
 
 def p_lCerrada3(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE '{' g '}'
   | IF '(' cosaBooleana ')' lCerrada ELSE '{' g '}'
+  | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE '{' g '}'
   | IF '(' cosaBooleana ')' '{' g '}' ELSE lCerrada
   | IF '(' cosaBooleana ')' lCerrada ELSE lCerrada
-  '''
+  | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE lCerrada
+  | IF '(' cosaBooleana ')' lCerrada ELSE  COMMENT com lCerrada
+  | IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE  COMMENT co mlCerrada '''
   subexpressions[0] = toString(subexpressions)
 
 def p_lCerrada4(subexpressions):

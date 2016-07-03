@@ -1,96 +1,96 @@
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 586, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:[
+value:[
+line:1
+position:44
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 22, in p_g1
+    subexpressions[0] = toString(subexpressions) 
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 602, in toString
+    res["value"].append(str(exp["value"]))
+KeyboardInterrupt
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 96, in p_sentencia3
+    subexpressions[0] = toString(subexpressions)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 602, in toString
+    res["value"].append(str(exp["value"]))
+KeyboardInterrupt
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 586, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:COMMENT
+value:# Co
+line:13
+position:116
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 22, in p_g1
+    subexpressions[0] = toString(subexpressions) 
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 602, in toString
+    res["value"].append(str(exp["value"]))
+KeyboardInterrupt
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 53, in p_lCerrada1
+    subexpressions[0] = toString(subexpressions)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 602, in toString
+    res["value"].append(str(exp["value"]))
+KeyboardInterrupt
 Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
-Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
-Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
-Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
-Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:53: Possible grammar rule 'cp' defined without p_ prefix
-ERROR: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:52: Symbol 'cp' used, but not defined as a token or a rule
-Traceback (most recent call last):
-  File "parser.py", line 48, in <module>
-    parser = yacc(module=parser_rules)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 3403, in yacc
-    raise YaccError('Unable to build parser')
-ply.yacc.YaccError: Unable to build parser
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 586, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:COMMENT
+value:# Co
+line:15
+position:128
