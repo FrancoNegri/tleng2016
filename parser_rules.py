@@ -39,14 +39,16 @@ def p_g3(subexpressions):
 def p_linea(subexpressions):
   '''linea : lAbierta '''  
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions)
+  subexpressions[0]["value"] += "\ntabing"
 
 def p_linea1(subexpressions):
   '''linea : lCerrada'''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-
-
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions)
+  subexpressions[0]["value"] += "\ntabing"
 
 def p_lAbierta(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' linea
@@ -56,6 +58,7 @@ def p_lAbierta(subexpressions):
   | loop  lAbierta  '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = subexpressions[0]["value"].replace("tabing", "tabing\t")
 
 #Saco el bloque cerrado, ver si lo puedo meter de vuelta para mas claridad
 def p_lCerrada1(subexpressions):
@@ -503,7 +506,6 @@ def p_varAsig(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[3]["type"] 
   subexpressions[1]["type"] = subexpressions[3]["type"] 
-  print subexpressions[3]
   nombreVar = subexpressions[1]["var"]
   variables[nombreVar] = {}
   variables[nombreVar]["type"] = subexpressions[3]["type"] 
@@ -758,7 +760,6 @@ def toString(subexpressions):
   res = ""
   for exp in subexpressions[1:]:
     try:
-      print exp
       res += str(exp["value"])
     except TypeError:
       res += str(exp)
@@ -830,7 +831,6 @@ def chequeadorUnarioPostfijo(subexpressions, tipos):
     pass
 
 def chequeadorTernario(subexpressions):
-    print subexpressions[3]
     if len(subexpressions) == 6:
 
         if subexpressions[1]["type"] != "bool":

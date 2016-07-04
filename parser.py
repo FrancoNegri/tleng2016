@@ -47,8 +47,8 @@ if __name__ == "__main__":
     lexer = lex(module=lexer_rules)
     parser = yacc(module=parser_rules)
 
-    ast = parser.parse(text, lexer,debug=1)
-    print "Salida: \n" + ast["value"]
+    ast = parser.parse(text, lexer,debug=0)
+    print "Salida: \n" + ast["value"].replace("tabing","")
     output_file = open(argv[2], "w")
     #dump_ast(ast, output_file)
 	
