@@ -525,7 +525,6 @@ def p_valoresMat1(subexpressions):
   | atributos
   | funcString
   | STRING
-  | '(' ternarioMat ')' 
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -539,6 +538,15 @@ def p_valoresMat2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   nombreVar = subexpressions[1]["var"]
   subexpressions[0]["type"] = variables[nombreVar]["type"]
+  #subexpressions[0]["type"] = ""
+
+
+def p_valoresMat3(subexpressions):
+  '''valoresMat : '(' ternarioMat ')' ''' 
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["type"] = subexpressions[2]["type"]
+
 
 #EMat -> EMat '+' P | EMat - P | P
 def p_eMat1(subexpressions):
@@ -641,12 +649,22 @@ def p_valoresBool(subexpressions):
   '''valoresBool : BOOL
   | funcBool
   | varYVals
-  | varsOps
-  | '('  ternarioBool ')'
-  |'''
+  | varsOps'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[1]["type"]
+
+def p_valoresBool(subexpressions):
+  '''valoresBool : '('  ternarioBool ')' '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["type"] = subexpressions[2]["type"]  
+
+def p_valoresBool(subexpressions):
+  '''valoresBool : '''
+  subexpressions[0] = {}
+  subexpressions[0]["type"] = ""
+  subexpressions[0]["value"] = ""
 
 # Or -> Or or And | And
 def p_expBool(subexpressions):
@@ -770,14 +788,14 @@ def toString(subexpressions):
 # Ademas en caso de fallar se levanta una excepcion con el tipo esperado
 # Se le puede pasar un mensaje adicional como tercer parametro, esto se usa para los chequeaodores
 # de operadores
-def chequearTipo(subexps, tipos, aditionalMessage):
+def chequearTipo(subexps, tipos, aditionalMessage=""):
 
     for subexp in subexps:
         if subexp["type"] not in tipos:
             message = "Se esperaba tipo "
             message += listTypes(tipos)
             message += aditionalMessage
-            raise Exception(message)
+            #raise Exception(message)
 
     pass
 
@@ -809,7 +827,6 @@ def chequeadorBinario(subexpressions, tipos):
         aditionalMessage = "\n en operador " + subexpressions[2]
         aditionalMessage += "\n se encontro tipos: " + subexpressions[1]["type"] + " y "+ subexpressions[3]["type"]
         chequearTipo(subexps, tipos, aditionalMessage)
-
     pass
 
 def chequeadorUnarioPrefijo(subexpressions, tipos):
@@ -818,7 +835,6 @@ def chequeadorUnarioPrefijo(subexpressions, tipos):
         aditionalMessage = "\n en operador " + subexpressions[1]
         aditionalMessage += "\n se encontro tipo: " + subexpressions[2]["type"]
         chequearTipo(subexps, tipos, aditionalMessage)
-
     pass
 
 def chequeadorUnarioPostfijo(subexpressions, tipos):
@@ -827,7 +843,6 @@ def chequeadorUnarioPostfijo(subexpressions, tipos):
         aditionalMessage = "\n en operador " + subexpressions[2]
         aditionalMessage += "\n se encontro tipo: " + subexpressions[1]["type"]
         chequearTipo(subexps, tipos, aditionalMessage)
-
     pass
 
 def chequeadorTernario(subexpressions):
@@ -836,7 +851,8 @@ def chequeadorTernario(subexpressions):
         if subexpressions[1]["type"] != "bool":
             message = "La condicion del operador ? tiene que ser de tipo Bool"
             message += "\n se encontro tipo " + subexpressions[1]["type"]
-            raise Exception(message)
+            print message
+            #raise Exception(message)
 
         if (subexpressions[3]["type"], subexpressions[5]["type"]) in [("int", "float"),  ("float", "int")]:
             return
@@ -844,7 +860,8 @@ def chequeadorTernario(subexpressions):
         if subexpressions[3]["type"] != subexpressions[5]["type"]:
             message = "Los valores de retorno del operador ? tiene que ser del mismo tipo"
             message += "\n se encontro tipos " + subexpressions[3]["type"] + " y " + subexpressions[5]["type"]
-            raise Exception(message)
+            print message
+            #raise Exception(message)
 
 def chequeadorSuma(subexpressions):
   if len(subexpressions) == 4:
@@ -859,5 +876,4 @@ def chequearUnicoTerminal(subexpressions, tipos):
     if len(subexpressions) == 2:
         subexps = [ subexpressions[1] ]
         chequearTipo(subexps, tipos, "")
-
     pass
