@@ -48,7 +48,7 @@ if __name__ == "__main__":
     parser = yacc(module=parser_rules)
 
     ast = parser.parse(text, lexer,debug=1)
-    #print "Salida: \n" + ast
+    print "Salida: \n" + ast["value"]
     output_file = open(argv[2], "w")
     #dump_ast(ast, output_file)
 	
