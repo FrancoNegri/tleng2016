@@ -82,7 +82,8 @@ def p_lCerrada4(subexpressions):
 
 def p_lCerrada5(subexpressions):
   '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' 
-  | DO lCerrada WHILE '(' valores ')' ';' '''
+  | DO lCerrada WHILE '(' valores ')' ';' 
+  | DO COMMENT com lCerrada WHILE '(' valores ')' ';' '''
   subexpressions[0] = toString(subexpressions)
 
 def p_sentencia1(subexpressions):
@@ -247,7 +248,8 @@ def p_valores(subexpressions):
   subexpressions[0] = toString(subexpressions)
 
 def p_atributos(subexpressions):
-  '''atributos : ID '.' valoresCampos'''
+  '''atributos : ID '.' valoresCampos
+  | reg '.' valoresCampos '''
   subexpressions[0] = toString(subexpressions)
 
 def p_valoresCampos(subexpressions):
@@ -300,25 +302,26 @@ def p_vecVal1(subexpressions):
 
 #Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
 #Entonces, mas general deberia poder pasar g[h[t[a]]] mientras los tipos anden :)
+#OJO! ACA EN VEZ DE INT PONGO VALORES, HAY QUE CHEQUEAR TIPOS DESPUES....
 def p_m1(subexpressions):
-  '''m : '[' INT ']' '''
+  '''m : '[' valores ']' '''
   subexpressions[0] = toString(subexpressions)
 def p_m2(subexpressions):
-  ''' m : '[' INT ']' m '''
+  ''' m : '[' valores ']' m '''
   subexpressions[0] = toString(subexpressions)
-def p_m3(subexpressions):
-  ''' m : '[' varYVals ']' m '''
-  subexpressions[0] = toString(subexpressions)
-def p_m4(subexpressions):
-  ''' m : '[' varYVals ']' '''
-  subexpressions[0] = toString(subexpressions)
-# a[3*4]
-def p_m5(subexpressions):
- ''' m : '[' eMat ']' m '''
- subexpressions[0] = toString(subexpressions)
-def p_m6(subexpressions):
- ''' m : '[' eMat ']' '''
- subexpressions[0] = toString(subexpressions)
+# def p_m3(subexpressions):
+#   ''' m : '[' varYVals ']' m '''
+#   subexpressions[0] = toString(subexpressions)
+# def p_m4(subexpressions):
+#   ''' m : '[' varYVals ']' '''
+#   subexpressions[0] = toString(subexpressions)
+# # a[3*4]
+# def p_m5(subexpressions):
+#  ''' m : '[' eMat ']' m '''
+#  subexpressions[0] = toString(subexpressions)
+# def p_m6(subexpressions):
+#  ''' m : '[' eMat ']' '''
+#  subexpressions[0] = toString(subexpressions)
 
 
 #Registros:
@@ -372,9 +375,13 @@ def p_varAsig(subexpressions):
 
 # Coloco string aqui, luego chequeamos tipos para cuando se use
 # las operaciones solo para INT
+
+#ACa agrego tambien la funcionString, habria que hacer chequeos despues...
 def p_valoresMat(subexpressions):
   '''valoresMat : INT
   | FLOAT
+  | atributos
+  | funcString
   | funcInt
   | varYVals
   | varsOps
