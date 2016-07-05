@@ -877,19 +877,32 @@ def p_and(subexpressions):
 def p_eq(subexpressions):
   '''eq : eq EQEQ mayor
   | eq DISTINTO mayor
-  | tCompare EQEQ mayor
-  | tCompare DISTINTO mayor
-  | eq EQEQ tCompare
-  | eq DISTINTO tCompare
-  | tCompare EQEQ tCompare
-  | tCompare DISTINTO tCompare
+  | tCompareEQ EQEQ mayor
+  | tCompareEQ DISTINTO mayor
+  | eq EQEQ tCompareEQ
+  | eq DISTINTO tCompareEQ
+  | tCompareEQ EQEQ tCompareEQ
+  | tCompareEQ DISTINTO tCompareEQ
   | mayor'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
 #Aca pongo que se puedan comparar los ternarios.
 #Comparar dos booleanos tiene sentido para neq y eq pero no  para menor o mayor. Se podria filtrar chequeando tipos?
- 
+# Para comparar booleanos por igualdad
+def p_tCompareEQ(subexpressions):
+  '''tCompareEQ :BOOL
+  '''tCompareEQ : BOOL
+  | funcBool
+  | varYVals
+  | varsOps
+  | INT
+  | FLOAT
+  | funcInt
+  | eMat
+  | '(' ternarioMat ')'
+  '''
+
 def p_tCompare(subexpressions):
   '''tCompare : eMat
   | varsOps
@@ -1069,4 +1082,3 @@ def chequearUnicoTerminal(subexpressions, tipos):
     if len(subexpressions) == 2:
         subexps = [ subexpressions[1] ]
         chequearTipo(subexps, tipos)
-    pass
