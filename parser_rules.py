@@ -706,8 +706,7 @@ def p_valoresBool(subexpressions):
   | funcBool
   | varYVals
   | varsOps
-  | '('  ternarioBool ')'
-  |'''
+  '''
   chequearUnicoTerminal(subexpressions, ["bool"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
