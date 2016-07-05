@@ -654,13 +654,13 @@ def p_valoresBool(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[1]["type"]
 
-def p_valoresBool(subexpressions):
+def p_valoresBool1(subexpressions):
   '''valoresBool : '('  ternarioBool ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[2]["type"]  
 
-def p_valoresBool(subexpressions):
+def p_valoresBool2(subexpressions):
   '''valoresBool : '''
   subexpressions[0] = {}
   subexpressions[0]["type"] = ""
