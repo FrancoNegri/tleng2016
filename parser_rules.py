@@ -76,6 +76,10 @@ def p_lCerrada1(subexpressions):
 def p_com(subexpressions):
   '''com : COMMENT com
   | empty '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = "" 
+
 
 
 def p_lCerrada3(subexpressions):
@@ -345,6 +349,7 @@ def p_ternario(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = "" 
   if len(subexpressions) == 2:
     subexpressions[0]["type"] = subexpressions[1]["type"]
   else:
@@ -375,6 +380,7 @@ def p_valoresTernarioVars1(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = "" 
   if len(subexpressions) == 2:
     subexpressions[0]["type"] = subexpressions[1]["type"]
   else:
@@ -517,7 +523,7 @@ def p_varsOps1(subexpressions):
     raise Exception("El operador ++ tiene que recibir variable de tipo float o int")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  nombreVar = subexpressions[1]["var"]
+  nombreVar = subexpressions[2]["var"]
   subexpressions[0]["type"] = variables[nombreVar]["type"]
   subexpressions[0]["var"] = subexpressions[2]["var"]
 
@@ -630,7 +636,7 @@ def p_eMat2(subexpressions):
   chequeadorBinario(subexpressions, ["int", "float"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[2]["type"]
+  subexpressions[0]["type"] = "Mat"
     
 #P -> P * Exp | P / Exp | P % Exp | Exp
 def p_p(subexpressions):
