@@ -30,7 +30,10 @@ def p_g1(subexpressions):
 def p_g2(subexpressions):
   '''g : COMMENT g  '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions) 
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += subexpressions[1]
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += subexpressions[2]["value"]
   subexpressions[0]["var"] = "" 
 
 
@@ -45,14 +48,12 @@ def p_linea(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = "tabing"
   subexpressions[0]["value"] += toString(subexpressions)
-  subexpressions[0]["value"] += "\n"
 
 def p_linea1(subexpressions):
   '''linea : lCerrada'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = "tabing"
   subexpressions[0]["value"] += toString(subexpressions)
-  subexpressions[0]["value"] += "\n"
 
 def p_lAbierta1(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' linea '''
@@ -78,9 +79,10 @@ def p_lAbierta4(subexpressions):
 
 def p_lAbierta5(subexpressions):
   '''lAbierta : loop  lAbierta  '''
-  subexpressions[0]["value"] = toString(subexpressions[:1])
+  subexpressions[0]["value"] = toString(subexpressions[:2])
   subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[1:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toString(subexpressions[0:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["var"] = "" 
 
 
@@ -88,7 +90,8 @@ def p_lAbierta5(subexpressions):
 def p_lCerrada1(subexpressions):
   '''lCerrada : sentencia'''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = "\ntabing"
+  subexpressions[0]["value"] += toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
 
@@ -129,37 +132,69 @@ def p_lCerrada3(subexpressions):
 def p_lCerrada4(subexpressions):
   '''lCerrada : loop '{' g '}' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:3])
-  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:3])
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[3:])
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["var"] = "" 
 
 def p_lCerrada7(subexpressions):
   '''lCerrada : loop lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:1])
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:2])
   subexpressions[0]["value"] += "\n"
+  print subexpressions[1:]
   subexpressions[0]["value"] += toString(subexpressions[1:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
 
 def p_lCerrada8(subexpressions):
   '''lCerrada : loop COMMENT com lCerrada'''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:1])
-  subexpressions[0]["value"] += toString(subexpressions[1:4]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:2])
+  #COMMENT es un terminal asi que no tiene el tabbing apropiado segun el sistema este, lo agrego
+  subexpressions[0]["value"] += "\n\ttabing" + subexpressions[2]
+  subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += toString(subexpressions[3:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n"
   subexpressions[0]["var"] = ""
 
 def p_lCerrada5(subexpressions):
-  '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' 
-  | DO lCerrada WHILE '(' valores ')' ';' 
-  | DO COMMENT com lCerrada WHILE '(' valores ')' ';' '''
+  '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:3])
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toString(subexpressions[3:])
+  subexpressions[0]["value"] += "\n"
   subexpressions[0]["var"] = "" 
 
+def p_lCerrada9(subexpressions):
+  '''lCerrada : DO lCerrada WHILE '(' valores ')' ';'  '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:2])
+  subexpressions[0]["value"] += toString(subexpressions[1:3]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toString(subexpressions[2:])
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["var"] = "" 
+ 
+def p_lCerrada10(subexpressions):
+  '''lCerrada :  DO COMMENT com lCerrada WHILE '(' valores ')' ';'  '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions[:2])
+  subexpressions[0]["value"] += toString(subexpressions[1:4]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toString(subexpressions[3:])
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["var"] = "" 
 
 def p_sentencia1(subexpressions):
   '''sentencia : varsOps  ';' '''
@@ -201,7 +236,8 @@ def p_sentencia5(subexpressions):
 def p_loop1(subexpressions):
   '''loop : WHILE '(' valores ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = "tabing"
+  subexpressions[0]["value"] += toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
 
