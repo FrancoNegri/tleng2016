@@ -325,7 +325,7 @@ def p_atributos(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
-
+  subexpressions[0]["type"] = "falta" 
 
 def p_valoresCampos(subexpressions):
   '''valoresCampos : varYVals
