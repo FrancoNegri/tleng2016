@@ -363,10 +363,15 @@ def p_valoresTernarioMat(subexpressions):
   | FLOAT
   | funcInt
   | STRING
-  | eMat'''
+  | eMat
+  | ternarioMat
+  | '(' ternarioMat ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"]
+  if len(subexpressions) == 2:
+    subexpressions[0]["type"] = subexpressions[1]["type"]
+  else:
+    subexpressions[0]["type"] = subexpressions[2]["type"]
 
 def p_ternarioBool(subexpressions):
   '''ternarioBool : valoresBool '?' valoresTernarioBool ':' valoresTernarioBool  
@@ -411,6 +416,8 @@ def p_varYVals2(subexpressions):
   else:
     subexpressions[0]["type"] = subexpressions[1]["type"]
 
+  subexpressions[0]["var"] = subexpressions[1]["var"]
+
 #VecVal ->  var M
 def p_vecVal(subexpressions):
   '''vecVal : ID m
@@ -418,6 +425,9 @@ def p_vecVal(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "falta tipar"
+  subexpressions[0]["var"] = "falta definir"
+  variables["falta definir"] = {}
+  variables["falta definir"]["type"] = "falta"
 
 #Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
 #Entonces, mas general deberia poder pasar g[h[t[a]]] mientras los tipos anden :)
