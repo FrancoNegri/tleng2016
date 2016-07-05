@@ -66,9 +66,6 @@ def p_lCerrada1(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-#UHm, esto esta bien??
-# def p_lCerrada2(subexpressions):
-#   '''lCerrada : COMMENT lCerrada'''
 
 def p_com(subexpressions):
   '''com : COMMENT com
@@ -579,6 +576,7 @@ def p_eMat2(subexpressions):
   '''
   chequeadorBinario(subexpressions, ["int", "float"])
   subexpressions[0] = {}
+  subexpressions[2] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[2]["type"]
     
