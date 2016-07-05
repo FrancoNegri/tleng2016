@@ -891,7 +891,6 @@ def p_eq(subexpressions):
 #Comparar dos booleanos tiene sentido para neq y eq pero no  para menor o mayor. Se podria filtrar chequeando tipos?
 # Para comparar booleanos por igualdad
 def p_tCompareEQ(subexpressions):
-  '''tCompareEQ :BOOL
   '''tCompareEQ : BOOL
   | funcBool
   | varYVals
