@@ -460,7 +460,6 @@ def p_varsOps1(subexpressions):
   nombreVar = subexpressions[2]["var"]
   if variables[nombreVar]["type"] not in ["int", "float"]:
     raise Exception("El operador ++ tiene que recibir variable de tipo float o int")
-
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   nombreVar = subexpressions[1]["var"]
@@ -533,9 +532,9 @@ def p_valoresMat2(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  nombreVar = subexpressions[1]["var"]
-  subexpressions[0]["type"] = variables[nombreVar]["type"]
-  #subexpressions[0]["type"] = ""
+  #nombreVar = subexpressions[1]["var"]
+  #subexpressions[0]["type"] = variables[nombreVar]["type"]
+  subexpressions[0]["type"] = ""
 
 
 def p_valoresMat3(subexpressions):
@@ -721,7 +720,7 @@ def p_mayor(subexpressions):
   | menor'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-
+  subexpressions[0]["var"] = ""
   # if len(subexpressions) > 2:
   #   tokens = [subexpressions[1], subexpressions[3]]
   #   if not chequearTipo(tokens, ["int", "float"]):
@@ -734,6 +733,7 @@ def p_menor3(subexpressions):
   | not'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = "" 
   # if len(subexpressions) > 2:
   #   tokens = [subexpressions[1], subexpressions[3]]
   #   if not chequearTipo(tokens, ["int", "float"]):
