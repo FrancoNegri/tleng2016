@@ -894,6 +894,7 @@ def p_eq(subexpressions):
 # Para comparar booleanos por igualdad
 def p_tCompareEQ(subexpressions):
   '''tCompareEQ :BOOL
+  '''tCompareEQ : BOOL
   | funcBool
   | varYVals
   | varsOps
