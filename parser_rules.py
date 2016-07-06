@@ -353,25 +353,34 @@ def p_funcReturn(subexpressions):
   subexpressions[0]["value"] =  toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[1]["type"] 
 
-#ATENCION: para simplificar, o no, hice que las funciones tomen valores. Despues hay que restringirle el tipo 
-#La otra opcion es ir separando , x ej, la primera recibiria un emat o valorMat. Asi con los otros
 
 def p_funcInt1(subexpressions):
-  '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')'
-  | LENGTH '(' valores ')' '''
+  '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["type"] = "vec"
+  subexpressions[0]["elems"] = subexpressions[3].get("elems")
+  chequearTipo([subexpressions[3]],["vec"])
+  #Aca quiero chequear que el vector sea numerico, pero me tirar error
+  #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
+  chequearTipo([subexpressions[5]],["int"])
+  if(subexpressions[6]["type"] != ""):
+    chequearTipo([subexpressions[6]],["bool"])
+
+def p_funcInt2(subexpressions):
+  '''funcInt : LENGTH '(' valores ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "int"
-
-# FuncString -> capitalizar(eMat)
+  chequearTipo([subexpressions[3]],["string","vec"])
 #Aca lo mismo que en la de arriba, recibe un "string"
 
 def p_funcString(subexpressions):
   '''funcString : CAPITALIZAR '(' valores ')' '''
-  chequearTipo([subexpressions[3]], ["string"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "string"
+  chequearTipo([subexpressions[3]], ["string"])
 
 # FuncBool -> colineales(Vec,Vec )
 def p_funcBool(subexpressions):
@@ -379,6 +388,9 @@ def p_funcBool(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "bool"
+  subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
+
 
 # FuncVoid -> print(Valores) 
 def p_funcVoid(subexpressions):
@@ -388,6 +400,7 @@ def p_funcVoid(subexpressions):
   subexpressions[0]["var"] = "" 
 
 
+
 #Parametros de las funciones:
 
 def p_param1(subexpressions):
@@ -395,6 +408,7 @@ def p_param1(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
+  subexpressions[0]["type"] = subexpressions[2]["type"]
 
 
 def p_param2(subexpressions):
@@ -402,7 +416,7 @@ def p_param2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
-
+  subexpressions[0]["type"] = "" 
 
 def p_empty(subexpressions):
   '''empty : '''
@@ -542,7 +556,7 @@ def p_valores2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[1]["type"]
   if subexpressions[1]["type"] == "vec":
-      subexpressions[0]["elems"] = subexpressions[1]["elems"]
+      subexpressions[0]["elems"] = subexpressions[1].get("elems")
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos

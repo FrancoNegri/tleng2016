@@ -232,8 +232,8 @@ Rule 226   tCompareEQ -> INT
 Rule 227   tCompareEQ -> FLOAT
 Rule 228   tCompareEQ -> funcInt
 Rule 229   tCompareEQ -> eMat
-Rule 230   tCompareEQ -> ( ternarioMat )
-Rule 231   tCompareEQ -> ( ternarioBool )
+Rule 230   tCompareEQ -> ( ternarioBool )
+Rule 231   tCompareEQ -> ( ternarioMat )
 Rule 232   tCompare -> eMat
 Rule 233   tCompare -> varsOps
 Rule 234   tCompare -> varYVals
@@ -346,8 +346,8 @@ tCompare             : 239 239 241 241
 tCompareEQ           : 215 216 217 218 219 219 220 220
 tercerParam          : 34
 ternario             : 75 88
-ternarioBool         : 98 100 135 136 201 231
-ternarioMat          : 97 99 129 130 162 230 238
+ternarioBool         : 98 100 135 136 201 230
+ternarioMat          : 97 99 129 130 162 231 238
 ternarioVars         : 101 102 115 116
 valores              : 25 26 27 33 34 48 48 49 50 51 51 52 53 57 58 142 143 148 149 150 151 152 153
 valoresBool          : 36 103 104 105 106 107 122 131 204 205 206 206 209 210 211 211 244
@@ -1016,8 +1016,8 @@ state 20
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -1853,8 +1853,8 @@ state 41
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -2062,8 +2062,8 @@ state 42
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -2271,8 +2271,8 @@ state 43
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -2501,8 +2501,8 @@ state 45
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -2718,8 +2718,8 @@ state 47
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -2952,8 +2952,8 @@ state 49
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -3161,8 +3161,8 @@ state 50
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -3395,8 +3395,8 @@ state 52
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -3604,8 +3604,8 @@ state 53
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -3932,8 +3932,8 @@ state 58
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -4271,8 +4271,8 @@ state 74
     (102) ternario -> ( . ternarioVars )
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -4386,8 +4386,8 @@ state 74
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -5236,8 +5236,8 @@ state 103
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -5373,8 +5373,8 @@ state 104
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -5649,8 +5649,8 @@ state 106
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -5858,8 +5858,8 @@ state 107
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -6272,8 +6272,8 @@ state 113
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -6548,8 +6548,8 @@ state 118
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -7059,8 +7059,8 @@ state 150
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (51) funcBool -> . COLINEALES ( valores , valores )
@@ -7329,8 +7329,8 @@ state 151
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -7884,8 +7884,8 @@ state 158
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (232) tCompare -> . eMat
     (233) tCompare -> . varsOps
     (234) tCompare -> . varYVals
@@ -8018,8 +8018,8 @@ state 159
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (232) tCompare -> . eMat
     (233) tCompare -> . varsOps
     (234) tCompare -> . varYVals
@@ -8165,8 +8165,8 @@ state 160
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (51) funcBool -> . COLINEALES ( valores , valores )
@@ -8338,8 +8338,8 @@ state 161
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (59) vecVal -> . ID [ expresion ]
@@ -8603,8 +8603,8 @@ state 162
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -8868,8 +8868,8 @@ state 165
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (232) tCompare -> . eMat
     (233) tCompare -> . varsOps
     (234) tCompare -> . varYVals
@@ -9002,8 +9002,8 @@ state 166
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (232) tCompare -> . eMat
     (233) tCompare -> . varsOps
     (234) tCompare -> . varYVals
@@ -9226,8 +9226,8 @@ state 172
 
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -9331,8 +9331,8 @@ state 172
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -9404,7 +9404,7 @@ state 173
 
     (99) ternario -> ( ternarioMat . )
     (162) valoresMat -> ( ternarioMat . )
-    (230) tCompareEQ -> ( ternarioMat . )
+    (231) tCompareEQ -> ( ternarioMat . )
     (238) tCompare -> ( ternarioMat . )
 
     )               shift and go to state 317
@@ -9469,7 +9469,7 @@ state 177
 
     (100) ternario -> ( ternarioBool . )
     (201) valoresBool -> ( ternarioBool . )
-    (231) tCompareEQ -> ( ternarioBool . )
+    (230) tCompareEQ -> ( ternarioBool . )
 
     )               shift and go to state 318
 
@@ -9818,8 +9818,8 @@ state 189
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -10130,8 +10130,8 @@ state 198
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (59) vecVal -> . ID [ expresion ]
@@ -10395,8 +10395,8 @@ state 199
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -11029,8 +11029,8 @@ state 209
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -11394,8 +11394,8 @@ state 222
 state 223
 
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
@@ -11494,8 +11494,8 @@ state 223
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -12055,8 +12055,8 @@ state 240
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -12271,8 +12271,8 @@ state 242
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -12579,8 +12579,8 @@ state 247
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -12882,8 +12882,8 @@ state 254
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -13323,17 +13323,17 @@ state 268
 
 state 269
 
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
-    (122) ternarioMat -> . valoresBool ? valoresTernarioMat : valoresTernarioMat
-    (123) ternarioMat -> . expBool ? valoresTernarioMat : valoresTernarioMat
     (131) ternarioBool -> . valoresBool ? valoresTernarioBool : valoresTernarioBool
     (132) ternarioBool -> . expBool ? valoresTernarioBool : valoresTernarioBool
+    (122) ternarioMat -> . valoresBool ? valoresTernarioMat : valoresTernarioMat
+    (123) ternarioMat -> . expBool ? valoresTernarioMat : valoresTernarioMat
     (203) expBool -> . expBool OR and
     (204) expBool -> . valoresBool OR and
     (205) expBool -> . expBool OR valoresBool
@@ -13423,8 +13423,8 @@ state 269
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -13477,7 +13477,7 @@ state 269
     mayor                          shift and go to state 79
     valoresMat                     shift and go to state 169
     eq                             shift and go to state 69
-    valoresBool                    shift and go to state 313
+    valoresBool                    shift and go to state 361
     eMat                           shift and go to state 171
     tCompareEQ                     shift and go to state 73
     vecVal                         shift and go to state 8
@@ -13493,7 +13493,7 @@ state 269
     not                            shift and go to state 87
     funcString                     shift and go to state 179
     p                              shift and go to state 94
-    expBool                        shift and go to state 316
+    expBool                        shift and go to state 364
     varYVals                       shift and go to state 185
     parenBool                      shift and go to state 84
     atributos                      shift and go to state 186
@@ -14025,8 +14025,8 @@ state 299
     (116) valoresTernarioVars -> ( . ternarioVars )
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -14140,8 +14140,8 @@ state 299
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -14535,7 +14535,7 @@ state 313
 state 314
 
     (162) valoresMat -> ( ternarioMat . )
-    (230) tCompareEQ -> ( ternarioMat . )
+    (231) tCompareEQ -> ( ternarioMat . )
     (238) tCompare -> ( ternarioMat . )
 
     )               shift and go to state 386
@@ -14544,7 +14544,7 @@ state 314
 state 315
 
     (201) valoresBool -> ( ternarioBool . )
-    (231) tCompareEQ -> ( ternarioBool . )
+    (230) tCompareEQ -> ( ternarioBool . )
 
     )               shift and go to state 387
 
@@ -14566,7 +14566,7 @@ state 317
 
     (99) ternario -> ( ternarioMat ) .
     (162) valoresMat -> ( ternarioMat ) .
-    (230) tCompareEQ -> ( ternarioMat ) .
+    (231) tCompareEQ -> ( ternarioMat ) .
     (238) tCompare -> ( ternarioMat ) .
 
     ,               reduce using rule 99 (ternario -> ( ternarioMat ) .)
@@ -14580,8 +14580,8 @@ state 317
     /               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     %               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     ^               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
-    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
+    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
     >               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
     <               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
 
@@ -14590,7 +14590,7 @@ state 318
 
     (100) ternario -> ( ternarioBool ) .
     (201) valoresBool -> ( ternarioBool ) .
-    (231) tCompareEQ -> ( ternarioBool ) .
+    (230) tCompareEQ -> ( ternarioBool ) .
 
     ,               reduce using rule 100 (ternario -> ( ternarioBool ) .)
     )               reduce using rule 100 (ternario -> ( ternarioBool ) .)
@@ -14600,8 +14600,8 @@ state 318
     OR              reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     AND             reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     ?               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
-    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
+    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
 
 
 state 319
@@ -14651,8 +14651,8 @@ state 322
     (201) valoresBool -> ( . ternarioBool )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
     (122) ternarioMat -> . valoresBool ? valoresTernarioMat : valoresTernarioMat
@@ -14754,8 +14754,8 @@ state 322
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -15176,8 +15176,8 @@ state 337
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -15796,8 +15796,8 @@ state 357
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -16005,8 +16005,8 @@ state 358
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -16165,8 +16165,8 @@ state 362
 
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
@@ -16270,8 +16270,8 @@ state 362
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -16341,7 +16341,7 @@ state 362
 
 state 363
 
-    (230) tCompareEQ -> ( ternarioMat . )
+    (231) tCompareEQ -> ( ternarioMat . )
     (238) tCompare -> ( ternarioMat . )
     (162) valoresMat -> ( ternarioMat . )
 
@@ -16630,8 +16630,8 @@ state 367
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -16955,7 +16955,7 @@ state 377
 
 state 378
 
-    (231) tCompareEQ -> ( ternarioBool . )
+    (230) tCompareEQ -> ( ternarioBool . )
 
     )               shift and go to state 418
 
@@ -17041,8 +17041,8 @@ state 379
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -17293,8 +17293,8 @@ state 380
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -17497,8 +17497,8 @@ state 381
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -17572,7 +17572,7 @@ state 382
 
     (130) valoresTernarioMat -> ( ternarioMat . )
     (162) valoresMat -> ( ternarioMat . )
-    (230) tCompareEQ -> ( ternarioMat . )
+    (231) tCompareEQ -> ( ternarioMat . )
     (238) tCompare -> ( ternarioMat . )
 
     )               shift and go to state 439
@@ -17582,7 +17582,7 @@ state 383
 
     (136) valoresTernarioBool -> ( ternarioBool . )
     (201) valoresBool -> ( ternarioBool . )
-    (231) tCompareEQ -> ( ternarioBool . )
+    (230) tCompareEQ -> ( ternarioBool . )
 
     )               shift and go to state 440
 
@@ -17708,8 +17708,8 @@ state 385
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -17783,7 +17783,7 @@ state 385
 state 386
 
     (162) valoresMat -> ( ternarioMat ) .
-    (230) tCompareEQ -> ( ternarioMat ) .
+    (231) tCompareEQ -> ( ternarioMat ) .
     (238) tCompare -> ( ternarioMat ) .
 
     )               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
@@ -17793,8 +17793,8 @@ state 386
     /               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     %               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     ^               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
-    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
+    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
     >               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
     <               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
 
@@ -17802,7 +17802,7 @@ state 386
 state 387
 
     (201) valoresBool -> ( ternarioBool ) .
-    (231) tCompareEQ -> ( ternarioBool ) .
+    (230) tCompareEQ -> ( ternarioBool ) .
 
     ?               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     OR              reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
@@ -17813,8 +17813,8 @@ state 387
     ;               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     :               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     }               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
-    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
+    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
 
 
 state 388
@@ -17931,8 +17931,8 @@ state 388
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -18112,8 +18112,8 @@ state 389
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -18313,8 +18313,8 @@ state 391
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -18461,8 +18461,8 @@ state 392
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -18713,8 +18713,8 @@ state 393
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -18917,8 +18917,8 @@ state 394
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -19053,8 +19053,8 @@ state 396
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -19244,8 +19244,8 @@ state 398
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -19486,8 +19486,8 @@ state 401
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (141) reg -> . { campos }
@@ -19566,21 +19566,21 @@ state 401
 
 state 402
 
-    (230) tCompareEQ -> ( ternarioMat ) .
+    (231) tCompareEQ -> ( ternarioMat ) .
     (238) tCompare -> ( ternarioMat ) .
     (162) valoresMat -> ( ternarioMat ) .
 
-    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    AND             reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    OR              reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    ?               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    ,               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    ]               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    )               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    ;               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    :               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    }               reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
+    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    AND             reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    OR              reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    ?               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    ,               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    ]               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    )               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    ;               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    :               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    }               reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
     >               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
     <               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
     +               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
@@ -19699,8 +19699,8 @@ state 403
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (141) reg -> . { campos }
@@ -20230,8 +20230,8 @@ state 411
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -20560,8 +20560,8 @@ state 415
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -20717,19 +20717,19 @@ state 417
 
 state 418
 
-    (231) tCompareEQ -> ( ternarioBool ) .
+    (230) tCompareEQ -> ( ternarioBool ) .
 
-    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    AND             reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    OR              reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    ?               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    ,               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    ]               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    )               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    ;               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    :               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    }               reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
+    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    AND             reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    OR              reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    ?               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    ,               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    ]               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    )               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    ;               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    :               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    }               reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
 
 
 state 419
@@ -20801,8 +20801,8 @@ state 423
     (136) valoresTernarioBool -> ( . ternarioBool )
     (116) valoresTernarioVars -> ( . ternarioVars )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
@@ -20911,8 +20911,8 @@ state 423
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -21111,8 +21111,8 @@ state 430
     (136) valoresTernarioBool -> ( . ternarioBool )
     (201) valoresBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -21226,8 +21226,8 @@ state 430
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -21407,8 +21407,8 @@ state 435
     (201) valoresBool -> ( . ternarioBool )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
     (122) ternarioMat -> . valoresBool ? valoresTernarioMat : valoresTernarioMat
@@ -21520,8 +21520,8 @@ state 435
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -21633,7 +21633,7 @@ state 439
 
     (130) valoresTernarioMat -> ( ternarioMat ) .
     (162) valoresMat -> ( ternarioMat ) .
-    (230) tCompareEQ -> ( ternarioMat ) .
+    (231) tCompareEQ -> ( ternarioMat ) .
     (238) tCompare -> ( ternarioMat ) .
 
     :               reduce using rule 130 (valoresTernarioMat -> ( ternarioMat ) .)
@@ -21648,8 +21648,8 @@ state 439
     /               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     %               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
     ^               reduce using rule 162 (valoresMat -> ( ternarioMat ) .)
-    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
-    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioMat ) .)
+    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
+    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioMat ) .)
     >               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
     <               reduce using rule 238 (tCompare -> ( ternarioMat ) .)
 
@@ -21658,7 +21658,7 @@ state 440
 
     (136) valoresTernarioBool -> ( ternarioBool ) .
     (201) valoresBool -> ( ternarioBool ) .
-    (231) tCompareEQ -> ( ternarioBool ) .
+    (230) tCompareEQ -> ( ternarioBool ) .
 
     :               reduce using rule 136 (valoresTernarioBool -> ( ternarioBool ) .)
     )               reduce using rule 136 (valoresTernarioBool -> ( ternarioBool ) .)
@@ -21669,8 +21669,8 @@ state 440
     ?               reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     OR              reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
     AND             reduce using rule 201 (valoresBool -> ( ternarioBool ) .)
-    EQEQ            reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
-    DISTINTO        reduce using rule 231 (tCompareEQ -> ( ternarioBool ) .)
+    EQEQ            reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
+    DISTINTO        reduce using rule 230 (tCompareEQ -> ( ternarioBool ) .)
 
 
 state 441
@@ -21705,8 +21705,8 @@ state 444
     (136) valoresTernarioBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -21810,8 +21810,8 @@ state 444
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -21913,8 +21913,8 @@ state 448
     (201) valoresBool -> ( . ternarioBool )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
     (122) ternarioMat -> . valoresBool ? valoresTernarioMat : valoresTernarioMat
@@ -22016,8 +22016,8 @@ state 448
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -22197,8 +22197,8 @@ state 457
 
     (136) valoresTernarioBool -> ( . ternarioBool )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
@@ -22297,8 +22297,8 @@ state 457
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -22437,8 +22437,8 @@ state 462
     (130) valoresTernarioMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
@@ -22542,8 +22542,8 @@ state 462
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -22802,8 +22802,8 @@ state 466
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -23168,8 +23168,8 @@ state 470
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -23555,8 +23555,8 @@ state 482
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -23768,8 +23768,8 @@ state 483
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -24024,8 +24024,8 @@ state 486
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -24256,8 +24256,8 @@ state 488
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -24469,8 +24469,8 @@ state 489
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -24719,8 +24719,8 @@ state 492
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -24851,8 +24851,8 @@ state 493
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -25077,8 +25077,8 @@ state 494
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -25201,8 +25201,8 @@ state 495
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (56) vec -> . [ elem ]
@@ -25427,8 +25427,8 @@ state 496
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (232) tCompare -> . eMat
@@ -25864,8 +25864,8 @@ state 514
     (130) valoresTernarioMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
@@ -25979,8 +25979,8 @@ state 514
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -26190,8 +26190,8 @@ state 516
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -26404,8 +26404,8 @@ state 517
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -26530,8 +26530,8 @@ state 523
     (136) valoresTernarioBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -26645,8 +26645,8 @@ state 523
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -26872,8 +26872,8 @@ state 525
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -27086,8 +27086,8 @@ state 526
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -27770,8 +27770,8 @@ state 536
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -27958,8 +27958,8 @@ state 537
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -28154,8 +28154,8 @@ state 538
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -28398,8 +28398,8 @@ state 539
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -28552,8 +28552,8 @@ state 540
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -28796,8 +28796,8 @@ state 541
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -28942,8 +28942,8 @@ state 542
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -29130,8 +29130,8 @@ state 543
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (48) funcInt -> . MULTIESCALAR ( valores , valores param )
@@ -29775,8 +29775,8 @@ state 556
 
     (116) valoresTernarioVars -> ( . ternarioVars )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
@@ -29885,8 +29885,8 @@ state 556
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -30006,8 +30006,8 @@ state 559
     (116) valoresTernarioVars -> ( . ternarioVars )
     (136) valoresTernarioBool -> ( . ternarioBool )
     (201) valoresBool -> ( . ternarioBool )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (238) tCompare -> ( . ternarioMat )
     (162) valoresMat -> ( . ternarioMat )
     (246) parenBool -> ( . expBool )
@@ -30116,8 +30116,8 @@ state 559
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (190) iSing -> . - paren
@@ -30216,8 +30216,8 @@ state 561
     (130) valoresTernarioMat -> ( . ternarioMat )
     (201) valoresBool -> ( . ternarioBool )
     (162) valoresMat -> ( . ternarioMat )
-    (230) tCompareEQ -> ( . ternarioMat )
-    (231) tCompareEQ -> ( . ternarioBool )
+    (230) tCompareEQ -> ( . ternarioBool )
+    (231) tCompareEQ -> ( . ternarioMat )
     (195) paren -> ( . eMat )
     (196) paren -> ( . valoresMat )
     (238) tCompare -> ( . ternarioMat )
@@ -30331,8 +30331,8 @@ state 561
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -30762,8 +30762,8 @@ state 568
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -30974,8 +30974,8 @@ state 569
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -31224,8 +31224,8 @@ state 572
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -31437,8 +31437,8 @@ state 573
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -31650,8 +31650,8 @@ state 574
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -31863,8 +31863,8 @@ state 575
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -32180,8 +32180,8 @@ state 580
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
@@ -32394,8 +32394,8 @@ state 581
     (227) tCompareEQ -> . FLOAT
     (228) tCompareEQ -> . funcInt
     (229) tCompareEQ -> . eMat
-    (230) tCompareEQ -> . ( ternarioMat )
-    (231) tCompareEQ -> . ( ternarioBool )
+    (230) tCompareEQ -> . ( ternarioBool )
+    (231) tCompareEQ -> . ( ternarioMat )
     (239) mayor -> . tCompare > tCompare
     (240) mayor -> . menor
     (195) paren -> . ( eMat )
