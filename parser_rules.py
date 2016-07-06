@@ -1008,12 +1008,9 @@ def p_tCompareEQ(subexpressions):
   | FLOAT
   | funcInt
   | eMat
-  | '(' ternarioMat ')'
   | '(' ternarioBool ')' 
+  | '(' ternarioMat ')'
   '''
-  chequearUnicoTerminal(subexpressions, ["int", "float", "bool"])
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
 
 def p_tCompare(subexpressions):
   '''tCompare : eMat
@@ -1023,6 +1020,7 @@ def p_tCompare(subexpressions):
   | funcInt 
   | FLOAT
   | '(' ternarioMat ')' '''
+  print subexpressions[1]
   chequearUnicoTerminal(subexpressions, ["int", "float"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -1191,7 +1189,11 @@ def chequeadorSuma(subexpressions):
 def chequearUnicoTerminal(subexpressions, tipos):
     if len(subexpressions) == 2:
         subexps = [ subexpressions[1] ]
-        chequearTipo(subexps, tipos)
+        if subexpressions[1]["type"] == "noType":
+          message = '''\n variable "''' + subexpressions[1]["var"] + '''" no inicializada'''
+          raise Exception(message)
+          
+        chequearTipo(subexps, tipos, aditionalMessage)
 
 def chequearAccesoVector(subexpressions):
   global vectores, variables
