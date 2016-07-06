@@ -536,6 +536,7 @@ def p_vecVal(subexpressions):
   | vec '[' expresion ']'
   | vecVal '[' expresion ']'
   '''
+  #print(subexpressions[3]["type"])
   chequearAccesoVector(subexpressions)
 
   # a. Si el indice es una expresion, no se puede chequear en tiempo de compilacion
@@ -549,6 +550,7 @@ def p_vecVal(subexpressions):
   subexpressions[0]["var"] = subexpressions[1]["var"]
   subexpressions[0]["type"] = "int"
   subexpressions[0]["elems"] = []
+
 
 def p_vecVal2(subexpressions):
   '''vecVal : ID '[' INT ']'
@@ -568,6 +570,7 @@ def p_vecVal2(subexpressions):
   subexpressions[0]["type"] = tipoElemento
   subexpressions[0]["elems"] = []
   subexpressions[0]["var"] = ""
+
 
 def p_expresion(subexpressions):
   '''expresion : eMat
@@ -829,8 +832,15 @@ def p_varsOps2(subexpressions):
   '''varsOps : varYVals MASMAS 
   | varYVals MENOSMENOS'''
   nombreVar = subexpressions[1]["var"]
-  if variables[nombreVar]["type"] not in ["int", "float"]:
-    raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
+  if nombreVar not in variables:
+    if nombreVar not in vectores:
+       raise Exception("Variable no inicializada previamente")
+    else:
+        ##IF el vector en la posicion [i] no del tipo int o float... como se haria esto?
+        raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")  
+  else:    
+    if variables[nombreVar]["type"] not in ["int", "float"]:
+      raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -857,16 +867,20 @@ def p_varAsig(subexpressions):
   subexpressions[0]["type"] = subexpressions[3]["type"] 
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
+  #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
+  #Uso el get porque si no me tiraba key errors
   if subexpressions[3]["type"] == "vec":
     nombreVec = subexpressions[1]["var"]
-    vectores[nombreVec] = {}
-    vectores[nombreVec]["elems"] = subexpressions[3]["elems"]
-    subexpressions[0]["elems"] = subexpressions[3]["elems"] 
+    if nombreVec not in vectores:
+      vectores[nombreVec] = {}
+      vectores[nombreVec]["elems"] = subexpressions[3].get("elems")
+      subexpressions[0]["elems"] = subexpressions[3].get("elems")
 
   nombreVar = subexpressions[1]["var"]
-  variables[nombreVar] = {}
-  variables[nombreVar]["type"] = subexpressions[3]["type"] 
-
+  if  nombreVar not in variables:
+    variables[nombreVar] = {}
+    variables[nombreVar]["type"] = subexpressions[3]["type"] 
+    
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
 
@@ -922,7 +936,7 @@ def p_eMat1(subexpressions):
         if subexpressions[3]["type"] == "string":
           subexpressions[0]["type"] = "string"
         else:
-          if (subexpressions[1], subexpressions[3]) == ("int", "int"):
+          if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
             subexpressions[0]["type"] = "int"
           else:
             subexpressions[0]["type"] = "float"
@@ -941,7 +955,7 @@ def p_eMat2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  if (subexpressions[1], subexpressions[3]) == ("int", "int"):
+  if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
     subexpressions[0]["type"] = "int"
   else:
     subexpressions[0]["type"] = "float"
@@ -967,9 +981,10 @@ def p_p(subexpressions):
     subexpressions[0] = {}
     subexpressions[0]["value"] = toString(subexpressions)
     subexpressions[0]["type"] = "float"
-
+    
     if len(subexpressions) == 4:
-      if (subexpressions[1], subexpressions[3]) == ("int", "int"):
+
+      if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
         subexpressions[0]["type"] = "int"
       else:
         subexpressions[0]["type"] = "float"
@@ -990,7 +1005,7 @@ def p_exp(subexpressions):
   subexpressions[0]["type"] = "float"
 
   if len(subexpressions) == 4:
-    if (subexpressions[1], subexpressions[3]) == ("int", "int"):
+    if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
       subexpressions[0]["type"] = "int"
     else:
       subexpressions[0]["type"] = "float"
@@ -1110,7 +1125,6 @@ def p_tCompare(subexpressions):
   | funcInt 
   | FLOAT
   | '(' ternarioMat ')' '''
-  print subexpressions[1]
   chequearUnicoTerminal(subexpressions, ["int", "float"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -1300,4 +1314,5 @@ def chequearAccesoVector(subexpressions):
     tipoVariable2 = subexpressions[3]["type"]
 
   if tipoVariable2 != "int" and tipoVariable2 != "":
+    #print(tipoVariable2)
     raise Exception("El indice de un vector solo se puede ser de tipo int") 

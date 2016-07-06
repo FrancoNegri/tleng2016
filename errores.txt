@@ -5,9 +5,9 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 558, in p_vecVal2
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 560, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1290, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1304, in chequearAccesoVector
     nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
@@ -17,11 +17,9 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 539, in p_vecVal
-    chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1303, in chequearAccesoVector
-    raise Exception("El indice de un vector solo se puede ser de tipo int") 
-Exception: El indice de un vector solo se puede ser de tipo int
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 837, in p_varsOps2
+    raise Exception("Variable no inicializada previamente")
+Exception: Variable no inicializada previamente
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
@@ -31,6 +29,6 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 456, in p_funcString
     chequearTipo([subexpressions[3]], ["string"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1201, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1215, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo string
