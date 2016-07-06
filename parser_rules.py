@@ -1192,8 +1192,8 @@ def chequearUnicoTerminal(subexpressions, tipos):
         if subexpressions[1]["type"] == "noType":
           message = '''\n variable "''' + subexpressions[1]["var"] + '''" no inicializada'''
           raise Exception(message)
-          
-        chequearTipo(subexps, tipos, aditionalMessage)
+
+        chequearTipo(subexps, tipos)
 
 def chequearAccesoVector(subexpressions):
   global vectores, variables
