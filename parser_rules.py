@@ -129,7 +129,7 @@ def p_com(subexpressions):
 def p_com2(subexpressions):
   '''com : empty '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = "\ntabing"
+  subexpressions[0]["value"] = "\n"
   subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
@@ -752,10 +752,10 @@ def p_ternarioBool(subexpressions):
   '''ternarioBool : valoresBool '?' valoresTernarioBool ':' valoresTernarioBool  
   | expBool '?' valoresTernarioBool ':' valoresTernarioBool
   '''
+  chequeadorTernario(subexpressions)
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "bool"
-  chequeadorTernario(subexpressions)
 
 def p_valoresTernarioBool(subexpressions):
   '''valoresTernarioBool : BOOL
