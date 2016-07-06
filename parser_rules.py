@@ -806,10 +806,9 @@ def p_varYVals1(subexpressions):
   global variables
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = subexpressions[1]["var"]
-  nombreVar = subexpressions[1]["var"]
-  variable = variables.get(nombreVar, subexpressions[1])
-  subexpressions[0]["type"] = variable["type"]
+  setVariable(subexpressions, 1) 
+  setTipo(subexpressions, 1)
+  setVector(subexpressions, 1) 
 
 def p_varYVals2(subexpressions):
   '''varYVals : vecVal
@@ -821,10 +820,9 @@ def p_varYVals2(subexpressions):
   if len(subexpressions) == 4:
     subexpressions[0]["type"] = "falta tipar"
   else:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
-    subexpressions[0]["elems"] = subexpressions[1]["elems"]
-
-  subexpressions[0]["var"] = subexpressions[1]["var"]
+    setTipo(subexpressions, 1)
+    setVariable(subexpressions, 1)
+    setVector(subexpressions, 1) 
 
 #Registros:
 #Reg -> {U}
@@ -852,63 +850,84 @@ def p_campos2(subexpressions):
 def p_varsOps1(subexpressions):
   '''varsOps : MENOSMENOS varYVals 
   | MASMAS varYVals '''
-  nombreVar = subexpressions[2]["var"]
-  if variables[nombreVar]["type"] not in ["int", "float"]:
-    raise Exception("El operador ++ tiene que recibir variable de tipo float o int")
+  chequearOperadorIncDec(subexpressions, "prefijo")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  nombreVar = subexpressions[2]["var"]
-  subexpressions[0]["type"] = variables[nombreVar]["type"]
-  subexpressions[0]["var"] = subexpressions[2]["var"]
+  setTipo(subexpressions, 2)
+  setVariable(subexpressions, 2)
+  setVector(subexpressions, 2)
 
 def p_varsOps2(subexpressions):
   '''varsOps : varYVals MASMAS 
   | varYVals MENOSMENOS'''
-  nombreVar = subexpressions[1]["var"]
-  if nombreVar not in variables and nombreVar not in vectores:
-    raise Exception("Variable no inicializada previamente")
-  else:
-      if subexpressions[1]["type"] not in ["int", "float"]:
-        raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
-
+  chequearOperadorIncDec(subexpressions, "postfijo")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"]
-  subexpressions[0]["var"] = subexpressions[1]["var"]
+  setTipo(subexpressions, 1)
+  setVariable(subexpressions, 1)
+  setVector(subexpressions, 1)
   
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
 #Dejo las asignaciones no ambiguas como estaban antes
 #Aca pongo varYvals por este caso g[a] = b;
+def p_variable(subexpressions):
+  '''variable : ID
+  | vecVal
+  | vecVal '.' varYVals'''
+  # No hace falta, se pisa el valor de antes pues es una asignacion
+  # if nombreVec not in vectores:
+  # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
+  if subexpressions[1].get("var") == None:
+    raise Exception("Solo se puede asignar valores a variables")
 
-def p_varAsig(subexpressions):
-  '''varAsig : varYVals MULEQ valores
-  | varYVals DIVEQ valores
-  | varYVals MASEQ valores
-  | varYVals MENOSEQ valores
-  | varYVals '=' valores
-  | ID '.' ID '=' valores'''
-  global variables, vectores
-
+  nombreVar = subexpressions[1].get("var")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[3]["type"] 
+  subexpressions[0]["var"] = nombreVar
+  setVariable(subexpressions, 1)
+
+  if subexpressions[1].get("var") == "Para ejecucion":
+    return
+
+  if nombreVar not in vectores:
+    vectores[nombreVar] = {}
+  if nombreVar not in variables:
+    variables[nombreVar] = {}
+
+def p_varAsig(subexpressions):
+  '''varAsig : variable MULEQ valores
+  | variable DIVEQ valores
+  | variable MASEQ valores
+  | variable MENOSEQ valores
+  | variable '=' valores
+  | ID '.' ID '=' valores'''
+  global variables, vectores
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+
+  print subexpressions[1]
+  chequearAsignacion(subexpressions)
+  setTipo(subexpressions, 3)
+  setVariable(subexpressions, 1)
+  setVector(subexpressions, 3)
+
+  nombreVar = subexpressions[1]["var"]
+  tipoValor = getTipoExpresion(subexpressions[3])
+
+  # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
+
+  if subexpressions[1].get("var") == "Para ejecucion":
+    return
+
+  variables[nombreVar]["type"] = tipoValor
+  vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
   #Uso el get porque si no me tiraba key errors
-  if subexpressions[3]["type"] == "vec":
-    nombreVec = subexpressions[1]["var"]
-    if nombreVec not in vectores:
-      vectores[nombreVec] = {}
-      vectores[nombreVec]["elems"] = subexpressions[3].get("elems")
-      subexpressions[0]["elems"] = subexpressions[3].get("elems")
 
-  nombreVar = subexpressions[1]["var"]
-  if  nombreVar not in variables:
-    variables[nombreVar] = {}
-    variables[nombreVar]["type"] = subexpressions[3]["type"] 
     
 #-----------------------------------------------------------------------------
 #Operaciones binarias enteras
