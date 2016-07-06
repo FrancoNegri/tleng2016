@@ -1066,7 +1066,7 @@ def p_valoresBool2(subexpressions):
   '''valoresBool : '''
   subexpressions[0] = {}
   subexpressions[0]["type"] = ""
-  subexpressions[0]["value"] = ""
+  subexpressions[0]["value"] = toString(subexpressions)
 
 # Or -> Or or And | And
 def p_expBool(subexpressions):
@@ -1118,6 +1118,9 @@ def p_tCompareEQ(subexpressions):
   | '(' ternarioBool ')' 
   | '(' ternarioMat ')'
   '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+
 
 def p_tCompare(subexpressions):
   '''tCompare : eMat
@@ -1197,9 +1200,20 @@ def toString(subexpressions):
   res = ""
   for exp in subexpressions[1:]:
     try:
-      res += str(exp["value"])
+      if(exp["value"].endswith(' ') or exp["value"].endswith(';')):
+        res += str(exp["value"])
+      else:
+        res += str(exp["value"]) + " "
     except TypeError:
-      res += str(exp)
+      if(exp == ";" or exp == "[" or exp == "("):
+        res = res[:-1]
+        res += str(exp)
+      else:
+        if(exp == "]" or exp == "," or exp == ")"):
+          res = res[:-1]
+          res += str(exp) + " "
+        else:
+          res += str(exp) + " "
   return res
 
 # chequea si todos los elementos de la lista de subexpresiones son de 
