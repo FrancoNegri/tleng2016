@@ -1358,4 +1358,42 @@ def chequearAccesoVector(subexpressions):
 
   if tipoVariable2 != "int" and tipoVariable2 != "":
     #print(tipoVariable2)
-    raise Exception("El indice de un vector solo se puede ser de tipo int") 
+    raise Exception("El indice de un vector solo se puede ser de tipo int")     raise Exception("El indice de un vector solo se puede ser de tipo int") 
+
+def chequearOperadorIncDec(subexpressions, tipo):
+  if tipo == "prefijo":
+    variable = subexpressions[2]
+    operador = subexpressions[1]
+  
+  if tipo == "postfijo":
+    variable = subexpressions[1]
+    operador = subexpressions[2]
+
+  nombreVar = variable["var"]
+
+  if nombreVar == None:
+    message = "Solo se puede aplicar operador "
+    message += operador
+    message += " a variables"
+    raise Exception(message)
+
+  if nombreVar not in variables:
+    raise Exception("Variable no inicializada previamente")
+
+  ##IF el vector en la posicion [i] no del tipo int o float... como se haria esto?
+  # RTA: a[1] es un valor, eso tiene un tipo asignado
+  # Si a[1] es de tipo vector tiene que explotar
+  if variables[nombreVar]["type"] not in ["int", "float"]:
+    raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
+
+def chequearAsignacion(subexpressions):
+  if subexpressions[1].get("var") == None:
+    raise Exception("Solo se puede asignar valores a variables")
+
+  operador = subexpressions[2]
+  if operador not in ["=", "+="]:
+    chequearTipo([subexpressions[3]], ["int", "float"])
+
+  if operador == "+=":
+    chequearTipo([subexpressions[3]], ["int", "float", "string"])
+
