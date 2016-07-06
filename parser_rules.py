@@ -17,10 +17,12 @@ vectores = {}
 # Simbolo inicial
 start = 'g'
 
-# ---------------------------------------------------------------------------------------
-#Sentencias:
+#-----------------------------------------------------------------------------
+#Sentencias y estructura general:
+#-----------------------------------------------------------------------------
 
-#Tengo dudas con
+#g -> linea g | COMMENT g | empty 
+
 def p_g1(subexpressions):
   '''g : linea g'''
   subexpressions[0] = {}
@@ -38,12 +40,14 @@ def p_g2(subexpressions):
   subexpressions[0]["value"] += subexpressions[2]["value"]
   subexpressions[0]["var"] = "" 
 
-
 def p_g3(subexpressions):
   '''g : empty'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "Empty" 
+
+#-----------------------------------------------------------------------------
+#linea -> lAbierta | lCerrada
 
 def p_linea(subexpressions):
   '''linea : lAbierta '''  
@@ -57,6 +61,10 @@ def p_linea1(subexpressions):
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions)
 
+#-----------------------------------------------------------------------------
+#Linea Abierta: Hay por lo menos un IF que no matchea con un else
+
+#lAbierta -> IF (cosaBooleana) linea
 def p_lAbierta1(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' linea '''
   subexpressions[0] = {}
@@ -64,20 +72,31 @@ def p_lAbierta1(subexpressions):
   subexpressions[0]["value"] = subexpressions[0]["value"].replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+#lAbirta -> IF (cosasBooleana) {g} ELSE lAbierta
+
 def p_lAbierta2(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' '{' g '}' ELSE lAbierta''' 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
+#-----------------------------------------------------------------------------
+#lAbirta -> IF (cosasBooleana) {g} ELSE lAbierta
 def p_lAbierta3(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' lCerrada ELSE lAbierta '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
+#-----------------------------------------------------------------------------
+#lAbirta -> IF (cosasBooleana) {g} 
+
 def p_lAbierta4(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' '{' g '}' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+
+#-----------------------------------------------------------------------------
+#lAbirta -> loop Labierta
 
 def p_lAbierta5(subexpressions):
   '''lAbierta : loop  lAbierta  '''
@@ -86,8 +105,10 @@ def p_lAbierta5(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[0:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+#Linea Cerrada: Cualquier sentencia "comun", if-else completos, loops entre llaves, etc
 
-#Saco el bloque cerrado, ver si lo puedo meter de vuelta para mas claridad
+#lCerrada -> sentencia
 def p_lCerrada1(subexpressions):
   '''lCerrada : sentencia'''
   subexpressions[0] = {}
@@ -95,6 +116,8 @@ def p_lCerrada1(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+#lCerrada -> COMMENT com
 
 def p_com(subexpressions):
   '''com : COMMENT com'''
@@ -108,6 +131,13 @@ def p_com2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = "\ntabing"
   subexpressions[0]["var"] = "" 
+
+#-----------------------------------------------------------------------------
+#Las siguientes son las variantes de tener bloques cerrados ELSE bloques cerrados
+#Un bloque cerrado puede ser una sentencia unica o un bloque entre llaves
+#En cada uno de estos casos puede haber, o no, comentarios. De ahi todas estas combinaciones.
+
+#lCerrada -> IF (cosaBooleana) {g} ELSE {g}
 
 def p_lCerrada3(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE '{' g '}' '''
@@ -123,6 +153,7 @@ def p_lCerrada3(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[10:])
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
 
 def p_lCerrada12(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE '{' g '}' '''
@@ -138,16 +169,21 @@ def p_lCerrada12(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[10:])
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada6(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE '{' g '}' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
+#-----------------------------------------------------------------------------
 
 def p_lCerrada13(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE lCerrada '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+
+#-----------------------------------------------------------------------------
 
 def p_lCerrada14(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE lCerrada '''
@@ -161,20 +197,28 @@ def p_lCerrada14(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[6:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada15(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE lCerrada '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+
+#-----------------------------------------------------------------------------
 
 def p_lCerrada16(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE  COMMENT com lCerrada '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada11(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE  COMMENT com lCerrada '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
+
+#-----------------------------------------------------------------------------
 
 def p_lCerrada4(subexpressions):
   '''lCerrada : loop '{' g '}' '''
@@ -187,6 +231,8 @@ def p_lCerrada4(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[3:])
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada7(subexpressions):
   '''lCerrada : loop lCerrada '''
   subexpressions[0] = {}
@@ -195,6 +241,8 @@ def p_lCerrada7(subexpressions):
   subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[1:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
+
+#-----------------------------------------------------------------------------
 
 def p_lCerrada8(subexpressions):
   '''lCerrada : loop COMMENT com lCerrada'''
@@ -207,6 +255,8 @@ def p_lCerrada8(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[3:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = ""
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada5(subexpressions):
   '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' '''
   subexpressions[0] = {}
@@ -218,6 +268,8 @@ def p_lCerrada5(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[3:])
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+
 def p_lCerrada9(subexpressions):
   '''lCerrada : DO lCerrada WHILE '(' valores ')' ';'  '''
   subexpressions[0] = {}
@@ -228,7 +280,9 @@ def p_lCerrada9(subexpressions):
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:])
   subexpressions[0]["var"] = "" 
- 
+
+#----------------------------------------------------------------------------- 
+
 def p_lCerrada10(subexpressions):
   '''lCerrada :  DO COMMENT com lCerrada WHILE '(' valores ')' ';'  '''
   subexpressions[0] = {}
@@ -240,12 +294,19 @@ def p_lCerrada10(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[4:])
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+#Sentencias basicas
+#-----------------------------------------------------------------------------
+
+#sentencia -> varsOps | func ; | varAsig ; | RETURN; | ;
+
 def p_sentencia1(subexpressions):
   '''sentencia : varsOps  ';' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
 
 def p_sentencia2(subexpressions):
   '''sentencia : func ';' '''
@@ -253,6 +314,7 @@ def p_sentencia2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
 
 def p_sentencia3(subexpressions):
   '''sentencia : varAsig ';' '''
@@ -260,6 +322,7 @@ def p_sentencia3(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
 
 def p_sentencia4(subexpressions):
   '''sentencia : RETURN ';' '''
@@ -267,6 +330,7 @@ def p_sentencia4(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
 
 def p_sentencia5(subexpressions):
   '''sentencia : ';' '''
@@ -274,8 +338,11 @@ def p_sentencia5(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+#Loop headers
+#-----------------------------------------------------------------------------
 
-#Ojo, estoy usando valores, habria que chequear tipos...
+#loop -> WHILE (valores) | FOR (primerParam ; valores ; tercerParam)
 
 def p_loop1(subexpressions):
   '''loop : WHILE '(' valores ')' '''
@@ -283,26 +350,19 @@ def p_loop1(subexpressions):
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions)
   subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[3]],["bool"],". La guarda debe ser un booleano")
 
+#-----------------------------------------------------------------------------
 
 def p_loop3(subexpressions):
   '''loop : FOR '(' primParam ';' valores ';' tercerParam ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[5]],["bool"],". El segundo parametro debe ser un booleano")
 
-
-#en el tercer parametro del for pongo varOps, pero en realidad puede ser mas general(!), es lo que discutimos en clase.
-
-#Este puede ser util para otras cosas de mas abajo. Ver como reemplazar !
-
-def p_cosaBooleana(subexpressions):
-  '''cosaBooleana : expBool
-  | valoresBool'''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
-
+#en el tercer parametro del for esta varOps, pero en realidad puede ser mas general(!)
+#-----------------------------------------------------------------------------
 
 def p_primParam(subexpressions):
   '''primParam : varAsig
@@ -322,20 +382,25 @@ def p_tercerParam(subexpressions):
   subexpressions[0]["var"] = "" 
 
 
-# ---------------------------------------------------------------------------------------
-#Control:
+def p_cosaBooleana(subexpressions):
+  '''cosaBooleana : expBool
+  | valoresBool'''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
 #Funciones
+#-----------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------
+# func -> FuncReturn | FuncVoid
 
-# Func -> FuncReturn | FuncVoid
 def p_func1(subexpressions):
   '''func : funcReturn'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
-
 
 def p_func2(subexpressions):
   '''func : funcVoid'''
@@ -343,8 +408,9 @@ def p_func2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
+#-----------------------------------------------------------------------------
+# funcReturn -> FuncInt | FuncString | FuncBool
 
-# FuncReturn -> FuncInt | FuncString | FuncBool
 def p_funcReturn(subexpressions):
   '''funcReturn : funcInt
   | funcString
@@ -353,6 +419,8 @@ def p_funcReturn(subexpressions):
   subexpressions[0]["value"] =  toString(subexpressions)
   subexpressions[0]["type"] = subexpressions[1]["type"] 
 
+#-----------------------------------------------------------------------------
+#funcInt -> MULTIESCALAR( valores, valores param)
 
 def p_funcInt1(subexpressions):
   '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
@@ -361,11 +429,14 @@ def p_funcInt1(subexpressions):
   subexpressions[0]["type"] = "vec"
   subexpressions[0]["elems"] = subexpressions[3].get("elems")
   chequearTipo([subexpressions[3]],["vec"])
-  #Aca quiero chequear que el vector sea numerico, pero me tirar error
+  #Aca quiero chequear que sea numerico, pero me tirar error
   #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
   chequearTipo([subexpressions[5]],["int"])
   if(subexpressions[6]["type"] != ""):
     chequearTipo([subexpressions[6]],["bool"])
+
+#-----------------------------------------------------------------------------
+#funcInt -> LENGTH( valores)
 
 def p_funcInt2(subexpressions):
   '''funcInt : LENGTH '(' valores ')' '''
@@ -373,7 +444,9 @@ def p_funcInt2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "int"
   chequearTipo([subexpressions[3]],["string","vec"])
-#Aca lo mismo que en la de arriba, recibe un "string"
+
+#-----------------------------------------------------------------------------
+#funcString -> CAPIALIZAR(valores)
 
 def p_funcString(subexpressions):
   '''funcString : CAPITALIZAR '(' valores ')' '''
@@ -382,7 +455,9 @@ def p_funcString(subexpressions):
   subexpressions[0]["type"] = "string"
   chequearTipo([subexpressions[3]], ["string"])
 
-# FuncBool -> colineales(Vec,Vec )
+#-----------------------------------------------------------------------------
+# FuncBool -> colineales(valores,valores )
+
 def p_funcBool(subexpressions):
   '''funcBool : COLINEALES '(' valores ',' valores ')' '''
   subexpressions[0] = {}
@@ -391,17 +466,18 @@ def p_funcBool(subexpressions):
   subexpressions[0]["var"] = "" 
   chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
 
-
+#-----------------------------------------------------------------------------
 # FuncVoid -> print(Valores) 
+
 def p_funcVoid(subexpressions):
   '''funcVoid : PRINT '(' valores ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
 
-
-
+#-----------------------------------------------------------------------------
 #Parametros de las funciones:
+#-----------------------------------------------------------------------------
 
 def p_param1(subexpressions):
   '''param : ',' valores'''
@@ -427,6 +503,8 @@ def p_empty(subexpressions):
 
 #-----------------------------------------------------------------------------
 #Vectores  y variables
+#-----------------------------------------------------------------------------
+
 
 def p_vec(subexpressions):
   '''vec : '[' elem ']' '''
@@ -452,9 +530,7 @@ def p_elem(subexpressions):
   subexpressions[0]["elems"].insert(1, tipoElem)
 
 #VecVal ->  var M
-#Aca se volvio un poco turbio, pero debe poder pasar esto g[b] 
-#Entonces, mas general deberia poder pasar g[h[t[a]]] mientras los tipos anden :)
-#OJO! ACA EN VEZ DE INT PONGO VALORES, HAY QUE CHEQUEAR TIPOS DESPUES....
+
 def p_vecVal(subexpressions):
   '''vecVal : ID '[' expresion ']'
   | vec '[' expresion ']'
@@ -468,7 +544,6 @@ def p_vecVal(subexpressions):
   # indice hay un valor o una expresion
   # if valorIndice[ "hay una expresion?" ] == true
   #   tipoElemento = vectores[nombreVar1]["elems"][int(valorIndice["value"])]
-  # RTA: Solo tipo si tengo un token INT
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = subexpressions[1]["var"]
@@ -539,8 +614,6 @@ def p_valores(subexpressions):
     tipo = variables[nombreVariable]["type"]
 
   subexpressions[0]["type"] = tipo
-  if tipo == "vec":
-    subexpressions[0]["elems"] = subexpressions[1]["elems"]
 
 def p_valores2(subexpressions):
   '''valores : eMat
@@ -702,9 +775,6 @@ def p_varYVals1(subexpressions):
   variable = variables.get(nombreVar, subexpressions[1])
   subexpressions[0]["type"] = variable["type"]
 
-  if subexpressions[1]["type"] == "vec":
-    subexpressions[0]["elems"] = subexpressions[1]["elems"]
-
 def p_varYVals2(subexpressions):
   '''varYVals : vecVal
   | vecVal '.' varYVals
@@ -852,7 +922,7 @@ def p_eMat1(subexpressions):
         if subexpressions[3]["type"] == "string":
           subexpressions[0]["type"] = "string"
         else:
-          if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
+          if (subexpressions[1], subexpressions[3]) == ("int", "int"):
             subexpressions[0]["type"] = "int"
           else:
             subexpressions[0]["type"] = "float"
@@ -871,7 +941,7 @@ def p_eMat2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
+  if (subexpressions[1], subexpressions[3]) == ("int", "int"):
     subexpressions[0]["type"] = "int"
   else:
     subexpressions[0]["type"] = "float"
@@ -896,8 +966,10 @@ def p_p(subexpressions):
     chequeadorBinario(subexpressions, ["int", "float"])
     subexpressions[0] = {}
     subexpressions[0]["value"] = toString(subexpressions)
+    subexpressions[0]["type"] = "float"
+
     if len(subexpressions) == 4:
-      if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
+      if (subexpressions[1], subexpressions[3]) == ("int", "int"):
         subexpressions[0]["type"] = "int"
       else:
         subexpressions[0]["type"] = "float"
@@ -918,7 +990,7 @@ def p_exp(subexpressions):
   subexpressions[0]["type"] = "float"
 
   if len(subexpressions) == 4:
-    if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
+    if (subexpressions[1], subexpressions[3]) == ("int", "int"):
       subexpressions[0]["type"] = "int"
     else:
       subexpressions[0]["type"] = "float"
@@ -1038,6 +1110,7 @@ def p_tCompare(subexpressions):
   | funcInt 
   | FLOAT
   | '(' ternarioMat ')' '''
+  print subexpressions[1]
   chequearUnicoTerminal(subexpressions, ["int", "float"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -1215,19 +1288,16 @@ def chequearUnicoTerminal(subexpressions, tipos):
 def chequearAccesoVector(subexpressions):
   global vectores, variables
   nombreVar1 = subexpressions[1]["var"]
-  if variables.get(nombreVar1) == None:
-    message = '''Variable "''' + subexpressions[1]["var"] + '''" no inicializada'''
-    raise Exception(message)
   tipoVariable1 = variables[nombreVar1]["type"]
 
   if tipoVariable1 != "vec" and tipoVariable1 != "":
     raise Exception("El operador [i] solo se puede usar con variables de tipo vector")
 
-  if subexpressions[3].get("var") != None:
+  if subexpressions[3]["type"] == "var":
     nombreVar2 = subexpressions[3]["var"]
     tipoVariable2 = variables[nombreVar2]["type"]
   else:
     tipoVariable2 = subexpressions[3]["type"]
 
   if tipoVariable2 != "int" and tipoVariable2 != "":
-    raise Exception("El indice de un vector solo puede ser de tipo int") 
+    raise Exception("El indice de un vector solo se puede ser de tipo int") 

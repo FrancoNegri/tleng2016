@@ -37,14 +37,14 @@ Rule 31    sentencia -> RETURN ;
 Rule 32    sentencia -> ;
 Rule 33    loop -> WHILE ( valores )
 Rule 34    loop -> FOR ( primParam ; valores ; tercerParam )
-Rule 35    cosaBooleana -> expBool
-Rule 36    cosaBooleana -> valoresBool
-Rule 37    primParam -> varAsig
-Rule 38    primParam -> empty
-Rule 39    tercerParam -> varsOps
-Rule 40    tercerParam -> varAsig
-Rule 41    tercerParam -> func
-Rule 42    tercerParam -> empty
+Rule 35    primParam -> varAsig
+Rule 36    primParam -> empty
+Rule 37    tercerParam -> varsOps
+Rule 38    tercerParam -> varAsig
+Rule 39    tercerParam -> func
+Rule 40    tercerParam -> empty
+Rule 41    cosaBooleana -> expBool
+Rule 42    cosaBooleana -> valoresBool
 Rule 43    func -> funcReturn
 Rule 44    func -> funcVoid
 Rule 45    funcReturn -> funcInt
@@ -314,12 +314,12 @@ com                  : 12 16 19 20 21 21 24 27
 cosaBooleana         : 6 7 8 9 14 15 16 17 18 19 20 21
 eMat                 : 65 80 128 163 165 168 170 195 229 232
 elem                 : 56 57
-empty                : 3 13 38 42 54
+empty                : 3 13 36 40 54
 eq                   : 208 209 212 213 214 217 218
 exp                  : 172 173 174 175 176 177 184 185 187
-expBool              : 35 66 81 108 109 110 111 112 123 132 137 203 205 246
+expBool              : 41 66 81 108 109 110 111 112 123 132 137 203 205 246
 expresion            : 59 60 61
-func                 : 29 41
+func                 : 29 39
 funcBool             : 47 134 198 223
 funcInt              : 45 126 156 228 236
 funcReturn           : 43 67 82
@@ -350,15 +350,15 @@ ternarioBool         : 98 100 135 136 201 230
 ternarioMat          : 97 99 129 130 162 231 238
 ternarioVars         : 101 102 115 116
 valores              : 25 26 27 33 34 48 48 49 50 51 51 52 53 57 58 142 143 148 149 150 151 152 153
-valoresBool          : 36 103 104 105 106 107 122 131 204 205 206 206 209 210 211 211 244
+valoresBool          : 42 103 104 105 106 107 122 131 204 205 206 206 209 210 211 211 244
 valoresCampos        : 92 93
 valoresMat           : 164 165 166 166 169 170 171 171 175 176 177 178 179 180 181 181 182 182 183 183 186 187 188 188 192 193 196
 valoresTernarioBool  : 106 107 111 112 131 131 132 132
 valoresTernarioMat   : 104 105 109 110 122 122 123 123
 valoresTernarioVars  : 103 103 104 105 106 107 108 108 109 110 111 112
-varAsig              : 30 37 40
+varAsig              : 30 35 38
 varYVals             : 72 78 94 119 140 144 145 146 147 148 149 150 151 152 160 199 224 234
-varsOps              : 28 39 73 79 118 161 200 225 233
+varsOps              : 28 37 73 79 118 161 200 225 233
 vec                  : 60 63 74 90 114
 vecVal               : 61 64 139 140
 
@@ -3766,8 +3766,8 @@ state 56
 state 57
 
     (34) loop -> FOR ( . primParam ; valores ; tercerParam )
-    (37) primParam -> . varAsig
-    (38) primParam -> . empty
+    (35) primParam -> . varAsig
+    (36) primParam -> . empty
     (148) varAsig -> . varYVals MULEQ valores
     (149) varAsig -> . varYVals DIVEQ valores
     (150) varAsig -> . varYVals MASEQ valores
@@ -5324,8 +5324,8 @@ state 104
     (19) lCerrada -> IF ( . cosaBooleana ) COMMENT com lCerrada ELSE lCerrada
     (20) lCerrada -> IF ( . cosaBooleana ) lCerrada ELSE COMMENT com lCerrada
     (21) lCerrada -> IF ( . cosaBooleana ) COMMENT com lCerrada ELSE COMMENT com lCerrada
-    (35) cosaBooleana -> . expBool
-    (36) cosaBooleana -> . valoresBool
+    (41) cosaBooleana -> . expBool
+    (42) cosaBooleana -> . valoresBool
     (203) expBool -> . expBool OR and
     (204) expBool -> . valoresBool OR and
     (205) expBool -> . expBool OR valoresBool
@@ -6499,8 +6499,8 @@ state 118
     (19) lCerrada -> IF ( . cosaBooleana ) COMMENT com lCerrada ELSE lCerrada
     (20) lCerrada -> IF ( . cosaBooleana ) lCerrada ELSE COMMENT com lCerrada
     (21) lCerrada -> IF ( . cosaBooleana ) COMMENT com lCerrada ELSE COMMENT com lCerrada
-    (35) cosaBooleana -> . expBool
-    (36) cosaBooleana -> . valoresBool
+    (41) cosaBooleana -> . expBool
+    (42) cosaBooleana -> . valoresBool
     (203) expBool -> . expBool OR and
     (204) expBool -> . valoresBool OR and
     (205) expBool -> . expBool OR valoresBool
@@ -6998,16 +6998,16 @@ state 145
 
 state 146
 
-    (37) primParam -> varAsig .
+    (35) primParam -> varAsig .
 
-    ;               reduce using rule 37 (primParam -> varAsig .)
+    ;               reduce using rule 35 (primParam -> varAsig .)
 
 
 state 147
 
-    (38) primParam -> empty .
+    (36) primParam -> empty .
 
-    ;               reduce using rule 38 (primParam -> empty .)
+    ;               reduce using rule 36 (primParam -> empty .)
 
 
 state 148
@@ -11363,13 +11363,13 @@ state 220
 
 state 221
 
-    (36) cosaBooleana -> valoresBool .
+    (42) cosaBooleana -> valoresBool .
     (204) expBool -> valoresBool . OR and
     (206) expBool -> valoresBool . OR valoresBool
     (209) and -> valoresBool . AND eq
     (211) and -> valoresBool . AND valoresBool
 
-    )               reduce using rule 36 (cosaBooleana -> valoresBool .)
+    )               reduce using rule 42 (cosaBooleana -> valoresBool .)
     OR              shift and go to state 161
     AND             shift and go to state 160
 
@@ -11735,11 +11735,11 @@ state 229
 
 state 230
 
-    (35) cosaBooleana -> expBool .
+    (41) cosaBooleana -> expBool .
     (203) expBool -> expBool . OR and
     (205) expBool -> expBool . OR valoresBool
 
-    )               reduce using rule 35 (cosaBooleana -> expBool .)
+    )               reduce using rule 41 (cosaBooleana -> expBool .)
     OR              shift and go to state 198
 
 
@@ -20654,10 +20654,10 @@ state 416
 state 417
 
     (34) loop -> FOR ( primParam ; valores ; . tercerParam )
-    (39) tercerParam -> . varsOps
-    (40) tercerParam -> . varAsig
-    (41) tercerParam -> . func
-    (42) tercerParam -> . empty
+    (37) tercerParam -> . varsOps
+    (38) tercerParam -> . varAsig
+    (39) tercerParam -> . func
+    (40) tercerParam -> . empty
     (144) varsOps -> . MENOSMENOS varYVals
     (145) varsOps -> . MASMAS varYVals
     (146) varsOps -> . varYVals MASMAS
@@ -22753,8 +22753,8 @@ state 466
     (7) lAbierta -> IF ( . cosaBooleana ) { g } ELSE lAbierta
     (8) lAbierta -> IF ( . cosaBooleana ) lCerrada ELSE lAbierta
     (9) lAbierta -> IF ( . cosaBooleana ) { g }
-    (35) cosaBooleana -> . expBool
-    (36) cosaBooleana -> . valoresBool
+    (41) cosaBooleana -> . expBool
+    (42) cosaBooleana -> . valoresBool
     (203) expBool -> . expBool OR and
     (204) expBool -> . valoresBool OR and
     (205) expBool -> . expBool OR valoresBool
@@ -23389,9 +23389,9 @@ state 476
 
 state 477
 
-    (41) tercerParam -> func .
+    (39) tercerParam -> func .
 
-    )               reduce using rule 41 (tercerParam -> func .)
+    )               reduce using rule 39 (tercerParam -> func .)
 
 
 state 478
@@ -23403,23 +23403,23 @@ state 478
 
 state 479
 
-    (40) tercerParam -> varAsig .
+    (38) tercerParam -> varAsig .
 
-    )               reduce using rule 40 (tercerParam -> varAsig .)
+    )               reduce using rule 38 (tercerParam -> varAsig .)
 
 
 state 480
 
-    (42) tercerParam -> empty .
+    (40) tercerParam -> empty .
 
-    )               reduce using rule 42 (tercerParam -> empty .)
+    )               reduce using rule 40 (tercerParam -> empty .)
 
 
 state 481
 
-    (39) tercerParam -> varsOps .
+    (37) tercerParam -> varsOps .
 
-    )               reduce using rule 39 (tercerParam -> varsOps .)
+    )               reduce using rule 37 (tercerParam -> varsOps .)
 
 
 state 482
