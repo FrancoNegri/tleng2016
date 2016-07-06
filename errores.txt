@@ -5,9 +5,9 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 563, in p_vecVal2
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 594, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1431, in chequearAccesoVector
     nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
@@ -17,7 +17,21 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 840, in p_varsOps2
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 469, in p_funcInt1
+    chequearTipo([subexpressions[6]],["bool"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1342, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo bool
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 886, in p_varsOps2
+    chequearOperadorIncDec(subexpressions, "postfijo")
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1465, in chequearOperadorIncDec
     raise Exception("Variable no inicializada previamente")
 Exception: Variable no inicializada previamente
 Traceback (most recent call last):
@@ -27,8 +41,8 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 459, in p_funcString
-    chequearTipo([subexpressions[3]], ["string"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1218, in chequearTipo
-    raise Exception(message)
-Exception: Se esperaba tipo string
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 826, in p_varYVals1
+    setTipo(subexpressions, 1)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1309, in setTipo
+    tipo = variables[nombreVariable]["type"]
+KeyError: 'nombre'

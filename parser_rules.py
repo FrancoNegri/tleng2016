@@ -13,7 +13,7 @@ class Node:
 # Para guardar el tipo de las variables
 variables = {}
 vectores = {}
-
+registros = {}
 # Simbolo inicial
 start = 'g'
 
@@ -433,13 +433,13 @@ def p_func1(subexpressions):
   '''func : funcReturn'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None
 
 def p_func2(subexpressions):
   '''func : funcVoid'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None 
 
 #-----------------------------------------------------------------------------
 # funcReturn -> FuncInt | FuncString | FuncBool
@@ -465,8 +465,9 @@ def p_funcInt1(subexpressions):
   #Aca quiero chequear que sea numerico, pero me tirar error
   #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
   chequearTipo([subexpressions[5]],["int"])
-  if(subexpressions[6]["type"] != ""):
+  if(subexpressions[6]["type"] != None):
     chequearTipo([subexpressions[6]],["bool"])
+  subexpressions[0]["var"] =  None  
 
 #-----------------------------------------------------------------------------
 #funcInt -> LENGTH( valores)
@@ -477,6 +478,7 @@ def p_funcInt2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "int"
   chequearTipo([subexpressions[3]],["string","vec"])
+  subexpressions[0]["var"] = None
 
 #-----------------------------------------------------------------------------
 #funcString -> CAPIALIZAR(valores)
@@ -487,6 +489,7 @@ def p_funcString(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "string"
   chequearTipo([subexpressions[3]], ["string"])
+  subexpressions[0]["var"] = None 
 
 #-----------------------------------------------------------------------------
 # FuncBool -> colineales(valores,valores )
@@ -496,7 +499,7 @@ def p_funcBool(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "bool"
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None 
   chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
 
 #-----------------------------------------------------------------------------
@@ -506,7 +509,7 @@ def p_funcVoid(subexpressions):
   '''funcVoid : PRINT '(' valores ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None 
 
 #-----------------------------------------------------------------------------
 #Parametros de las funciones:
@@ -516,7 +519,7 @@ def p_param1(subexpressions):
   '''param : ',' valores'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None
   subexpressions[0]["type"] = subexpressions[2]["type"]
 
 
@@ -525,13 +528,13 @@ def p_param2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = "" 
-  subexpressions[0]["type"] = "" 
+  subexpressions[0]["type"] = None 
 
 def p_empty(subexpressions):
   '''empty : '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None
 
 
 #-----------------------------------------------------------------------------
@@ -652,14 +655,33 @@ def p_valores(subexpressions):
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
+  if subexpressions[1]["type"] == "reg": 
+      subexpressions[0]["campos"] = subexpressions[1].get("campos")
 
 def p_atributos(subexpressions):
-  '''atributos : ID '.' valoresCampos
-  | reg '.' valoresCampos '''
+  '''atributos : ID '.' valoresCampos'''
+ 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = None 
-  subexpressions[0]["type"] = "falta" 
+  nombreReg = subexpressions[1]["var"]
+  
+  for  tupla in registros[nombreReg]["campos"]:
+    print(tupla[0])
+    if tupla[0] == subexpressions[3]["var"]:
+      subexpressions[0]["type"] = tupla[1]
+      return
+
+  raise Exception("El campo no esta definido para ese registro")   
+
+
+def p_atributos2(subexpressions):
+  '''atributos : reg '.' valoresCampos '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["var"] = ""
+  
+
 
 def p_valoresCampos(subexpressions):
   '''valoresCampos : varYVals
@@ -825,19 +847,26 @@ def p_reg(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "reg"
+  subexpressions[0]["campos"] = subexpressions[2]["campos"]
 
 #U -> campo: Valores, U | campof: Valores
 #campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
 #Me parece que mejore el campo es un ID (!)
 def p_campos1(subexpressions):
-  '''campos : ID ':' valores ',' campos'''
+  '''campos : ID ':' valores ',' campos
+  | ID ':' valores '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-def p_campos2(subexpressions):
-  '''campos : ID ':' valores'''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["campos"] = []
 
+  tupla = (subexpressions[1]["var"], subexpressions[3]["type"])
+
+  if len(subexpressions) != 4:
+    subexpressions[0]["campos"] = subexpressions[5]["campos"]
+
+  subexpressions[0]["campos"].insert(1, tupla)
+
+  
 #-----------------------------------------------------------------------------
 #Operadores de variables:
 #VarsOps -> --SMM | ++SMM | SMM
@@ -901,7 +930,7 @@ def p_varAsig(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  print subexpressions[1]
+  
   chequearAsignacion(subexpressions)
   setTipo(subexpressions, 3)
   setVariable(subexpressions, 1)
@@ -912,6 +941,13 @@ def p_varAsig(subexpressions):
 
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
 
+
+  if subexpressions[3]["type"] == "reg":
+    nombreReg = subexpressions[1]["var"]
+    if nombreReg not in registros:
+      registros[nombreReg] = {}
+      registros[nombreReg]["campos"] = subexpressions[3].get("campos")
+      subexpressions[0]["campos"] = subexpressions[3].get("campos")
   if subexpressions[1].get("var") == "Para ejecucion":
     return
 
@@ -1280,7 +1316,7 @@ def setTipo(subexpressions, indiceFuente):
 # Obtiene el tipo de una expresion
 def getTipoExpresion(subexpression):
   nombreVariable =  subexpression.get("var")
-  if nombreVariable != None and nombreVariable != "Para ejecucion":
+  if nombreVariable != None and nombreVariable != "Para ejecucion" and nombreVariable != "":
     tipo = variables[nombreVariable]["type"]
   else:
     tipo = subexpression["type"]
@@ -1418,7 +1454,7 @@ def chequearOperadorIncDec(subexpressions, tipo):
     operador = subexpressions[2]
 
   nombreVar = variable["var"]
-
+  print(nombreVar)
   if nombreVar == None:
     message = "Solo se puede aplicar operador "
     message += operador
