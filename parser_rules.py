@@ -700,11 +700,15 @@ def p_ternario(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+
   if len(subexpressions) == 2:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
+    setTipo(subexpressions, 1)
+    setVariable(subexpressions, 1)
+    setVector(subexpressions, 1)
   else:
-    subexpressions[0]["type"] = subexpressions[2]["type"]
+    setTipo(subexpressions, 2)
+    setVariable(subexpressions, 2)
+    setVector(subexpressions, 2)
 
 def p_ternarioVars(subexpressions):
   '''ternarioVars : valoresBool '?' valoresTernarioVars ':' valoresTernarioVars  
@@ -720,7 +724,11 @@ def p_ternarioVars(subexpressions):
   chequeadorTernario(subexpressions)
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[3]["type"]
+  setTipo(subexpressions, 3)
+
+  # Dejo los atributos de vectores y variables para tiempo de ejecucion
+  subexpressions[0]["var"] = None
+  subexpressions[0]["elems"] = None
 
 def p_valoresTernarioVars1(subexpressions):
   '''valoresTernarioVars : reg
@@ -728,28 +736,20 @@ def p_valoresTernarioVars1(subexpressions):
   | ternarioVars
   | '(' ternarioVars ')'
   | atributos
+  | varsOps
+  | varYVals
+  | RES
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
   if len(subexpressions) == 2:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
+    setTipo(subexpressions, 1)
+    setVariable(subexpressions, 1)
+    setVector(subexpressions, 1)
   else:
-    subexpressions[0]["type"] = subexpressions[2]["type"]
-
-def p_valoresTernarioVars2(subexpressions):
-  '''valoresTernarioVars : varsOps
-  | varYVals
-  | res'''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-  nombreVar = subexpressions[1]["var"]
-  subexpressions[0]["var"] = nombreVar
-  subexpressions[0]["type"] = variables[nombreVar]["type"]
-
-def p_res(subexpressions):
-  '''res : RES'''
-  subexpressions[0]["var"] = "res"
+    setTipo(subexpressions, 2)
+    setVariable(subexpressions, 2)
+    setVector(subexpressions, 2)
 
 def p_ternarioMat(subexpressions):
   '''ternarioMat : valoresBool '?' valoresTernarioMat ':' valoresTernarioMat  
@@ -758,10 +758,17 @@ def p_ternarioMat(subexpressions):
   chequeadorTernario(subexpressions)
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  if (subexpressions[3], subexpressions[5]) in [("int", "float"), ("float", "int")]:
+
+  tipo1 = getTipoExpresion(subexpressions[3])
+  tipo2 = getTipoExpresion(subexpressions[5])
+  if (tipo1, tipo2) in [("int", "float"), ("float", "int")]:
     subexpressions[0]["type"] = "float"
   else:
-    subexpressions[0] = subexpressions[3]
+    subexpressions[0]["type"] = tipo1
+
+  # Dejo los atributos de vectores y variables para tiempo de ejecucion
+  subexpressions[0]["var"] = None
+  subexpressions[0]["elems"] = None
 
 def p_valoresTernarioMat(subexpressions):
   '''valoresTernarioMat : INT
@@ -774,18 +781,22 @@ def p_valoresTernarioMat(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   if len(subexpressions) == 2:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
+    setTipo(subexpressions, 1)
+    setVariable(subexpressions, 1)
+    setVector(subexpressions, 1)
   else:
-    subexpressions[0]["type"] = subexpressions[2]["type"]
+    setTipo(subexpressions, 2)
+    setVariable(subexpressions, 2)
+    setVector(subexpressions, 2)
 
 def p_ternarioBool(subexpressions):
   '''ternarioBool : valoresBool '?' valoresTernarioBool ':' valoresTernarioBool  
   | expBool '?' valoresTernarioBool ':' valoresTernarioBool
   '''
-  chequeadorTernario(subexpressions)
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "bool"
+  chequeadorTernario(subexpressions)
 
 def p_valoresTernarioBool(subexpressions):
   '''valoresTernarioBool : BOOL
