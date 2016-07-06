@@ -925,53 +925,37 @@ def p_valoresMat1(subexpressions):
   | atributos
   | funcString
   | STRING
-  '''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"]
-
-def p_valoresMat2(subexpressions):
-  '''valoresMat : varYVals
+  | varYVals
   | varsOps
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  if subexpressions[1]["type"] in ["var", "vec"]:
-    nombreVar = subexpressions[1]["var"]
-    subexpressions[0]["type"] = variables[nombreVar]["type"]
-  else:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
+  setTipo(subexpressions, 1)
+  setVariable(subexpressions, 1)
+  setVector(subexpressions, 1)
 
 def p_valoresMat3(subexpressions):
   '''valoresMat : '(' ternarioMat ')' ''' 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[2]["type"]
+  setTipo(subexpressions, 2)
+  setVariable(subexpressions, 2)
+  setVector(subexpressions, 2)
 
 
 #EMat -> EMat '+' P | EMat - P | P
 def p_eMat1(subexpressions):
-    '''eMat : eMat '+' p
-    | valoresMat '+' p
-    | eMat '+' valoresMat
-    | valoresMat '+' valoresMat
-    | p'''
-    chequeadorSuma(subexpressions)
-    chequearUnicoTerminal(subexpressions, ["int", "float"] )
-    subexpressions[0] = {}
-    subexpressions[0]["value"] = toString(subexpressions)
+  '''eMat : eMat '+' p
+  | valoresMat '+' p
+  | eMat '+' valoresMat
+  | valoresMat '+' valoresMat
+  | p'''
+  chequeadorSuma(subexpressions)
+  chequearUnicoTerminal(subexpressions, ["int", "float"] )
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
 
-    if len(subexpressions) == 4:
-        if subexpressions[3]["type"] == "string":
-          subexpressions[0]["type"] = "string"
-        else:
-          if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
-            subexpressions[0]["type"] = "int"
-          else:
-            subexpressions[0]["type"] = "float"
-
-    if len(subexpressions) == 2:
-        subexpressions[0]["type"] = subexpressions[1]["type"]
+  setTipoBinarioMat(subexpressions)
     
 
 def p_eMat2(subexpressions):
@@ -984,10 +968,7 @@ def p_eMat2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
-    subexpressions[0]["type"] = "int"
-  else:
-    subexpressions[0]["type"] = "float"
+  setTipoBinarioMat(subexpressions)
     
 #P -> P * Exp | P / Exp | P % Exp | Exp
 def p_p(subexpressions):
@@ -1008,17 +989,8 @@ def p_p(subexpressions):
     chequearUnicoTerminal(subexpressions, ["int", "float"] )
     chequeadorBinario(subexpressions, ["int", "float"])
     subexpressions[0] = {}
-    subexpressions[0]["value"] = toString(subexpressions)
-    subexpressions[0]["type"] = "float"
-    
-    if len(subexpressions) == 4:
-
-      if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
-        subexpressions[0]["type"] = "int"
-      else:
-        subexpressions[0]["type"] = "float"
-    else:
-        subexpressions[0]["type"] = subexpressions[1]["type"]
+    subexpressions[0]["value"] = toString(subexpressions)    
+    setTipoBinarioMat(subexpressions)
 
 #Exp -> Exp ^ ISing | ISing
 def p_exp(subexpressions):
@@ -1033,13 +1005,7 @@ def p_exp(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "float"
 
-  if len(subexpressions) == 4:
-    if (subexpressions[1]["type"], subexpressions[3]["type"]) == ("int", "int"):
-      subexpressions[0]["type"] = "int"
-    else:
-      subexpressions[0]["type"] = "float"
-  else:
-    subexpressions[0]["type"] = subexpressions[1]["type"]
+  setTipoBinarioMat(subexpressions)
 
 #ISing -> -Paren | '+'Paren | Paren
 def p_iSing(subexpressions):
@@ -1145,6 +1111,7 @@ def p_tCompareEQ(subexpressions):
   | '(' ternarioBool ')' 
   | '(' ternarioMat ')'
   '''
+  chequearUnicoTerminal(subexpressions, ["int", "float", "bool"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
