@@ -102,7 +102,7 @@ def p_lAbierta5(subexpressions):
   '''lAbierta : loop  lAbierta  '''
   subexpressions[0]["value"] = toString(subexpressions[:2])
   subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[0:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toString(subexpressions[1:]).replace("tabing", "tabing\t")
   subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ def p_lCerrada12(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions[:5])
   subexpressions[0]["value"] += "\n"
-  subexpressions[0]["value"] += toString(subexpressions[4:6]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[5])
   subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[5:10])
   subexpressions[0]["value"] += "\n"
@@ -174,14 +174,24 @@ def p_lCerrada12(subexpressions):
 def p_lCerrada6(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE '{' g '}' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[5] + "\ntabing"
+  subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[8] + subexpressions[9]
+  subexpressions[0]["value"] += toString(subexpressions[9:11]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[11]
 
 #-----------------------------------------------------------------------------
 
 def p_lCerrada13(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toString(subexpressions[:6])
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] = toString(subexpressions[5:7]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:9])
+  subexpressions[0]["value"] += "\n" + toStringLineaCerrada(subexpressions[9])
 
 #-----------------------------------------------------------------------------
 
@@ -189,12 +199,10 @@ def p_lCerrada14(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE lCerrada '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions[:5])
-  subexpressions[0]["value"] += "\n"
-  subexpressions[0]["value"] += toString(subexpressions[4:6]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n" + toStringLineaCerrada(subexpressions[5])
   subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[5:7])
-  subexpressions[0]["value"] += "\n"
-  subexpressions[0]["value"] += toString(subexpressions[6:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toString(subexpressions[5:7]) + "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
   subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
@@ -202,22 +210,43 @@ def p_lCerrada14(subexpressions):
 def p_lCerrada15(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += toStringTerminal(subexpressions[5])
+  subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t") + "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
+  subexpressions[0]["value"] += toStringTerminal(subexpressions[8])
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[9])
+  subexpressions[0]["var"] = "" 
+
+def toStringLineaCerrada(subexpression):
+  return "\ttabing" + subexpression["value"].replace("tabing", "tabing\t")
+def toStringTerminal(subexpression):
+  return "\ntabing" + subexpression
 
 #-----------------------------------------------------------------------------
 
 def p_lCerrada16(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE  COMMENT com lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += "\n" + toStringLineaCerrada(subexpressions[5])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[6] + "\ntabing" + subexpressions[7]
+  subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:9]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[9])
+  subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
 
 def p_lCerrada11(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE  COMMENT com lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[5]
+  subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[8] + "\ntabing" + subexpressions[8] + "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[10])
+  subexpressions[0]["var"] = "" 
 #-----------------------------------------------------------------------------
 
 def p_lCerrada4(subexpressions):
@@ -238,8 +267,8 @@ def p_lCerrada7(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions[:2])
-  subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[1:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[2])
   subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
@@ -252,7 +281,7 @@ def p_lCerrada8(subexpressions):
   #COMMENT es un terminal asi que no tiene el tabbing apropiado segun el sistema este, lo agrego
   subexpressions[0]["value"] += "\n\ttabing" + subexpressions[2]
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += toString(subexpressions[3:]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[4])
   subexpressions[0]["var"] = ""
 
 #-----------------------------------------------------------------------------
@@ -264,7 +293,7 @@ def p_lCerrada5(subexpressions):
   subexpressions[0]["value"] += toString(subexpressions[:3])
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[3:])
   subexpressions[0]["var"] = "" 
   chequearTipo([subexpressions[7]],["bool"],". La guarda debe ser un booleano")
@@ -276,9 +305,9 @@ def p_lCerrada9(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions[:2])
-  subexpressions[0]["value"] += "\n\t"
-  subexpressions[0]["value"] += toString(subexpressions[1:3]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[2])
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[2:])
   subexpressions[0]["var"] = "" 
   chequearTipo([subexpressions[5]],["bool"],". La guarda debe ser un booleano")
@@ -290,9 +319,10 @@ def p_lCerrada10(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions[:2])
-  subexpressions[0]["value"] += "\n\ttabing" + subexpressions[2]
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[2]
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += "\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[4])
+  subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[4:])
   subexpressions[0]["var"] = "" 
   chequearTipo([subexpressions[7]],["bool"],". La guarda debe ser un booleano")
@@ -574,8 +604,6 @@ def p_vecVal2(subexpressions):
   subexpressions[0]["type"] = tipoElemento
   subexpressions[0]["elems"] = []
   subexpressions[0]["var"] = subexpressions[1]["var"]
-  print(subexpressions[0]["type"])
-  print(subexpressions[0]["var"])
 
 def p_expresion(subexpressions):
   '''expresion : eMat
@@ -837,7 +865,6 @@ def p_varsOps2(subexpressions):
   '''varsOps : varYVals MASMAS 
   | varYVals MENOSMENOS'''
   nombreVar = subexpressions[1]["var"]
-  print(nombreVar)
   if nombreVar not in variables and nombreVar not in vectores:
     raise Exception("Variable no inicializada previamente")
   else:
