@@ -1243,6 +1243,70 @@ def toString(subexpressions):
           res += str(exp) + " "
   return res
 
+# Dado una lista de subexpresiones, asigna los elementos del indice indiceFuente a la produccion
+# Si la fuente no tiene elementos, asigna None
+def setVector(subexpressions, indiceFuente):
+  elementos = subexpressions[indiceFuente].get("elems")
+  subexpressions[0]["elems"] = elementos
+
+# Dado una lista de subexpresiones, asigna la variables del indice indiceFuente a la produccion
+# Si la fuente no tiene variable, asigna None
+def setVariable(subexpressions, indiceFuente):
+  variable = subexpressions[indiceFuente].get("var")
+  subexpressions[0]["var"] = variable
+  return
+
+# retorna el tipo apropiado en las operaciones binarias matematicas
+# Se asume que ya paso por el chequeo de tipos
+def setTipoBinarioMat(subexpressions):
+  if len(subexpressions) == 4:
+    tipo1 = getTipoExpresion(subexpressions[1])
+    tipo2 = getTipoExpresion(subexpressions[3])
+    operador = subexpressions[2]
+
+    if (tipo1, tipo2) == ("Para ejecucion", "Para ejecucion"):
+      subexpressions[0]["type"] = "Para ejecucion"
+      return
+
+    if operador == "+" and (tipo1 == "string" or tipo2 == "string"):
+      subexpressions[0]["type"] = "string"
+      return
+
+    if (tipo1, tipo2) in [("int", "int"), ("Para ejecucion", "int"), ("int", "Para ejecucion")]:
+      subexpressions[0]["type"] = "int"
+    else:
+      subexpressions[0]["type"] = "float"
+
+  if len(subexpressions) == 2:
+      tipo1 = getTipoExpresion(subexpressions[1])
+      subexpressions[0]["type"] = tipo1
+
+  return
+
+# Dado una lista de subexpresiones, asigna el tipo del indice indiceFuente a la produccion
+# Si el elemento no tiene tipo, asigna None
+def setTipo(subexpressions, indiceFuente):
+  nombreVariable = subexpressions[indiceFuente].get("var")
+  if nombreVariable != None and nombreVariable != "Para ejecucion":
+    # Si el tipo viene dado por una variable
+    subexpressions[0]["var"] = nombreVariable
+    tipo = variables[nombreVariable]["type"]
+    subexpressions[0]["type"] = tipo
+  else:
+    # Si no hay una variable y el tipo viene dado
+    subexpressions[0]["type"] = subexpressions[indiceFuente]["type"]
+  return
+
+# Obtiene el tipo de una expresion
+def getTipoExpresion(subexpression):
+  nombreVariable =  subexpression.get("var")
+  if nombreVariable != None and nombreVariable != "Para ejecucion":
+    tipo = variables[nombreVariable]["type"]
+  else:
+    tipo = subexpression["type"]
+
+  return tipo
+
 # chequea si todos los elementos de la lista de subexpresiones son de 
 # algun tipo de la lista tipos
 # Ademas en caso de fallar se levanta una excepcion con el tipo esperado
@@ -1250,14 +1314,18 @@ def toString(subexpressions):
 # de operadores
 def chequearTipo(subexps, tipos, aditionalMessage=""):
 
-    for subexp in subexps:
-        if subexp["type"] not in tipos:
-            message = "Se esperaba tipo "
-            message += listTypes(tipos)
-            message += aditionalMessage
-            raise Exception(message)
+  for subexp in subexps:
+    tipo = getTipoExpresion(subexp)
 
-    pass
+    if tipo not in tipos:
+      if tipo == "Para ejecucion":
+        continue
+      message = "Se esperaba tipo "
+      message += listTypes(tipos)
+      message += aditionalMessage
+      raise Exception(message)
+
+  pass
 
 def listTypes(tipos):
     if len(tipos) == 1:
@@ -1336,7 +1404,7 @@ def chequeadorSuma(subexpressions):
 def chequearUnicoTerminal(subexpressions, tipos):
     if len(subexpressions) == 2:
         subexps = [ subexpressions[1] ]
-        if subexpressions[1]["type"] == "noType":
+        if subexpressions[1]["type"] == "noType" and subexpressions[1]["type"] != "Para ejecucion":
           message = '''\n variable "''' + subexpressions[1]["var"] + '''" no inicializada'''
           raise Exception(message)
 
@@ -1347,7 +1415,7 @@ def chequearAccesoVector(subexpressions):
   nombreVar1 = subexpressions[1]["var"]
   tipoVariable1 = variables[nombreVar1]["type"]
 
-  if tipoVariable1 != "vec" and tipoVariable1 != "":
+  if tipoVariable1 != "vec" and tipoVariable1 != "Para ejecucion":
     raise Exception("El operador [i] solo se puede usar con variables de tipo vector")
 
   if subexpressions[3]["type"] == "var":
@@ -1356,9 +1424,9 @@ def chequearAccesoVector(subexpressions):
   else:
     tipoVariable2 = subexpressions[3]["type"]
 
-  if tipoVariable2 != "int" and tipoVariable2 != "":
+  if tipoVariable2 != "int" and tipoVariable2 != "Para ejecucion":
     #print(tipoVariable2)
-    raise Exception("El indice de un vector solo se puede ser de tipo int")     raise Exception("El indice de un vector solo se puede ser de tipo int") 
+    raise Exception("El indice de un vector solo se puede ser de tipo int") 
 
 def chequearOperadorIncDec(subexpressions, tipo):
   if tipo == "prefijo":
