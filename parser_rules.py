@@ -578,12 +578,17 @@ def p_vecVal(subexpressions):
  
   chequearAccesoVector(subexpressions)
 
+  # Si el indice es una expresion o una variable se chequea en ejecucion
+  # Si es un token INT, entonces se chequea en compilacion
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = subexpressions[1]["var"]
-  #esto esta bien?
-  subexpressions[0]["type"] = "int"
-  subexpressions[0]["elems"] = []
+  # Para que no tire excepcion cuando se hace a[g[b[1]]], esto se chequea en ejecucion
+  subexpressions[0]["type"] = "Para ejecucion"
+  # Como es entero, no tiene elementos
+  subexpressions[0]["elems"] = None
+  # Para que no explote en la asignacion. Dejo el chequeo de si, por ejemplo a[2*3 + 4], 
+  # es una variable para ejecucion
+  subexpressions[0]["var"] = "Para ejecucion"
 
 
 def p_vecVal2(subexpressions):
@@ -595,15 +600,21 @@ def p_vecVal2(subexpressions):
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  variableVector = subexpressions[1]["var"]
-  
-  indice = int(subexpressions[3]["value"])
+
+  # Obtengo los tipos de los elementos del vector
+  variableVector = subexpressions[1].get("var")
   elementosVector = vectores[variableVector]["elems"]
+  # Convierto el indice en int (el valor esta guardado en string) y obtengo el tipo correspondiente
+
+  indice = int(subexpressions[3]["value"]) -1
   tipoElemento = elementosVector[indice]
 
   subexpressions[0]["type"] = tipoElemento
-  subexpressions[0]["elems"] = []
-  subexpressions[0]["var"] = subexpressions[1]["var"]
+  # Dejo del chequeo de a[3][5][4] para tiempo de ejecucion, seteo elems y var por default
+
+  subexpressions[0]["elems"] = None
+  # Para que en la asignacion tenga una variable para instanciar
+  subexpressions[0]["var"] = "Para ejecucion"
 
 def p_expresion(subexpressions):
   '''expresion : eMat
@@ -623,36 +634,14 @@ def p_expresion(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  if subexpressions[1]["type"] in ["vec", "var"]:
-    nombreVariable = subexpressions[1]["var"]
-    subexpressions[0]["var"] = nombreVariable
-    tipo = variables[nombreVariable]["type"]
-    if subexpressions[1]["type"] == "vec":
-      subexpressions[0]["elems"] = subexpressions[1]["elems"]
-  else:
-    tipo = subexpressions[1]["type"]
-
-  subexpressions[0]["type"] = tipo
+  setTipo(subexpressions, 1)
+  setVariable(subexpressions, 1)
+  setVector(subexpressions, 1)
 
 def p_valores(subexpressions):
   '''valores : varYVals
   | varsOps
-  '''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-
-  nombreVariable = subexpressions[1]["var"]
-  subexpressions[0]["var"] = nombreVariable
-
-  if nombreVariable == "":
-    tipo = ""
-  else:
-    tipo = variables[nombreVariable]["type"]
-
-  subexpressions[0]["type"] = tipo
-
-def p_valores2(subexpressions):
-  '''valores : eMat
+  | eMat
   | expBool
   | funcReturn
   | reg
@@ -663,19 +652,21 @@ def p_valores2(subexpressions):
   | ternario
   | atributos
   | vec
-  | RES'''
+  | RES
+  '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"]
-  if subexpressions[1]["type"] == "vec":
-      subexpressions[0]["elems"] = subexpressions[1].get("elems")
+
+  setTipo(subexpressions, 1)
+  setVariable(subexpressions, 1)
+  setVector(subexpressions, 1)
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos
   | reg '.' valoresCampos '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None 
   subexpressions[0]["type"] = "falta" 
 
 def p_valoresCampos(subexpressions):
@@ -684,7 +675,7 @@ def p_valoresCampos(subexpressions):
   | BEGIN'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = "" 
+  subexpressions[0]["var"] = None
 
 
 #--------------------------------------------------------------------------------------
