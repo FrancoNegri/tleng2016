@@ -450,7 +450,7 @@ def p_funcReturn(subexpressions):
   | funcBool'''
   subexpressions[0] = {}
   subexpressions[0]["value"] =  toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"] 
+  setTipo(subexpressions, 1) 
 
 #-----------------------------------------------------------------------------
 #funcInt -> MULTIESCALAR( valores, valores param)
@@ -544,7 +544,7 @@ def p_vec(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "vec"
-  subexpressions[0]["elems"] = subexpressions[2]["elems"]
+  setVector(subexpressions, 2)
 
 #Elem-> Valores, Elem | Valores
 def p_elem(subexpressions):
@@ -552,30 +552,22 @@ def p_elem(subexpressions):
   | valores'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = subexpressions[1]["type"]
-
+  setTipo(subexpressions, 1)
   if len(subexpressions) == 2:
-    subexpressions[0]["elems"] = [subexpressions[1]["type"]]
+    subexpressions[0]["elems"] = []
   else:
-    subexpressions[0]["elems"] = subexpressions[3]["elems"]
+    setVector(subexpressions, 3)
 
-  tipoElem = subexpressions[1]["type"]
+  tipoElem = getTipoExpresion(subexpressions[1])
   subexpressions[0]["elems"].insert(1, tipoElem)
 
 #VecVal ->  var M
 
-def p_vecVal(subexpressions):
+def p_vecVal1(subexpressions):
   '''vecVal : ID '[' expresion ']'
   | vec '[' expresion ']'
   | vecVal '[' expresion ']'
   '''
-   # a. Si el indice es una expresion, no se puede chequear en tiempo de compilacion
-  # b. Si el indice es una variable y se le asigno una expresion, idem a.
-  # c. Si no pasa a. ni b. entonces en el indice tengo un numero, pero tengo que saber si en el
-  # indice hay un valor o una expresion
-  # if valorIndice[ "hay una expresion?" ] == true
-  #   tipoElemento = vectores[nombreVar1]["elems"][int(valorIndice["value"])]
- 
   chequearAccesoVector(subexpressions)
 
   # Si el indice es una expresion o una variable se chequea en ejecucion
