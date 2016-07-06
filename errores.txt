@@ -1,6 +1,3 @@
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:657: Function p_valoresBool redefined. Previously defined on line 648
-WARNING: /home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py:663: Function p_valoresBool redefined. Previously defined on line 648
-Generating LALR tables
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
@@ -8,83 +5,25 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 278, in p_valores
-    subexpressions[0]["type"] = subexpressions[1]["type"] 
-KeyError: 'type'
-Traceback (most recent call last):
-  File "parser.py", line 50, in <module>
-    ast = parser.parse(text, lexer,debug=0)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
-    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
-    p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 509, in p_varAsig
-    nombreVar = subexpressions[1]["var"]
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 468, in p_vecVal2
+    chequearAccesoVector(subexpressions)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1198, in chequearAccesoVector
+    nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
-    tok = call_errorfunc(self.errorfunc, errtoken, self)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
-    r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 771, in p_error
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1026, in p_tCompare
+    chequearUnicoTerminal(subexpressions, ["int", "float"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1194, in chequearUnicoTerminal
+    chequearTipo(subexps, tipos)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1113, in chequearTipo
     raise Exception(message)
-Exception: [Syntax error]
-type:AND
-value:{'var': 'AND', 'type': 'noType', 'value': 'AND'}
-line:3
-position:27
-Traceback (most recent call last):
-  File "parser.py", line 50, in <module>
-    ast = parser.parse(text, lexer,debug=0)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
-    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
-    tok = call_errorfunc(self.errorfunc, errtoken, self)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
-    r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 771, in p_error
-    raise Exception(message)
-Exception: [Syntax error]
-type:?
-value:?
-line:18
-position:162
-Traceback (most recent call last):
-  File "parser.py", line 50, in <module>
-    ast = parser.parse(text, lexer,debug=0)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
-    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
-    tok = call_errorfunc(self.errorfunc, errtoken, self)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
-    r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 771, in p_error
-    raise Exception(message)
-Exception: [Syntax error]
-type:?
-value:?
-line:19
-position:314
-Traceback (most recent call last):
-  File "parser.py", line 50, in <module>
-    ast = parser.parse(text, lexer,debug=0)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
-    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
-    tok = call_errorfunc(self.errorfunc, errtoken, self)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
-    r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 771, in p_error
-    raise Exception(message)
-Exception: [Syntax error]
-type:BOOL
-value:{'type': 'bool', 'value': 'true'}
-line:1
-position:4
+Exception: Se esperaba tipo int o float
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
@@ -92,9 +31,11 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 583, in p_eMat2
-    subexpressions[0]["type"] = subexpressions[2]["type"]
-TypeError: string indices must be integers, not str
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 449, in p_vecVal
+    chequearAccesoVector(subexpressions)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1211, in chequearAccesoVector
+    raise Exception("El indice de un vector solo se puede ser de tipo int") 
+Exception: El indice de un vector solo se puede ser de tipo int
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
@@ -102,22 +43,8 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 278, in p_valores
-    subexpressions[0]["type"] = subexpressions[1]["type"] 
-KeyError: 'type'
-Traceback (most recent call last):
-  File "parser.py", line 50, in <module>
-    ast = parser.parse(text, lexer,debug=0)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
-    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
-    tok = call_errorfunc(self.errorfunc, errtoken, self)
-  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
-    r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 771, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 371, in p_funcString
+    chequearTipo([subexpressions[3]], ["string"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1113, in chequearTipo
     raise Exception(message)
-Exception: [Syntax error]
-type:BOOL
-value:{'type': 'bool', 'value': 'false'}
-line:12
-position:103
+Exception: Se esperaba tipo string

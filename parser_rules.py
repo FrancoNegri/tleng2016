@@ -484,7 +484,6 @@ def p_expresion(subexpressions):
   | expBool
   | funcReturn
   | reg
-  | INT
   | FLOAT
   | STRING
   | BOOL
