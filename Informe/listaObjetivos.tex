@@ -1,0 +1,201 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{makeidx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{enumerate}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{minted}
+\restylefloat{table}
+\usepackage{anysize}
+
+\marginsize{2cm}{2cm}{2cm}{2cm}
+
+\title{Ingeniería del Software I}
+
+\begin{document}
+
+\begin{table}[h]
+\begin{tabular}{p{1.5cm} p{7cm} p{8cm}}
+\rule{0pt}{1.2em} Número & Objetivo & Descripción\\[0.2em]
+\hline
+
+\rule{0pt}{1.2em}  & Lograr[Aumentar las ventas] & Aumentar las ventas en los locales de mes\% \\[0.2em]
+
+\rule{0pt}{1.2em}  & Evitar[Falta de stock en los locales] & Evitar que falten productos en las góndolas \\[0.2em]
+
+\rule{0pt}{1.2em}  & Evitar[Largas colas en los locales] & Evitar que haya excesivo tiempo de espera en las colas de las cajas \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Obtener estadísticas de las ventas] & Obtener información interesante para tomar \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Sistema para realizar pedidos de forma remota] & Proveer una página Web para poder realizar pedidos de clientes tanto como reponer stock en los locales \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Locales puedan solicitar reponer stock desde la página Web] & La página pueda recibir solicitudes de reponer stock de un local \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Clientes puedan realizar pedidos a través de cualquier dispositivo de forma segura] & La página recibe pedidos de clientes y los datos no se pierden, no los intercepta un tercero y la información relevante para el cliente está disponible en la página \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Proveer un servicio de armado y entrega de pedidos] & Luego de obtener pedidos en la página, se coloca todo en un paquete/bolsa y se lo envía al cliente \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Proveer un sitio Web escalable, seguro y responsive para realizar pedidos] & Los pedidos de los clientes se hacen de forma segura y el usuario puede verlos tanto en un navegador estándar como en un dispositivo móvil, además se pueden colocar más depósitos en el sistema y configurarlos \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Instalar cajas de autoservicio] & Agregar cajas para realizar los pedidos en los locales y evitar las largas colas \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Sitio escalable] & Posibilidad de agregar nuevos depósitos \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Agregar depósitos al sistema] & \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Interfaz de depósitos] &  \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Sitio seguro] & Tener seguridad en el sistema, tanto en el logeo como a la hora de hacer los pedidos \\[0.2em]
+
+\rule{0pt}{1.2em}  &  Lograr[Interfaz responsive necesaria para locales y clientes]& Se debe construir una interfaz web que se adapte tanto a los dispositivos móviles como a las computadoras de escritorio que permita a los clientes realizar pedidos y los locales solicitar reposición de stock \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Los usuarios deberán ingresar usuario y contraseña para hacer pedidos] &  \\[0.2em]
+
+\rule{0pt}{1.2em}  &  Lograr[Los usuarios deberán verificar su identidad al registrarse&  \\[0.2em]
+
+\rule{0pt}{1.2em}  &  Lograr[Usuario reciba un mensaje de texto con un código] &  \\[0.2em]
+
+\rule{0pt}{1.2em}  & Lograr[Cliente visite un local para obtener un usuario] &  \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Interfaz permita a los locales solicitar stock] & \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Armar el pedido] & \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Coordinar Fecha de Entrega]& \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Entregar pedidos]& \\[0.2em]
+
+\rule{0pt}{1.2em} & Mantener[Stock del depósito] & \\[0.2em]
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabular}{p{2cm} p{7cm} p{8cm}}
+\rule{0pt}{1.2em} Número & Objetivo & Descripción\\[0.2em]
+\hline
+
+\rule{0pt}{1.2em} & Evitar[Stock del producto caiga por debajo del umbral configurado] & \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Configurar umbrales por producto en el sistema] & Cada producto tiene un stock y umbrales distintos\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Interfaz que permite a los clientes realizar pedidos] & Interfaz en donde se recibirán pedidos de clientes\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente pueda modificar un pedido no cerrado] & Servicio en la página de modificar un pedido no cerrado\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente pueda registrarse] & Cada cliente tiene que tener un nombre de usuario\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente pueda seleccionar la fecha de entrega] & Servicio en la página de elegir una fecha de entrega\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente pueda ingresar sus datos de contacto] & Servicio en la página de ingresa datos de contacto\\[0.2em]
+
+\rule{0pt}{1.2em} & Se actualice el pedido modificado & Una ves que se modificó un pedido, que aparezca dicha modificación en la página\\[0.2em]
+
+\rule{0pt}{1.2em} & Cliente seleccione pedido a modificar & Servicio en la página de elegir un pedido a modificar\\[0.2em]
+
+%\rule{0pt}{1.2em} & Cliente no puede modificar un pedido ya pagado & Expectativa o propiedad del dominio (quizás hipótesis) para que el cliente no pueda modificar un pedido que ya fue pagado\\[0.2em]
+
+%\rule{0pt}{1.2em} & Se guarde el registro del usuario & Se actualice en la página el nuevo registro (implementativo?)\\[0.2em]
+
+\rule{0pt}{1.2em} & Cliente ingrese usuario & Cliente escriba su nombre de usuario con algún método de entrada\\[0.2em]
+
+%\rule{0pt}{1.2em} & Nombre de usuario tiene que ser distinto a uno ya existente & Requerimiento para que un usuario pueda ser registrado (implementativo?)\\[0.2em]
+
+%\rule{0pt}{1.2em} & Lograr[Se guarda la fecha de entrega] & Se actualice en la página la fecha de entrega (implementativo?)\\[0.2em]
+
+%\rule{0pt}{1.2em} & Lograr[El cliente acuerde una fecha del futuro próximo] & Expectativa o propiedad del dominio (quizás hipótesis) para que el cliente no pueda elegir una fecha poco realista (quizás requerimiento de la pagina?)\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente ingrese un método de contacto válido] & Expectativa o propiedad del domino (quizás hipótesis) para que el cliente no especifique una información de contacto en donde no se pueda comunicar con él directamente\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Se guarden los datos de contacto] & Se actualiza los datos de contacto en la página\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Instalar cajas de autoservicio] & Se instalan cajas en donde el cliente puede colocar sus productos y registrarlos el mismo. Luego tiene que pagarlo en una cajera\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Entregar pedidos al local] & Transportar los pedidos al local\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Entregas pedidos al cliente] & Transportar los pedidos al cliente\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Sitio Responsive] & Que el sitio tenga una interfaz gráfica que funciones en todo navegador y dispositivo\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Proveedor envíe productos] & Que el proveedor envíe los productos que solicita el depósito a este mismo\\[0.2em]
+
+%\rule{0pt}{1.2em} & Lograr[Recibir los productos del proveedor] & que luego sean recibidos?\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Se encarguen productos cuando se disparan las alarmas] & Cuando suena una alarma en el depósito es cuando hay que reponer stock en el depósito\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Interfaz de escritorio] & Se diseñe una interfaz para ser vista desde una navegador estándar\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Interfaz mobile] & Se diseñe una interfaz para ser vista desde un móvil\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Llevar el conteo en base a los pedidos realizados de cuántos productos quedan] & Cada vez que se realiza un pedido, descontar estos productos del stock\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Se disparan alertas cuando la cantidad de productos cae debajo del umbral configurado] & Si hay menos stock que el umbral de algún producto, entonces se dispara una alarma\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Contactar al proveedor] & Comunicarse con el proveedor\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Contar con una estrategia de entrega de pedidos] & Método para entregar un pedido\\[0.2em]
+
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{p{2cm} p{7cm} p{8cm}}
+\rule{0pt}{1.2em} Número & Objetivo & Descripción\\[0.2em]
+\hline
+
+\rule{0pt}{1.2em} & Lograr[Cliente no esta en su domicilio =$>$ Pedido vuelve al depósito] & \\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[notificación pedido entregado] & Notificar a la página de que el pedido fue entregado\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Llegar a la casa del cliente] & Tener un medio de trasporte para que se puedan entregar los pedidos\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Notificación pedido pago] & Notificar a la página de que el pedido fue pagado\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Pedido este pago] & El cliente pague el pedido que realizó en la página\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Proveer diferentes métodos de pago] & Tiene que haber varias formas de pago para el cliente\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Cliente espere cuando la entrega está demorada] & Si se notifica que el pedido esta demorado entonces el cliente debería esperar\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Notificar cuando la entrega está demorada] & Notificar a la página qde que el pedido esta demorado\\[0.2em]
+
+\rule{0pt}{1.2em} & Evitar[Cliente no este en el domicilio] & Que el cliente esté en el domicilio cuando se realice una entrega\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Confirmar fecha de entrega] & Confirmar una fecha pactada con el cliente y el responsable del transporte para realizar la entrega\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Llamado telefónico al cliente] & Que se llame al cliente para avisar transporte\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Enviar SMS al cliente] & Que se envíe un SMS al cliente para avisar transporte\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Proveer métodos de pago online] & Proveer métodos de pago electrónicos\\[0.2em]
+
+\rule{0pt}{1.2em} & Mantener[Pago con Débito] & Tener la opción de pagar con Débito\\[0.2em]
+
+\rule{0pt}{1.2em} & Mantener[Pago con Crédito] & Tener la opción de pagar con Crédito\\[0.2em]
+
+\rule{0pt}{1.2em} & Mantener[Pago con PayPal] & Tener la opción de pagar con PayPal\\[0.2em]
+
+\rule{0pt}{1.2em} & Mantener[Pago con Efectivo] & Tener la opción de pagar con Efectivo\\[0.2em]
+
+\rule{0pt}{1.2em} & Lograr[Pago a contraentrega] & Tener la opción de pagar en el domicilio\\[0.2em]
+
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\end{document}
