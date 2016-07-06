@@ -267,6 +267,7 @@ def p_lCerrada5(subexpressions):
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[3:])
   subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[7]],["bool"],". La guarda debe ser un booleano")
 
 #-----------------------------------------------------------------------------
 
@@ -280,6 +281,7 @@ def p_lCerrada9(subexpressions):
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:])
   subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[5]],["bool"],". La guarda debe ser un booleano")
 
 #----------------------------------------------------------------------------- 
 
@@ -293,6 +295,7 @@ def p_lCerrada10(subexpressions):
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[4:])
   subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[7]],["bool"],". La guarda debe ser un booleano")
 
 #-----------------------------------------------------------------------------
 #Sentencias basicas
