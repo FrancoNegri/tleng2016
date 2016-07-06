@@ -539,18 +539,19 @@ def p_vecVal(subexpressions):
   | vec '[' expresion ']'
   | vecVal '[' expresion ']'
   '''
-  #print(subexpressions[3]["type"])
-  chequearAccesoVector(subexpressions)
-
-  # a. Si el indice es una expresion, no se puede chequear en tiempo de compilacion
+   # a. Si el indice es una expresion, no se puede chequear en tiempo de compilacion
   # b. Si el indice es una variable y se le asigno una expresion, idem a.
   # c. Si no pasa a. ni b. entonces en el indice tengo un numero, pero tengo que saber si en el
   # indice hay un valor o una expresion
   # if valorIndice[ "hay una expresion?" ] == true
   #   tipoElemento = vectores[nombreVar1]["elems"][int(valorIndice["value"])]
+ 
+  chequearAccesoVector(subexpressions)
+
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = subexpressions[1]["var"]
+  #esto esta bien?
   subexpressions[0]["type"] = "int"
   subexpressions[0]["elems"] = []
 
@@ -572,8 +573,9 @@ def p_vecVal2(subexpressions):
 
   subexpressions[0]["type"] = tipoElemento
   subexpressions[0]["elems"] = []
-  subexpressions[0]["var"] = ""
-
+  subexpressions[0]["var"] = subexpressions[1]["var"]
+  print(subexpressions[0]["type"])
+  print(subexpressions[0]["var"])
 
 def p_expresion(subexpressions):
   '''expresion : eMat
@@ -835,15 +837,12 @@ def p_varsOps2(subexpressions):
   '''varsOps : varYVals MASMAS 
   | varYVals MENOSMENOS'''
   nombreVar = subexpressions[1]["var"]
-  if nombreVar not in variables:
-    if nombreVar not in vectores:
-       raise Exception("Variable no inicializada previamente")
-    else:
-        ##IF el vector en la posicion [i] no del tipo int o float... como se haria esto?
-        raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")  
-  else:    
-    if variables[nombreVar]["type"] not in ["int", "float"]:
-      raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
+  print(nombreVar)
+  if nombreVar not in variables and nombreVar not in vectores:
+    raise Exception("Variable no inicializada previamente")
+  else:
+      if subexpressions[1]["type"] not in ["int", "float"]:
+        raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
