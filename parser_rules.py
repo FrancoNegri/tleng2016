@@ -214,7 +214,7 @@ def p_lCerrada15(subexpressions):
   subexpressions[0]["value"] += toStringTerminal(subexpressions[5])
   subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t") + "\n"
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
-  subexpressions[0]["value"] += toStringTerminal(subexpressions[8])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[8]["value"] + "\n"
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[9])
   subexpressions[0]["var"] = "" 
 
