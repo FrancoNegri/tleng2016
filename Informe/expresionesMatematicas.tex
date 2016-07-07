@@ -1,0 +1,25 @@
+\section{Expresiones Matemáticas}
+Para las expresiones matemáticas consideramos la siguiente tabla de precedencia:
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Tipo & Operador & Asociatividad \\
+\hline \hline
+Binario & +,- & izquierda \\ \hline
+Binario & *,/,\% & izquierda \\ \hline
+Binario & \^{} & izquierda \\ \hline
+Unario & +,- &  \\ \hline
+Unario & () &  \\ \hline
+
+\end{tabular}
+\caption{Tabla de menor a mayor precedencia}
+\label{Precedencia}
+\end{center}
+\end{table}
+
+La producción que se encarga de realizar estas expresiones es eMat.
+
+Para evitar problemas de ambiguedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático (ver Tabla de precedencia). Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
+también se generarían en las expresiones de los otros tipos.
