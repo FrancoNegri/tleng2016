@@ -49,5 +49,5 @@ if __name__ == "__main__":
 
     ast = parser.parse(text, lexer,debug=0)
     output_file = open(argv[2], "w")
-    output_file.write(ast["value"])
+    output_file.write(ast["value"].replace("tabing", ""))
     output_file.close()
