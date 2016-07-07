@@ -1,0 +1,21 @@
+MINPARAMS=4
+if [ $# -lt "$MINPARAMS" ]
+then
+  echo
+  echo "Modo de uso:"
+  echo "./SLSParser [-o SALIDA] [-c ENTRADA]"
+  exit 1
+fi
+
+if [ "$1" = "-c" ] 
+then
+	python parser.py $2 $4
+	exit 0
+fi
+if [ "$1" = "-o" ] 
+then
+	python parser.py $4 $2
+	exit 0
+fi
+echo "Modo de uso:"
+echo "./SLSParser [-o SALIDA] [-c ENTRADA]"
