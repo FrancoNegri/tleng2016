@@ -7,3 +7,6 @@ Mientras realizabamos esto empezamos a notar que necesitaríamos determinar la p
 \\
 Ya abanzados en el proceso de desarrollo de la gramatica nos dimos cuenta que esta era demasiado restrictiva. Era imposible realizar una gramatica que nos permitiera aceptar exactamente lo que queríamos, por lo que decidimos optar por acerla mas laxa y restringir lo que quisieramos utilizando chequeo de tipos.
 \\
+Llegado ese punto descubrimos que existía una forma de darle a ply una gramatica ambigua, darle reglas de precedencia y que ply se encargara de resolver los conflictos. Nos pusimos muy felices porque eso facilitaba mucho el armado de la gramatica. Dos días mas tarde descubrimos que esta no era una solucion valida y volvimos a trabajar sobre nuestra gramatica no ambigua.
+\\
+Otro problema que encontramos ya abanzados en el proceso de desarrollo de la gramatica fue el problema del Dangling else que consiste en que los else opcionales en un if resultan en que la gramatica sea ambigua. 
