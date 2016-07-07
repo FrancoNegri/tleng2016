@@ -48,8 +48,6 @@ if __name__ == "__main__":
     parser = yacc(module=parser_rules)
 
     ast = parser.parse(text, lexer,debug=0)
-    print "Salida: \n" + ast["value"].replace("tabing","")
     output_file = open(argv[2], "w")
-    #dump_ast(ast, output_file)
-	
+    output_file.write(ast["value"])
     output_file.close()
