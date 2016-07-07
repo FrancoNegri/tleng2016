@@ -474,8 +474,6 @@ def p_funcInt1(subexpressions):
   #Aca quiero chequear que sea numerico, pero me tirar error
   #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
   chequearTipo([subexpressions[5]],["int"])
-  if(subexpressions[6]["type"] != None):
-    chequearTipo([subexpressions[6]],["bool"])
   subexpressions[0]["var"] =  None  
 
 #-----------------------------------------------------------------------------
@@ -526,11 +524,11 @@ def p_funcVoid(subexpressions):
 
 def p_param1(subexpressions):
   '''param : ',' valores'''
+  chequearTipo([subexpressions[2]],["bool"])
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = None
-  subexpressions[0]["type"] = subexpressions[2]["type"]
-
+  subexpressions[0]["type"] = "bool"
 
 def p_param2(subexpressions):
   '''param : empty'''
@@ -594,7 +592,6 @@ def p_vecVal1(subexpressions):
   # es una variable para ejecucion
   subexpressions[0]["var"] = "Para ejecucion"
 
-
 def p_vecVal2(subexpressions):
   '''vecVal : ID '[' INT ']'
   | vec '[' INT ']'
@@ -619,6 +616,9 @@ def p_vecVal2(subexpressions):
   subexpressions[0]["elems"] = None
   # Para que en la asignacion tenga una variable para instanciar
   subexpressions[0]["var"] = "Para ejecucion"
+  # Para la asignacion y varOps
+  subexpressions[0]["varAsig"] = subexpressions[1]["var"]
+  subexpressions[0]["indice"] = indice
 
 def p_expresion(subexpressions):
   '''expresion : eMat
@@ -666,6 +666,32 @@ def p_valores(subexpressions):
   setVector(subexpressions, 1)
   if subexpressions[1]["type"] == "reg": 
       subexpressions[0]["campos"] = subexpressions[1].get("campos")
+
+#Registros:
+#Reg -> {U}
+def p_reg(subexpressions):
+  '''reg :  '{' campos '}' '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["type"] = "reg"
+  subexpressions[0]["campos"] = subexpressions[2]["campos"]
+
+#U -> campo: Valores, U | campof: Valores
+#campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
+#Me parece que mejore el campo es un ID (!)
+def p_campos(subexpressions):
+  '''campos : ID ':' valores ',' campos
+  | ID ':' valores '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["campos"] = []
+
+  tupla = (subexpressions[1]["var"], subexpressions[3]["type"])
+
+  if len(subexpressions) != 4:
+    subexpressions[0]["campos"] = subexpressions[5]["campos"]
+
+  subexpressions[0]["campos"].insert(1, tupla)
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos'''
@@ -848,40 +874,13 @@ def p_varYVals2(subexpressions):
     setTipo(subexpressions, 1)
     setVariable(subexpressions, 1)
     setVector(subexpressions, 1) 
-
-#Registros:
-#Reg -> {U}
-def p_reg(subexpressions):
-  '''reg :  '{' campos '}' '''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["type"] = "reg"
-  subexpressions[0]["campos"] = subexpressions[2]["campos"]
-
-#U -> campo: Valores, U | campof: Valores
-#campo no es nada en la gramatica, pero creo que en realidad es cualquier string(!)
-#Me parece que mejore el campo es un ID (!)
-def p_campos1(subexpressions):
-  '''campos : ID ':' valores ',' campos
-  | ID ':' valores '''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["campos"] = []
-
-  tupla = (subexpressions[1]["var"], subexpressions[3]["type"])
-
-  if len(subexpressions) != 4:
-    subexpressions[0]["campos"] = subexpressions[5]["campos"]
-
-  subexpressions[0]["campos"].insert(1, tupla)
-
   
 #-----------------------------------------------------------------------------
 #Operadores de variables:
 #VarsOps -> --SMM | ++SMM | SMM
 def p_varsOps1(subexpressions):
-  '''varsOps : MENOSMENOS varYVals 
-  | MASMAS varYVals '''
+  '''varsOps : MENOSMENOS variable 
+  | MASMAS variable '''
   chequearOperadorIncDec(subexpressions, "prefijo")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -890,8 +889,9 @@ def p_varsOps1(subexpressions):
   setVector(subexpressions, 2)
 
 def p_varsOps2(subexpressions):
-  '''varsOps : varYVals MASMAS 
-  | varYVals MENOSMENOS'''
+  '''varsOps : variable MASMAS 
+  | variable MENOSMENOS'''
+  #print subexpressions[1]
   chequearOperadorIncDec(subexpressions, "postfijo")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
@@ -917,11 +917,13 @@ def p_variable(subexpressions):
   nombreVar = subexpressions[1].get("var")
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = nombreVar
-  setVariable(subexpressions, 1)
+  variableVector = subexpressions[1].get("varAsig")
 
-  if subexpressions[1].get("var") == "Para ejecucion":
-    return
+  if variableVector != None:
+    subexpressions[0]["var"] = variableVector
+    subexpressions[0]["indice"] = subexpressions[1]["indice"]
+  else:
+    subexpressions[0]["var"] = nombreVar
 
   if nombreVar not in vectores:
     vectores[nombreVar] = {}
@@ -939,7 +941,6 @@ def p_varAsig(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
-  
   chequearAsignacion(subexpressions)
   setTipo(subexpressions, 3)
   setVariable(subexpressions, 1)
@@ -1473,10 +1474,16 @@ def chequearOperadorIncDec(subexpressions, tipo):
   if nombreVar not in variables:
     raise Exception("Variable no inicializada previamente")
 
+  indice = variable.get("indice")
+  if indice != None:
+    tipoElemento = vectores[nombreVar]["elems"][indice]
+  else:
+    tipoElemento = variables[nombreVar]["type"]
+
   ##IF el vector en la posicion [i] no del tipo int o float... como se haria esto?
   # RTA: a[1] es un valor, eso tiene un tipo asignado
   # Si a[1] es de tipo vector tiene que explotar
-  if variables[nombreVar]["type"] not in ["int", "float"]:
+  if tipoElemento not in ["int", "float"]:
     raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
 def chequearAsignacion(subexpressions):
