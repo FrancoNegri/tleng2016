@@ -1,0 +1,13 @@
+\subsection{Lexer}
+El lexer se encarga de tomar el imput y tokenizarlo. Comenzamos el proceso de implementación del lexer declarando las palabras reservadas de nuestro lenguaje, esto es:
+\\
+Begin,end,while,for,if,else,do,res,return,AND,OR,NOT,print,multiplicacionEscalar,capitalizar,colineales,print,length
+\\
+Luego procedimos a tokenizar cosas mas complejas como strings, comentarios, numeros de punto flotante que ya requerían de la utilizacion de expresiones regulares. Para ello utilizamos el formato brindado por ply para tokenizaras.
+\\
+Por ejemplo, para tokenizar un string utilzamos la expresion regular:  $$\" \.\*\? \"$$
+
+\\
+Que nos dará tokenizará todas las cadenas de caracteres que comiencen y terminen con una comilla como un string
+\\
+Para tokenizar un comentario utilizaremos la expresión regular $$\\\# \.\*$$ que nos dará todos los caracteres que comiencen con un numeral hasta el salto de linea.
