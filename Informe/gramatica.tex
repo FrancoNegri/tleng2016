@@ -1,41 +1,50 @@
-\documentclass[10pt, a4paper]{article}
-\usepackage[english]{babel} % espanol
-\usepackage{enumerate} % enumerados
-\usepackage{longtable}
-
-\input{config/paquetes.tex}
-\input{config/variables.tex}
-
-\begin{document}
-\input{config/caratula.tex}	
-
-\tableofcontents
-\pagebreak
-
-\section{Introducción al problema:}
-El problema planteado implica el desarrollo de un analizador léxico y sintáctico para un lenguaje de programación dado. Para ello, se buscará una gramática que genere dicho lenguaje y además cumpla con los requisitos necesarios para construir un parser a partir de la misma. Finalmente, además de poder decidir si una cadena de texto pertenece al lenguaje, se formateará la cadena de texto de entrada para cumplir con la indentación adecuada en el caso de que la misma sea válida.
-
-\textit{Aclaracion: El informe es provisorio, hay varias secciones sin definir todavía. }
-
 \section{Descripción del lexer:}
 
 
 \section{Descripción de la gramática}
 
-\subsection{Introducción:}
+\subsection{Gramática inicial}
 Comenzamos el armado de la gramática definiendo los tipos básicos que debíamos aceptar en nuestro lenguaje.
 \\
-Así definimos los tipos Bool $'STRING'$,$'FLOAT'$,$'BOOL'$, $'INT'$. De allí el siguiente paso lógico fue ver que operaciones se le podía realizar a cada uno de ellos.
+Así definimos los tipos Bool, String, Float, Bool, Int, Vector, Registro. De allí el siguiente paso fue ver que operaciones se le podía realizar a cada uno de ellos.
 \\
-Mientras realizábamos esto empezamos a notar que necesitaríamos determinar la precedencia de estas operaciones y además que necesitaríamos incluirlas  dentro de la gramática si queríamos que no terminase resultando ambigua.
+Mientras realizábamos esto empezamos a notar que necesitaríamos determinar la precedencia de estas operaciones y la asociatividad. Para esto nos basamos en la precedencia de c++ (\url{http://en.cppreference.com/w/cpp/language/operator_precedence}) dado lo parecido que es al lenguaje de entrada.
 \\
-Ya avanzados en el proceso de desarrollo de la gramática nos dimos cuenta que esta era demasiado restrictiva. Era imposible realizar una gramática que nos permitiera aceptar exactamente lo que queríamos, por lo que decidimos optar por hacerla mas laxa y restringir lo que quisiéramos utilizando chequeo de tipos.
-\\
-Llegado ese punto descubrimos que existía una forma de darle a ply una gramática ambigua, darle reglas de precedencia y que ply se encargara de resolver los conflictos. Nos pusimos muy felices porque eso facilitaba mucho el armado de la gramática. Dos días mas tarde descubrimos que esta no era una solución valida y volvimos a trabajar sobre nuestra gramática no ambigua.
-\\
-Otro problema que encontramos ya avanzados en el proceso de desarrollo de la gramática fue el problema del Dangling else que consiste en que los else opcionales en un if resultan en que la gramática sea ambigua. 
 
-En  la \textbf{sección 3.3}  se define la gramática utilizada para construir el parser. La misma es \textbf{no ambigua} y \textbf{LALR}. La garantía de esto es que ply acepta gramáticas de este tipo, nuestra implementación no arroja conflictos \textbf{shift/reduce} o \textbf{reduce/reduce} \\
+Una vez que todas las expresiones del lenguaje estaban completas, lo pasamos a código Python usando la herramienta $PLY$. Ya terminado el código, nos encontramos de que la gramática tenía muchos mas conflictos que los que se podía ver a simple vista y por lo tanto era ambigua. 
+
+\subsection{Gramática ambigua}
+
+Luego de resolver algunos conflictos, nos dimos cuenta de que era un proceso muy complejo pues cada conflicto implicaba añadir mas reglas a la gramática haciendo que sea mas compleja y difícil de entender.
+
+Después de leer la documentación de ply (\url{http://www.dabeaz.com/ply/ply.html} y observar que ply puede encargarse de los conflictos de una gramática ambigua usando reglas de asociatividad y precedencia, decidimos hacer una gramática ambigua sencilla y aprovechar esta característica de ply.
+
+\subsection{Gramática no ambigua}
+
+Si bien esto solucionó todos los conflictos de una manera sencilla, por desgracia, nos comunicaron de que lo que se pedía era una gramática \textbf{no} ambigua. Por lo tanto decidimos tirar la gramática y comenzar de nuevo.
+
+Con el tiempo contado y sin ideas mejores nos dimos cuenta que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos.
+
+\subsection{Valores}
+Los valores son los cualquier expresión que denote un valor (por ejemplo 3 * 4 + 3). La primer idea era definir valores como \textbf{cualquier} expresión (para poder usarla como valor en asignaciones, en funciones como parámetro, etc.):
+
+$Valores \rightarrow ExpresionMatematica | ExpresionBooleana | ExpresionString | ExpresionVector | \\ ExpresionRegistro | OperacionVariables $
+
+Donde cada producción que empieza con $Expresion$ denota una expresión de un tipo determinado que también puede generar los valores primitivos (bool, string, float, bool, int, vec, reg), variables (id) y además funciones que retornen valores a su tipo correspondiente (por ejemplo $capitalizar$ en $Expresionstring$). $OperacionVariables$ genera las expresiones que usan operaciones de variables (asignación, incremento, decremento, etc). 
+
+El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} y, por lo tanto, hay conflictos (la gramática es ambigua).
+
+Por lo tanto decidimos sacar a \textbf{id} de cada producción. El problema es que se tiene que seguir produciendo expresiones complejas con \textbf{id} (por ejemplo $id$ $and$ $id$).
+
+Para solucionar esto, decidimos sacar todos los valores primitivos de cada expresión y colocarlo en $Valores$. Además hay que observar que una función de un determinado tipo puede devolver una variable de ese tipo, por lo que decidimos sacar también a esas funciones. Lo mismo pasa con los operadores ternarios. De esta forma, cada producción $Expresion$ genera expresiones con al menos un operador de su tipo:
+
+$Valores \rightarrow ExpresionMatematica | ExpresionBooleana | ExpresionString | ExpresionVector | \\ ExpresionRegistro | OperacionVariables | bool | string | float | bool | int | vec | reg | id | FuncReturn | Ternario $
+
+$FuncReturn \rightarrow FuncInt | FuncString | FuncBool | FuncVector $
+
+$Ternario ->  Ternariomat | Ternariobool | Ternariostring | Ternariovector | Ternarioregistro $
+
+
 
 \subsection{Expresiones Matemáticas}
 Para las expresiones matemáticas consideramos la siguiente tabla de precedencia:
@@ -58,12 +67,40 @@ Unario & () &  \\ \hline
 \end{center}
 \end{table}
 
-La producción que se encarga de realizar estas expresiones es eMat.
+La producción que se encarga de realizar estas expresiones es eMat. 
+
+La primera aproximación fue hacer la gramática para poder respetar la precedencia y asociatividad de los operadores. 
+
+Este proceso se logra teniendo en cuenta de que se puede fijar la precedencia (por ejemplo entre $+$ y $*$), con las reglas de la gramática. Como bien se sabe, el operador $+$ tiene menos precedencia que el $*$. Una gramática que respeta esto es la siguiente:\\
+\\$A \rightarrow A + B$ \\
+$B \rightarrow B * C$ \\
+$C \rightarrow int | float$ \\
+
+Esto se debe a que antes de calcular la suma entre $A$ y $B$, hay que parsear la producción B (pues es un parser ascendente). 
+
+Esto también respeta la asociatividad de ambos operados (que es a izquierda) por la misma razón que antes: La única forma de colocar mas de un operador $+$ es usando la producción $A$ y, por lo tanto, se tiene que parsear $A$ antes que calcular la suma.
+
+Este proceso se realiza con todos los operadores, de manera que si 2 operadores tienen la misma precedencia, entonces parten de un mismo no terminal.
+
+A esta gramática le falta la posibilidad de agregar paréntesis para poder cambiar la precedencia. Una forma de hacerlos es agregarlos a $C$ para que estos tengan mas prioridad que todas las operaciones.
+
+Además también falta poder agregar variables. Para esto agregamos un no terminal a $C$ llamado id que las representa. La gramática resultante es esta:\\
+\\$A \rightarrow A + B$ \\
+$B \rightarrow B * C$ \\
+$C \rightarrow (A) | int | float | id$ \\
 
 Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático (ver Tabla de precedencia). Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
 también se generarían en las expresiones de los otros tipos.
 
-\subsection{Implementación:}
+\subsection{Problema del Dangling else}
+
+Otro problema que encontramos ya avanzados en el proceso de desarrollo de la gramática fue el problema del Dangling else (\url{https://en.wikipedia.org/wiki/Dangling_else}) que consiste en que los else opcionales en un if hacen que la gramática sea ambigua. 
+\\
+Por ejemplo: 
+
+\subsection{Gramática Final}
+A continuación se define la gramática utilizada para construir el parser. La misma es \textbf{no ambigua} y \textbf{LALR}. La garantía de esto es que ply acepta gramáticas de este tipo, nuestra implementación no arroja conflictos \textbf{shift/reduce} o \textbf{reduce/reduce} \\
+
 \linespread{1.125}\selectfont
 
 $G$|$<V_{t}$, $V_{nt}$, $g$, $P>$
@@ -353,12 +390,3 @@ valoresBool $\rightarrow$ BOOL $|$ funcBoo l$|$ varYVals $|$ varsOps $|$ (  tern
   parenBool  $\rightarrow$ ( expBool ) 
   
   
- 
-\section{Descripción de la implementación}
-
-\section{Código}
-
-\section{Conclusiones}
-
-\end{document}
-

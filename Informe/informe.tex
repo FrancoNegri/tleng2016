@@ -1,12 +1,30 @@
 \documentclass[10pt, a4paper]{article}
 \usepackage[spanish]{babel} % espanol
+\usepackage[utf8]{inputenc}
 \usepackage{enumerate} % enumerados
+\usepackage{graphicx}
 \usepackage{longtable}
+\graphicspath{ {img/} }
 
-\input{config/paquetes.tex}
-\input{config/variables.tex}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage[colorlinks=true, linkcolor=black]{hyperref}
+\usepackage{a4wide}
+\usepackage{tikz}
+\usepackage{epsf}
+\usepackage{caratula}
 
 \begin{document}
-\input{config/caratula.tex}	
+
+\input{caratula.tex}
+\tableofcontents
+\pagebreak
+\input{introduccion.tex}
+\input{gramatica.tex}	
+\input{implementacion.tex}	
+\input{conclusiones.tex}	
+
 \end{document}
 
