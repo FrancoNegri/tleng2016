@@ -1,49 +1,174 @@
 \section{Descripción del lexer:}
 
+Para la construccion del lexer, además de dar las expresiones regular en python para ciertos \textit{tokens}, se definió un conjunto de literales con operadores y otros simbolos propios del lenguaje.
 
-\section{Descripción de la gramática}
+\textbf{literals} = $[+,- , * , / , ^ ,\% , < , > , = , ! , \{\ , \}\ , ( , ) , [ , ] , ? , \textbf{:} , \textbf{;} , \textbf{,} , \textbf{.} ]$
+
+A su vez, utilizamos otra funcionalidad de ply para definir las palabras reservadas del lenguaje: \\
+
+\textbf{reserved} = $\{$
+'begin' : 'BEGIN', 'end' : 'END', 'while' : 'WHILE', 'for' : 'FOR',
+
+'if' : 'IF', 'else' : 'ELSE','do' : 'DO', 'res' : 'RES', 'return' : 'RETURN',
+
+'AND' : 'AND', 'OR' : 'OR', 'NOT' : 'NOT', 'print' : 'PRINT',
+
+'multiplicacionEscalar': 'MULTIESCALAR', 'capitalizar': 'CAPITALIZAR', 
+
+'colineales': 'COLINEALES', 'print': 'PRINT', 'length': 'LENGTH',
+$\}$ \\
+
+Esto permitió evitar tener que definir demasiadas reglas simples para este tipo de operadores o palabras claves.
+
+Finalmente, el resto de los tokens definidos junto con sus reglas se muestra a continuacion (Por claridad, se omite el resto del codigo para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
+
+\begin{multicols}{2}
+
+t\_EQEQ = r"=="
+
+t\_DISTINTO = r"!="
+
+t\_MENOSEQ = r"-="
+
+t\_MASEQ = r"$\setminus$+="
+
+t\_MULEQ = r"$\setminus$*="
+
+t\_DIVEQ = r"/="
+
+t\_MASMAS = r"$\setminus$+$\setminus$+"
+
+t\_MENOSMENOS = r"--"
+
+\columnbreak
+
+def t\_STRING(token):
+
+\hspace{5mm}    r' ' ' " .*? " ' ' '
+    
+\hspace{5mm}    atributos = $\{ \} $
+    
+\hspace{5mm}    atributos["type"] = "string"
+    
+\hspace{5mm}    atributos["value"] = token.value
+    
+\hspace{5mm}    token.value = atributos
+    
+\hspace{5mm}    return token
+ 
+\end{multicols} 
+    
+   
+\begin{multicols}{2}   
+
+def t\_BOOL(token) : 
+
+\hspace{5mm}    r"true $|$ false"
+    
+    
+def t\_FLOAT(token):
+
+\hspace{5mm}    r"[-]?[0-9] 
+    
+def t\_INT(token) : 
+
+\hspace{5mm}    r"[-]?[1-9][0-9]* | 0"
+    
+\columnbreak
+
+def t\_ID(token):
+
+\hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
+    
+\hspace{5mm}    token.type = reserved.get(token.value,'ID')
+
+
+def t\_NEWLINE(token):
+
+\hspace{5mm}  r"$\setminus$n+"
+  
+\hspace{5mm}  token.lexer.lineno += len(token.value)
+  
+\end{multicols}
+
+\begin{multicols}{2}
+
+def t\_error(token):
+
+ \hspace{2mm}message = "Token desconocido:"
+    
+\hspace{2mm}message += "$\setminus$n type:" + token.type
+    
+\hspace{2mm}message += "$\setminus$n value:" + str(token.value)
+    
+\hspace{2mm}message += "$\setminus$n line:" + str(token.lineno)
+    
+\hspace{2mm}message += "$\setminus$n position:"+str(token.lexpos)
+    
+\hspace{2mm}raise Exception(message)
+  
+
+\columnbreak
+
+def t\_COMMENT(token):
+
+\hspace{2mm}    r'$\#.*$'
+
+t\_ignore  = ' $\setminus$ t'
+
+\end{multicols}
+
+
+
+
+\section{Desarrollo de la grmática:}
 
 \subsection{Gramática inicial}
 Comenzamos el armado de la gramática definiendo los tipos básicos que debíamos aceptar en nuestro lenguaje.
 \\
 Así definimos los tipos Bool, String, Float, Bool, Int, Vector, Registro. De allí el siguiente paso fue ver que operaciones se le podía realizar a cada uno de ellos.
 \\
-Mientras realizábamos esto empezamos a notar que necesitaríamos determinar la precedencia de estas operaciones y la asociatividad. Para esto nos basamos en la precedencia de c++ (\url{http://en.cppreference.com/w/cpp/language/operator_precedence}) dado lo parecido que es al lenguaje de entrada.
+Mientras realizábamos esto empezamos a notar que necesitaríamos determinar la precedencia de estas operaciones y la asociatividad. Para esto nos basamos en la precedencia de c++ \footnote{\url{http://en.cppreference.com/w/cpp/language/operator_precedence}} dado lo parecido que es al lenguaje de entrada.
 \\
 
-Una vez que todas las expresiones del lenguaje estaban completas, lo pasamos a código Python usando la herramienta $PLY$. Ya terminado el código, nos encontramos de que la gramática tenía muchos mas conflictos que los que se podía ver a simple vista y por lo tanto era ambigua. 
+Una vez que todas las expresiones del lenguaje estaban completas, lo pasamos a código Python usando la herramienta $PLY$. Ya terminado el código, nos encontramos con que la gramática tenía muchos mas conflictos que los que se podía ver a simple vista y por lo tanto no era LALR. 
 
 \subsection{Gramática ambigua}
 
-Luego de resolver algunos conflictos, nos dimos cuenta de que era un proceso muy complejo pues cada conflicto implicaba añadir mas reglas a la gramática haciendo que sea mas compleja y difícil de entender.
+Luego de resolver algunos conflictos, nos dimos cuenta de que era un proceso complicado pues cada conflicto implicaba añadir mas reglas a la gramática haciendo que sea mas compleja y difícil de entender.
 
-Después de leer la documentación de ply (\url{http://www.dabeaz.com/ply/ply.html} y observar que ply puede encargarse de los conflictos de una gramática ambigua usando reglas de asociatividad y precedencia, decidimos hacer una gramática ambigua sencilla y aprovechar esta característica de ply.
+Después de leer la documentación de ply\footnote{ \url{http://www.dabeaz.com/ply/ply.html}} y observar que ply puede encargarse de los conflictos de una gramática ambigua usando reglas de asociatividad y precedencia, decidimos hacer una gramática ambigua sencilla y aprovechar esta característica de ply.
 
 \subsection{Gramática no ambigua}
 
-Si bien esto solucionó todos los conflictos de una manera sencilla, por desgracia, nos comunicaron de que lo que se pedía era una gramática \textbf{no} ambigua. Por lo tanto decidimos tirar la gramática y comenzar de nuevo.
+Si bien esto solucionó todos los conflictos de una manera sencilla, por desgracia, nos comunicaron que lo que se pedía era una gramática \textbf{no} ambigua. Por lo tanto decidimos tirar la gramática y comenzar de nuevo.
 
-Con el tiempo contado y sin ideas mejores nos dimos cuenta que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos.
+Con el tiempo contado y sin ideas mejores nos dimos cuenta de que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos. Dicha gramática se encuentra definida en la seccion \textbf{5}
+
+\section{Descripción de la gramática implementada:}
 
 \subsection{Valores}
-Los valores son los cualquier expresión que denote un valor (por ejemplo 3 * 4 + 3). La primer idea era definir valores como \textbf{cualquier} expresión (para poder usarla como valor en asignaciones, en funciones como parámetro, etc.):
+Los valores son cualquier expresión que denote un valor (por ejemplo 3 * 4 + 3). La primer idea era definir valores como \textbf{cualquier} expresión (para poder usarla como valor en asignaciones, en funciones como parámetro, etc.):
 
-$Valores \rightarrow ExpresionMatematica | ExpresionBooleana | ExpresionString | ExpresionVector | \\ ExpresionRegistro | OperacionVariables $
+$Valores \rightarrow ExpresionMatematica \  | \  ExpresionBooleana \  | \ ExpresionString  \ | \ ExpresionVector \ | \ \\ ExpresionRegistro \ | \ OperacionVariables $
 
 Donde cada producción que empieza con $Expresion$ denota una expresión de un tipo determinado que también puede generar los valores primitivos (bool, string, float, bool, int, vec, reg), variables (id) y además funciones que retornen valores a su tipo correspondiente (por ejemplo $capitalizar$ en $Expresionstring$). $OperacionVariables$ genera las expresiones que usan operaciones de variables (asignación, incremento, decremento, etc). 
 
-El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} y, por lo tanto, hay conflictos (la gramática es ambigua).
+El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} (es decir, hay mas de una posible derivacion mas a la izquierda para la cadena \textit{id}) y, por lo tanto, hay conflictos (la gramática es ambigua). 
 
 Por lo tanto decidimos sacar a \textbf{id} de cada producción. El problema es que se tiene que seguir produciendo expresiones complejas con \textbf{id} (por ejemplo $id$ $and$ $id$).
 
 Para solucionar esto, decidimos sacar todos los valores primitivos de cada expresión y colocarlo en $Valores$. Además hay que observar que una función de un determinado tipo puede devolver una variable de ese tipo, por lo que decidimos sacar también a esas funciones. Lo mismo pasa con los operadores ternarios. De esta forma, cada producción $Expresion$ genera expresiones con al menos un operador de su tipo:
 
-$Valores \rightarrow ExpresionMatematica | ExpresionBooleana | ExpresionString | ExpresionVector | \\ ExpresionRegistro | OperacionVariables | bool | string | float | bool | int | vec | reg | id | FuncReturn | Ternario $
+$Valores \rightarrow ExpresionMatematica \ | \ ExpresionBooleana \  | \ ExpresionString \  | \ ExpresionVector \ | \  $
 
-$FuncReturn \rightarrow FuncInt | FuncString | FuncBool | FuncVector $
+\hspace{15mm} $| ExpresionRegistro  \ | \ OperacionVariables \ | \ bool \ | \ string \ | \ float \ | \ bool \ | \ int \ | \ vec \ | \ reg  $
 
-$Ternario ->  Ternariomat | Ternariobool | Ternariostring | Ternariovector | Ternarioregistro $
+\hspace{15mm} $| \ id \ | \ FuncReturn \ | \ Ternario $
 
+$FuncReturn \rightarrow FuncInt \ | \ FuncString \ | \ FuncBool \ | \ FuncVector $
+
+$Ternario \rightarrow  \ Ternariomat \ | \ Ternariobool \ | \ Ternariostring \ | \ Ternariovector \ | \ Ternarioregistro $
 
 
 \subsection{Expresiones Matemáticas}
@@ -71,11 +196,13 @@ La producción que se encarga de realizar estas expresiones es eMat.
 
 La primera aproximación fue hacer la gramática para poder respetar la precedencia y asociatividad de los operadores. 
 
-Este proceso se logra teniendo en cuenta de que se puede fijar la precedencia (por ejemplo entre $+$ y $*$), con las reglas de la gramática. Como bien se sabe, el operador $+$ tiene menos precedencia que el $*$. Una gramática que respeta esto es la siguiente:\\
-\\$A \rightarrow A + B$ \\
-$B \rightarrow B * C$ \\
-$C \rightarrow int | float$ \\
+Este proceso se logra teniendo en cuenta que se puede fijar la precedencia (por ejemplo entre $+$ y $*$), con las reglas de la gramática. Como bien se sabe, el operador $+$ tiene menos precedencia que el $*$. Una gramática que respeta esto es la siguiente:
 
+\begin{center}
+$A \rightarrow A + B$ \\
+$B \rightarrow B * C$ \\
+$C \rightarrow int | float$ 
+\end{center}
 Esto se debe a que antes de calcular la suma entre $A$ y $B$, hay que parsear la producción B (pues es un parser ascendente). 
 
 Esto también respeta la asociatividad de ambos operados (que es a izquierda) por la misma razón que antes: La única forma de colocar mas de un operador $+$ es usando la producción $A$ y, por lo tanto, se tiene que parsear $A$ antes que calcular la suma.
@@ -84,22 +211,33 @@ Este proceso se realiza con todos los operadores, de manera que si 2 operadores 
 
 A esta gramática le falta la posibilidad de agregar paréntesis para poder cambiar la precedencia. Una forma de hacerlos es agregarlos a $C$ para que estos tengan mas prioridad que todas las operaciones.
 
-Además también falta poder agregar variables. Para esto agregamos un no terminal a $C$ llamado id que las representa. La gramática resultante es esta:\\
-\\$A \rightarrow A + B$ \\
+Además también falta poder agregar variables. Para esto agregamos un \textbf{no-terminal} a $C$ llamado id que las representa. La gramática resultante es esta:
+\begin{center}
+$A \rightarrow A + B$ \\
 $B \rightarrow B * C$ \\
-$C \rightarrow (A) | int | float | id$ \\
-
+$C \rightarrow (A) | int | float | id$ 
+\end{center}
 Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático (ver Tabla de precedencia). Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
-también se generarían en las expresiones de los otros tipos.
+también se generarían en las expresiones de los otros tipos. Ver explicacion en \textbf{4.1}
 
-\subsection{Problema del Dangling else}
+\subsection{Problema del ``Dangling else'':}
 
-Otro problema que encontramos ya avanzados en el proceso de desarrollo de la gramática fue el problema del Dangling else (\url{https://en.wikipedia.org/wiki/Dangling_else}) que consiste en que los else opcionales en un if hacen que la gramática sea ambigua. 
+Otro problema que encontramos ya avanzados en el proceso de desarrollo de la gramática fue el problema del ``Dangling else'' \footnote{\url{https://en.wikipedia.org/wiki/Dangling_else}} que consiste en que los else opcionales en un if hacen que la gramática sea ambigua. 
 \\
 Por ejemplo: 
 
-\subsection{Gramática Final}
-A continuación se define la gramática utilizada para construir el parser. La misma es \textbf{no ambigua} y \textbf{LALR}. La garantía de esto es que ply acepta gramáticas de este tipo, nuestra implementación no arroja conflictos \textbf{shift/reduce} o \textbf{reduce/reduce} \\
+if cond1 then if cond2 then sentencia1 else sentencia2 \\
+
+La ambiguedad surge de no poder decidir si la sentencia2 se ejecuta como rama alternativo a cond1( es decir, cuando esta condicion es falsa), o bien como la rama alternativa del \textit{if} asociado a \textbf{cond2}. Esto último es posible ya que el \textit{if} de \textbf{cond1} puede prescindir del bloque \textit{else}.
+Para solucionar esto, construimos una solucion basada en el concepto de lineas abiertas o cerradas. La primera, son todas aquellas que contienen al menos un \textit{if} que no tiene un \textit{else} correspondiente o bien un bucle con linea abierta. La segunda mencionada, son aquellas que resultan de tener sentencias simples, comentarios, o bien: \\
+
+if (cond1) bloqueCerrado else bloqueCerrado \\
+
+Donde bloqueCerrado puede ser cualquier conjunto de sentencias escritas entre llaves, sentencias simples o , razonando inductivamente, lineas cerradas. Tambien se incluyen los bucles con lineas cerrados. Finalmente, la situación se complejizó un poco ya que hay que considerar las distintas combinaciones recién mencionadas, sumando la posibilidad de tener, o no, comentarios en cada uno de estos bloques.
+
+
+\section{Gramática Final}
+A continuación se define la gramática utilizada para construir el parser. La misma es \textbf{no ambigua} y \textbf{LALR}. La garantía de esto es que ply acepta gramáticas de este tipo, y nuestra implementación no arroja conflictos \textbf{shift/reduce} o \textbf{reduce/reduce} \\
 
 \linespread{1.125}\selectfont
 
@@ -130,11 +268,11 @@ linea $\rightarrow$ lAbierta $|$ lCerrada \\
 
 lAbierta $\rightarrow$ IF (cosaBooleana) linea $|$
 
-\hspace{15mm}$|$ IF (cosasBooleana) {g} ELSE lAbierta
+\hspace{15mm}$|$ IF (cosasBooleana) $\{$ g $\}$ ELSE lAbierta
 
-\hspace{15mm}$|$ IF (cosasBooleana) {g} ELSE lAbierta
+\hspace{15mm}$|$ IF (cosasBooleana) $\{$ g $\}$ ELSE lAbierta
 
-\hspace{15mm}$|$ IF (cosasBooleana) {g} 
+\hspace{15mm}$|$ IF (cosasBooleana) $\{$ g $\}$ 
 
 \hspace{15mm}$|$ loop Labierta \\
 
@@ -147,15 +285,13 @@ lAbierta $\rightarrow$ IF (cosaBooleana) linea $|$
 
 lCerrada $\rightarrow$ sentencia
 
-\hspace{15mm}$|$ COMMENT com $|$ lambda
+\hspace{15mm}$|$ IF (cosaBooleana) $\{$ g $\}$ ELSE $\{$ g $\}$
 
-\hspace{15mm}$|$ IF (cosaBooleana) {g} ELSE {g}
+\hspace{15mm}$|$ IF ( cosaBooleana ) lCerrada ELSE $\{$ g $\}$ 
 
-\hspace{15mm}$|$ IF ( cosaBooleana ) lCerrada ELSE { g } 
+\hspace{15mm}$|$ IF ( cosaBooleana ) COMMENT com lCerrada ELSE $\{$ g $\}$ 
 
-\hspace{15mm}$|$ IF ( cosaBooleana ) COMMENT com lCerrada ELSE { g } 
-
-\hspace{15mm}$|$ IF ( cosaBooleana ) { g } ELSE lCerrada 
+\hspace{15mm}$|$ IF ( cosaBooleana ) $\{$ g $\}$ ELSE lCerrada 
 
 \hspace{15mm}$|$ IF ( cosaBooleana ) lCerrada ELSE lCerrada 
 
@@ -165,18 +301,19 @@ lCerrada $\rightarrow$ sentencia
 
 \hspace{15mm}$|$ IF ( cosaBooleana ) COMMENT com lCerrada ELSE  COMMENT com lCerrada
 
-\hspace{15mm}$|$ loop { g } 
+\hspace{15mm}$|$ loop $\{$ g $\}$ 
 
 \hspace{15mm}$|$ loop lCerrada 
 
 \hspace{15mm}$|$ loop COMMENT com lCerrada
 
-\hspace{15mm}$|$ DO { g } WHILE ( valores ) ;
+\hspace{15mm}$|$ DO $\{$ g $\}$ WHILE ( valores ) ;
   
 \hspace{15mm}$|$ DO lCerrada WHILE ( valores ) ;  
   
-\hspace{15mm}$|$  DO COMMENT com lCerrada WHILE ( valores ) ; \\
+\hspace{15mm}$|$  DO COMMENT com lCerrada WHILE ( valores ) ;
 
+com $\rightarrow$  COMMENT com $|$ $\lambda$ \\
 
 \textbf{Sentencias básicas:}
 
@@ -187,9 +324,9 @@ sentencia $\rightarrow$ varsOps $|$ func ; $|$ varAsig ; $|$ RETURN; $|$ ; \\
 
 loop $\rightarrow$ WHILE (valores) $|$ FOR (primerParam ; valores ; tercerParam)
 
-primerParam $\rightarrow$  varAsig $|$ lambda
+primerParam $\rightarrow$  varAsig $|$ $\lambda$
 
-tercarParam $\rightarrow$  varsOps $|$ varAsig $|$ func $|$ lambda
+tercarParam $\rightarrow$  varsOps $|$ varAsig $|$ func $|$ $\lambda$
 
 cosaBooleana $\rightarrow$ expBool $|$ valoresBool \\
   
@@ -210,7 +347,7 @@ FuncBool $\rightarrow$ colineales(valores,valores )
 
 FuncVoid $\rightarrow$ print(Valores) 
 
-param $\rightarrow$ valores $|$ lambda \\
+param $\rightarrow$ valores $|$ $\lambda$ \\
 
 \textbf{Vectores y variables:}
 
@@ -248,7 +385,7 @@ $|$  FLOAT
  
 atributos $\rightarrow$ ID.valoresCampos $|$ reg.valoresCampos
 
-valoresCampos $\rightarrow$ varYVals $|$ END $|$ BEGIN
+valoresCampos $\rightarrow$ varYVals $|$ END $|$ BEGIN \\
 
 \textbf{Operadores ternarios:}
 
@@ -304,7 +441,7 @@ varYVals $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVals \\
 
 \textbf{Registros:} 
 
-reg $\rightarrow$ {campos}
+reg $\rightarrow$ $\{$ campos $\}$
 
 campos $\rightarrow$ ID:valores, campos $|$ ID:valores \\
 
@@ -313,7 +450,7 @@ campos $\rightarrow$ ID:valores, campos $|$ ID:valores \\
 
 varsOps$\rightarrow$ MENOSMENOS varYVals $|$ MASMAS varYVals
 
-\hspace{15mm}$|$ varYVals MASMAS $|$ varYVals MENOSMENOS 
+\hspace{15mm}$|$ varYVals MASMAS $|$ varYVals MENOSMENOS \\
 
 
 \textbf{Asignaciones:} 
@@ -323,7 +460,7 @@ varsOps$\rightarrow$ MENOSMENOS varYVals $|$ MASMAS varYVals
   \hspace{15mm}$|$ variable MENOSEQ valores $|$ variable = valores$|$ ID . ID = valores 
 
 
-variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVals 
+variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVals  \\
 
 
 \textbf{Operaciones binarias enteras:} 
