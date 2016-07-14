@@ -106,7 +106,7 @@ def t_INT(token) :
 
 def t_ID(token):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    token.type = reserved.get(token.value,'ID')    # Check for reserved words
+    token.type = reserved.get((token.value).lower(),'ID')    # Check for reserved words
     atributos = {}
     atributos["value"] = token.value
     atributos["var"] = token.value
