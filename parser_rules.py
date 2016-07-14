@@ -685,7 +685,6 @@ def p_campos(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["campos"] = []
-
   tupla = (subexpressions[1]["var"], subexpressions[3]["type"])
 
   if len(subexpressions) != 4:
@@ -700,12 +699,12 @@ def p_atributos(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = None 
   nombreReg = subexpressions[1]["var"]
-  
   for  tupla in registros[nombreReg]["campos"]:
-    print(tupla[0])
+    #print(tupla[0])
     if tupla[0] == subexpressions[3]["var"]:
       subexpressions[0]["type"] = tupla[1]
       return
+
 
   raise Exception("El campo no esta definido para ese registro")   
 
@@ -724,7 +723,8 @@ def p_valoresCampos(subexpressions):
   | BEGIN'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = None
+  subexpressions[0]["var"] = subexpressions[1]["var"]
+
 
 
 #--------------------------------------------------------------------------------------
@@ -908,6 +908,7 @@ def p_variable(subexpressions):
   '''variable : ID
   | vecVal
   | vecVal '.' varYVals'''
+
   # No hace falta, se pisa el valor de antes pues es una asignacion
   # if nombreVec not in vectores:
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
@@ -929,6 +930,8 @@ def p_variable(subexpressions):
     vectores[nombreVar] = {}
   if nombreVar not in variables:
     variables[nombreVar] = {}
+  if nombreVar not in registros:
+  	registros[nombreVar] = {}
 
 def p_varAsig(subexpressions):
   '''varAsig : variable MULEQ valores
@@ -937,7 +940,7 @@ def p_varAsig(subexpressions):
   | variable MENOSEQ valores
   | variable '=' valores
   | ID '.' ID '=' valores'''
-  global variables, vectores
+  global variables, vectores, registros
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
@@ -954,10 +957,9 @@ def p_varAsig(subexpressions):
 
   if subexpressions[3]["type"] == "reg":
     nombreReg = subexpressions[1]["var"]
-    if nombreReg not in registros:
-      registros[nombreReg] = {}
-      registros[nombreReg]["campos"] = subexpressions[3].get("campos")
-      subexpressions[0]["campos"] = subexpressions[3].get("campos")
+    registros[nombreReg]["campos"] = subexpressions[3].get("campos")
+    subexpressions[0]["campos"] = subexpressions[3].get("campos")
+
   if subexpressions[1].get("var") == "Para ejecucion":
     return
 
@@ -1315,9 +1317,10 @@ def setTipo(subexpressions, indiceFuente):
   nombreVariable = subexpressions[indiceFuente].get("var")
   if nombreVariable != None and nombreVariable != "Para ejecucion":
     # Si el tipo viene dado por una variable
-    subexpressions[0]["var"] = nombreVariable
-    tipo = variables[nombreVariable]["type"]
-    subexpressions[0]["type"] = tipo
+    if nombreVariable in variables:
+    	subexpressions[0]["var"] = nombreVariable
+    	tipo = variables[nombreVariable]["type"]
+    	subexpressions[0]["type"] = tipo
   else:
     # Si no hay una variable y el tipo viene dado
     subexpressions[0]["type"] = subexpressions[indiceFuente]["type"]
