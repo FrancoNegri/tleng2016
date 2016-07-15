@@ -705,7 +705,6 @@ def p_atributos(subexpressions):
       subexpressions[0]["type"] = tupla[1]
       return
 
-
   raise Exception("El campo no esta definido para ese registro")   
 
 
@@ -869,11 +868,15 @@ def p_varYVals2(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   # Falta agregar los registros
   if len(subexpressions) == 4:
-    subexpressions[0]["type"] = "falta tipar"
+    
+    if subexpressions[1]["var"] == "Para ejecucion":
+      subexpressions[0]["type"] = "Para ejecucion"
+      subexpressions[0]["var"] = "Para ejecucion"
   else:
     setTipo(subexpressions, 1)
     setVariable(subexpressions, 1)
     setVector(subexpressions, 1) 
+
   
 #-----------------------------------------------------------------------------
 #Operadores de variables:
@@ -931,7 +934,7 @@ def p_variable(subexpressions):
   if nombreVar not in variables:
     variables[nombreVar] = {}
   if nombreVar not in registros:
-  	registros[nombreVar] = {}
+    registros[nombreVar] = {}
 
 def p_varAsig(subexpressions):
   '''varAsig : variable MULEQ valores
@@ -1318,9 +1321,9 @@ def setTipo(subexpressions, indiceFuente):
   if nombreVariable != None and nombreVariable != "Para ejecucion":
     # Si el tipo viene dado por una variable
     if nombreVariable in variables:
-    	subexpressions[0]["var"] = nombreVariable
-    	tipo = variables[nombreVariable]["type"]
-    	subexpressions[0]["type"] = tipo
+      subexpressions[0]["var"] = nombreVariable
+      tipo = variables[nombreVariable]["type"]
+      subexpressions[0]["type"] = tipo
   else:
     # Si no hay una variable y el tipo viene dado
     subexpressions[0]["type"] = subexpressions[indiceFuente]["type"]
@@ -1467,7 +1470,7 @@ def chequearOperadorIncDec(subexpressions, tipo):
     operador = subexpressions[2]
 
   nombreVar = variable["var"]
-  print(nombreVar)
+  
   if nombreVar == None:
     message = "Solo se puede aplicar operador "
     message += operador

@@ -1,4 +1,3 @@
-Generating LALR tables
 Traceback (most recent call last):
   File "parser.py", line 50, in <module>
     ast = parser.parse(text, lexer,debug=0)
@@ -8,7 +7,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 600, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1441, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1447, in chequearAccesoVector
     nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
@@ -18,8 +17,8 @@ Traceback (most recent call last):
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 861, in p_varYVals1
-    setTipo(subexpressions, 1)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1319, in setTipo
-    tipo = variables[nombreVariable]["type"]
-KeyError: 'nombre'
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 600, in p_vecVal2
+    chequearAccesoVector(subexpressions)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1448, in chequearAccesoVector
+    tipoVariable1 = variables[nombreVar1]["type"]
+KeyError: 'doublelist'
