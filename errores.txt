@@ -7,7 +7,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 600, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1447, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1450, in chequearAccesoVector
     nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
@@ -19,6 +19,6 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 600, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1448, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1451, in chequearAccesoVector
     tipoVariable1 = variables[nombreVar1]["type"]
 KeyError: 'doublelist'

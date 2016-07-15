@@ -866,12 +866,15 @@ def p_varYVals2(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  # Falta agregar los registros
+  # Caso registros:
   if len(subexpressions) == 4:
-    
     if subexpressions[1]["var"] == "Para ejecucion":
       subexpressions[0]["type"] = "Para ejecucion"
       subexpressions[0]["var"] = "Para ejecucion"
+    else:
+      subexpressions[0]["type"] = subexpressions[3]["type"]
+      #No estoy seguro que var ponerle aca (por ejemplo usuario.edad tendria var = edad)
+      subexpressions[0]["var"] = subexpressions[3]["var"]
   else:
     setTipo(subexpressions, 1)
     setVariable(subexpressions, 1)
