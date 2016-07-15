@@ -106,7 +106,11 @@ def t_INT(token) :
 
 def t_ID(token):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    token.type = reserved.get((token.value).lower(),'ID')    # Check for reserved words
+    t = token.value
+    tipo = reserved.get(token.value)   
+    if t.lower() not in reserved and t.upper() not in reserved and t != "multiplicacionEscalar":
+            tipo = 'ID'
+    token.type = tipo
     atributos = {}
     atributos["value"] = token.value
     atributos["var"] = token.value
