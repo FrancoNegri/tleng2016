@@ -18,6 +18,7 @@ d += e;
 e = d;
 e = d + e;
 
+#Casos como if (cond) a = 2 ; else a = "asd"; no esan soportados
 
 g = [1,2,3];
 f = [4,5,6];
