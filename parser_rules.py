@@ -74,6 +74,20 @@ def p_lAbierta1(subexpressions):
   subexpressions[0]["var"] = "" 
 
 #-----------------------------------------------------------------------------
+
+#AGREGO NUEVA PRODUCCION!! para el caso que faltaba...
+#OJO! me parece que no esta tirando bien el output con esta, ver comentarios.i
+
+
+#lAbierta -> IF (cosaBooleana) COMMENT com linea
+def p_lAbierta1p(subexpressions):
+  '''lAbierta : IF '(' cosaBooleana ')' COMMENT com linea '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions[:7])
+  subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[7])
+  subexpressions[0]["var"] = "" 
+
+#-----------------------------------------------------------------------------
 #lAbirta -> IF (cosasBooleana) {g} ELSE lAbierta
 
 def p_lAbierta2(subexpressions):
@@ -88,8 +102,19 @@ def toStringLineaAbierta(subexpression):
   return "\n\ttabing" + subexpression["value"].replace("tabing", "tabing\t")
 
 #-----------------------------------------------------------------------------
-#lAbirta -> IF (cosasBooleana) {g} ELSE lAbierta
+#AGREGO NUEVA PRODUCCION!!!
+#lAbirta -> IF (cosasBooleana) COMMEN com lCerrada ELSE lAbierta
 def p_lAbierta3(subexpressions):
+  '''lAbierta : IF '(' cosaBooleana ')' COMMENT com lCerrada ELSE lAbierta '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[5])
+  subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[5:7])
+  subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[7])
+
+#-----------------------------------------------------------------------------
+#lAbirta -> IF (cosasBooleana) {g} ELSE lAbierta
+def p_lAbierta3p(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' lCerrada ELSE lAbierta '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions[:5])
