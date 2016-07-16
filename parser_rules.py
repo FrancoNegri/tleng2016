@@ -694,15 +694,14 @@ def p_valores(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-
+  subexpressions[0]["indice"] = subexpressions[1].get("indice")
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
-  if subexpressions[1]["type"] == "reg": 
+  if subexpressions[1].get("type") == "reg": 
     subexpressions[0]["campos"] = subexpressions[1].get("campos")
-  if subexpressions[1]["type"] == "vec":
+  if subexpressions[1].get("type") == "vec":
     subexpressions[0]["regs"] = subexpressions[1].get("regs")
-
 #Registros:
 #Reg -> {U}
 def p_reg(subexpressions):
@@ -941,6 +940,7 @@ def p_varsOps1(subexpressions):
   setTipo(subexpressions, 2)
   setVariable(subexpressions, 2)
   setVector(subexpressions, 2)
+  subexpressions[0]["indice"] = subexpressions[2].get("indice")
 
 def p_varsOps2(subexpressions):
   '''varsOps : variable MASMAS 
@@ -952,7 +952,7 @@ def p_varsOps2(subexpressions):
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
-  
+  subexpressions[0]["indice"] = subexpressions[1].get("indice")  
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
@@ -976,9 +976,11 @@ def p_variable(subexpressions):
 
   if variableVector != None:
     subexpressions[0]["var"] = variableVector
-    subexpressions[0]["indice"] = subexpressions[1]["indice"]
   else:
     subexpressions[0]["var"] = nombreVar
+
+  subexpressions[0]["indice"] = subexpressions[1].get("indice")
+  subexpressions[0]["type"] = subexpressions[1].get("type")
 
   if nombreVar not in vectores:
     vectores[nombreVar] = {}
@@ -1005,7 +1007,7 @@ def p_varAsig(subexpressions):
 
   nombreVar = subexpressions[1]["var"]
   tipoValor = getTipoExpresion(subexpressions[3])
-
+  
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
 
   if subexpressions[3]["type"] == "reg":
@@ -1017,18 +1019,16 @@ def p_varAsig(subexpressions):
     return
 
   #Esto lo hago para que no le cambie el tipo a g[0] = 2; por int y lo deje en vec.
-
   if subexpressions[1].get("indice") == None:
-    #Aca queria hacer un chequeo para verificar que no se puedan hacer cosas como
-    # a = 2;
-    # a = "asd";
-    # if nombreVar in variables and variables[nombreVar]!= {}:
-    #   if subexpressions[3].get("type") != variables[nombreVar].get("type"):
-    #     raise Exception("No coinciden los tipos")
-    # else:
+    if nombreVar in variables and variables[nombreVar]!= {}:
+      chequearAsignacion(subexpressions)
+      #chequearTipo([subexpressions[3]],[variables[nombreVar]["type"]])
+
+    else:
       variables[nombreVar]["type"] = tipoValor
       vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
       vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
+  
 
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
@@ -1385,10 +1385,12 @@ def setTipo(subexpressions, indiceFuente):
 
   if nombreVariable != None and nombreVariable != "Para ejecucion":
     # Si el tipo viene dado por una variable
-    if nombreVariable in variables:
+    if nombreVariable in variables and subexpressions[indiceFuente].get("indice") == None:
       subexpressions[0]["var"] = nombreVariable
       tipo = variables[nombreVariable]["type"]
       subexpressions[0]["type"] = tipo
+    else:
+       subexpressions[0]["type"] = subexpressions[indiceFuente]["type"]
   else:
     # Si no hay una variable y el tipo viene dado
     subexpressions[0]["type"] = subexpressions[indiceFuente]["type"]
@@ -1560,6 +1562,8 @@ def chequearOperadorIncDec(subexpressions, tipo):
     raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
 def chequearAsignacion(subexpressions):
+  global variables
+
   if subexpressions[1].get("var") == None:
     raise Exception("Solo se puede asignar valores a variables")
 
@@ -1569,4 +1573,16 @@ def chequearAsignacion(subexpressions):
 
   if operador == "+=":
     chequearTipo([subexpressions[3]], ["int", "float", "string"])
+  nombreVar = subexpressions[1].get("var")
+    
+  if operador == "=" and variables[nombreVar] != {}:
+    if subexpressions[3].get("indice") == None and subexpressions[1].get("indice") == None:
+      chequearTipo([subexpressions[3]],[variables[nombreVar].get("type")])
+    else:
+      if subexpressions[1].get("indice") == None:
+        if subexpressions[3].get("type") != variables[nombreVar].get("type"):
+          raise Exception ("No coinciden los tipos!")
+      else:
+        if subexpressions[3].get("type") != subexpressions[1].get("type"):
+          raise Exception ("No coinciden los tipos!")
 
