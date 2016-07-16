@@ -1008,7 +1008,6 @@ def p_varAsig(subexpressions):
 
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
 
-
   if subexpressions[3]["type"] == "reg":
     nombreReg = subexpressions[1]["var"]
     registros[nombreReg]["campos"] = subexpressions[3].get("campos")
@@ -1017,10 +1016,19 @@ def p_varAsig(subexpressions):
   if subexpressions[1].get("var") == "Para ejecucion":
     return
 
+  #Esto lo hago para que no le cambie el tipo a g[0] = 2; por int y lo deje en vec.
 
-  variables[nombreVar]["type"] = tipoValor
-  vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
-  vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
+  if subexpressions[1].get("indice") == None:
+    #Aca queria hacer un chequeo para verificar que no se puedan hacer cosas como
+    # a = 2;
+    # a = "asd";
+    # if nombreVar in variables and variables[nombreVar]!= {}:
+    #   if subexpressions[3].get("type") != variables[nombreVar].get("type"):
+    #     raise Exception("No coinciden los tipos")
+    # else:
+      variables[nombreVar]["type"] = tipoValor
+      vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
+      vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
 
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals

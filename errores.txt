@@ -7,7 +7,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 632, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1505, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1513, in chequearAccesoVector
     nombreVar1 = subexpressions[1]["var"]
 KeyError: 'var'
 Traceback (most recent call last):
@@ -19,7 +19,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:ID
@@ -35,7 +35,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:ELSE
@@ -51,7 +51,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:ELSE
@@ -67,7 +67,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:ELSE
@@ -83,7 +83,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:,
@@ -99,7 +99,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 524, in p_funcString
     chequearTipo([subexpressions[3]], ["string"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo string
 Traceback (most recent call last):
@@ -111,7 +111,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -127,7 +127,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -143,7 +143,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 536, in p_funcBool
     chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo vec
 Traceback (most recent call last):
@@ -155,7 +155,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:,
@@ -171,7 +171,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -187,7 +187,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 513, in p_funcInt2
     chequearTipo([subexpressions[3]],["string","vec"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo string o vec
 Traceback (most recent call last):
@@ -199,7 +199,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:,
@@ -215,7 +215,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -231,7 +231,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -247,7 +247,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 502, in p_funcInt1
     chequearTipo([subexpressions[5]],["int"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo int
 Traceback (most recent call last):
@@ -259,7 +259,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 502, in p_funcInt1
     chequearTipo([subexpressions[5]],["int"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo int
 Traceback (most recent call last):
@@ -271,7 +271,7 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 553, in p_param1
     chequearTipo([subexpressions[2]],["bool"])
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1415, in chequearTipo
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1423, in chequearTipo
     raise Exception(message)
 Exception: Se esperaba tipo bool
 Traceback (most recent call last):
@@ -283,7 +283,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:)
@@ -299,7 +299,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:,
@@ -315,7 +315,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:;
@@ -341,7 +341,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:AND
@@ -367,7 +367,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:BEGIN
@@ -403,7 +403,7 @@ Traceback (most recent call last):
     tok = call_errorfunc(self.errorfunc, errtoken, self)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
     r = errorfunc(token)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1307, in p_error
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1315, in p_error
     raise Exception(message)
 Exception: [Syntax error]
 type:=
@@ -439,6 +439,6 @@ Traceback (most recent call last):
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 632, in p_vecVal2
     chequearAccesoVector(subexpressions)
-  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1507, in chequearAccesoVector
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1515, in chequearAccesoVector
     tipoVariable1 = variables[nombreVar1]["type"]
 KeyError: 'Para ejecucion'
