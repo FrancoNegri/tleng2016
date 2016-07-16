@@ -14,6 +14,7 @@ class Node:
 variables = {}
 vectores = {}
 registros = {}
+
 # Simbolo inicial
 start = 'g'
 
@@ -555,6 +556,7 @@ def p_vec(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["type"] = "vec"
   setVector(subexpressions, 2)
+  subexpressions[0]["regs"] = subexpressions[2]["regs"]
 
 #Elem-> Valores, Elem | Valores
 def p_elem(subexpressions):
@@ -565,11 +567,16 @@ def p_elem(subexpressions):
   setTipo(subexpressions, 1)
   if len(subexpressions) == 2:
     subexpressions[0]["elems"] = []
+    subexpressions[0]["regs"] = []
   else:
     setVector(subexpressions, 3)
+    subexpressions[0]["regs"] = subexpressions[3].get("regs")
 
   tipoElem = getTipoExpresion(subexpressions[1])
+  campos = subexpressions[1].get("campos")
+  
   subexpressions[0]["elems"].insert(1, tipoElem)
+  subexpressions[0]["regs"].insert(1,campos)
 
 #VecVal ->  var M
 
@@ -614,8 +621,10 @@ def p_vecVal2(subexpressions):
   # Dejo del chequeo de a[3][5][4] para tiempo de ejecucion, seteo elems y var por default
 
   subexpressions[0]["elems"] = None
-  # Para que en la asignacion tenga una variable para instanciar
+  # Para que en la asignacion tenga una variable para instanciar[]
+
   subexpressions[0]["var"] = "Para ejecucion"
+
   # Para la asignacion y varOps
   subexpressions[0]["varAsig"] = subexpressions[1]["var"]
   subexpressions[0]["indice"] = indice
@@ -665,7 +674,9 @@ def p_valores(subexpressions):
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
   if subexpressions[1]["type"] == "reg": 
-      subexpressions[0]["campos"] = subexpressions[1].get("campos")
+    subexpressions[0]["campos"] = subexpressions[1].get("campos")
+  if subexpressions[1]["type"] == "vec":
+    subexpressions[0]["regs"] = subexpressions[1].get("regs")
 
 #Registros:
 #Reg -> {U}
@@ -691,10 +702,11 @@ def p_campos(subexpressions):
     subexpressions[0]["campos"] = subexpressions[5]["campos"]
 
   subexpressions[0]["campos"].insert(1, tupla)
+  subexpressions[1]["type"] = subexpressions[3].get("type")
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos'''
- 
+  
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = None 
@@ -713,7 +725,7 @@ def p_atributos2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["var"] = ""
-  
+  #Aca falta 
 
 
 def p_valoresCampos(subexpressions):
@@ -864,21 +876,32 @@ def p_varYVals2(subexpressions):
   '''varYVals : vecVal
   | vecVal '.' varYVals
   '''
+  global registros, vectores
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   # Caso registros:
   if len(subexpressions) == 4:
-    if subexpressions[1]["var"] == "Para ejecucion":
+    if subexpressions[1]["type"] == "Para ejecucion":
       subexpressions[0]["type"] = "Para ejecucion"
       subexpressions[0]["var"] = "Para ejecucion"
     else:
-      subexpressions[0]["type"] = subexpressions[3]["type"]
+      nombreVec = subexpressions[1]["varAsig"]
+      indice = subexpressions[1]["indice"]
+      listaCampos = vectores[nombreVec].get("regs")[indice]
+      nombreCampo = subexpressions[3]["var"]
+      tipo = None 
+      for tupla in listaCampos:
+        if tupla[0] == nombreCampo:
+          tipo = tupla[1]
+      subexpressions[0]["type"] = tipo
       #No estoy seguro que var ponerle aca (por ejemplo usuario.edad tendria var = edad)
-      subexpressions[0]["var"] = subexpressions[3]["var"]
+      subexpressions[0]["var"] = None
+    
   else:
     setTipo(subexpressions, 1)
     setVariable(subexpressions, 1)
     setVector(subexpressions, 1) 
+
 
   
 #-----------------------------------------------------------------------------
@@ -969,8 +992,11 @@ def p_varAsig(subexpressions):
   if subexpressions[1].get("var") == "Para ejecucion":
     return
 
+
   variables[nombreVar]["type"] = tipoValor
   vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
+  vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
+
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
@@ -996,10 +1022,12 @@ def p_valoresMat1(subexpressions):
   | varsOps
   '''
   subexpressions[0] = {}
+  
   subexpressions[0]["value"] = toString(subexpressions)
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
+
 
 def p_valoresMat3(subexpressions):
   '''valoresMat : '(' ternarioMat ')' ''' 
@@ -1321,6 +1349,7 @@ def setTipoBinarioMat(subexpressions):
 # Si el elemento no tiene tipo, asigna None
 def setTipo(subexpressions, indiceFuente):
   nombreVariable = subexpressions[indiceFuente].get("var")
+
   if nombreVariable != None and nombreVariable != "Para ejecucion":
     # Si el tipo viene dado por una variable
     if nombreVariable in variables:
@@ -1429,6 +1458,7 @@ def chequeadorTernario(subexpressions):
 
 def chequeadorSuma(subexpressions):
   if len(subexpressions) == 4:
+
     if subexpressions[1]["type"] == "string" and subexpressions[3]["type"] == "string":
       return
 
@@ -1448,6 +1478,7 @@ def chequearUnicoTerminal(subexpressions, tipos):
 def chequearAccesoVector(subexpressions):
   global vectores, variables
   nombreVar1 = subexpressions[1]["var"]
+
   tipoVariable1 = variables[nombreVar1]["type"]
 
   if tipoVariable1 != "vec" and tipoVariable1 != "Para ejecucion":
