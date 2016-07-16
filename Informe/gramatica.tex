@@ -121,7 +121,7 @@ t\_ignore  = ' $\setminus$ t'
 
 
 
-\section{Desarrollo de la grmática:}
+\section{Desarrollo de la gramática:}
 
 \subsection{Gramática inicial}
 Comenzamos el armado de la gramática definiendo los tipos básicos que debíamos aceptar en nuestro lenguaje.
@@ -168,7 +168,7 @@ $Valores \rightarrow ExpresionMatematica \ | \ ExpresionBooleana \  | \ Expresio
 
 $FuncReturn \rightarrow FuncInt \ | \ FuncString \ | \ FuncBool \ | \ FuncVector $
 
-$Ternario \rightarrow  \ Ternariomat \ | \ Ternariobool \ | \ Ternariostring \ | \ Ternariovector \ | \ Ternarioregistro $
+$Ternario \rightarrow  \ TernarioMat \ | \ TernarioBool \ | \ TernarioString \ | \ TernarioVector \ | \ TernarioRegistro $
 
 
 \subsection{Expresiones Matemáticas}
@@ -217,8 +217,21 @@ $A \rightarrow A + B$ \\
 $B \rightarrow B * C$ \\
 $C \rightarrow (A) | int | float | id$ 
 \end{center}
-Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático (ver Tabla de precedencia). Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
-también se generarían en las expresiones de los otros tipos. Ver explicacion en \textbf{4.1}
+
+Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático. Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
+también se generarían en las expresiones de los otros tipos. Ver explicación en \textbf{4.1}
+
+\subsection{Expresiones booleanas}
+Las expresiones booleanas también se soluciona de la misma manera que las expresiones matemáticas. Para mas información ver sección 5.
+
+\subsection{Expresiones de string}
+En principio consideramos la siguiente gramática:
+
+$ExpresionString \rightarrow ExpresionString + ExpresionString \ | \ string$ \\
+
+Esta gramática nos planteó un problema en el parser debido a que comparte un operador con las expresiones matemáticas. El problema viene cuando se tiene una expresión $a+b$ en donde no está claro que tipo le corresponde e introduce una ambigüedad.
+
+Por lo tanto decidimos fusionar a las expresiones de string con las expresiones matemáticas y restringir (mediante chequeo de tipos) que un string no se le puede hacer otra operación que no sea la suma.
 
 \subsection{Problema del ``Dangling else'':}
 
@@ -341,11 +354,11 @@ funcInt $\rightarrow$ MULTIESCALAR( valores, valores param)
 
 funcInt $\rightarrow$ LENGTH( valores)
 
-funcString $\rightarrow$ CAPIALIZAR(valores)
+funcString $\rightarrow$ CAPITALIZAR(valores)
 
-FuncBool $\rightarrow$ colineales(valores,valores )
+funcBool $\rightarrow$ colineales(valores,valores )
 
-FuncVoid $\rightarrow$ print(Valores) 
+funcVoid $\rightarrow$ print(Valores) 
 
 param $\rightarrow$ valores $|$ $\lambda$ \\
 
@@ -415,11 +428,11 @@ ternarioVars $\rightarrow$ valoresBool ? valoresTernarioVars : valoresTernarioVa
   
 
   
-valoresTernaioVars $\rightarrow$ reg $|$ vec $|$ ternarioVars $|$ (ternarioVars) $|$ atributos 
+valoresTernarioVars $\rightarrow$ reg $|$ vec $|$ ternarioVars $|$ (ternarioVars) $|$ atributos 
 
 \hspace{15mm}$|$ varsOps  $|$ varYVals $|$ RES
 
-valoresTernarioMat $\rightarrow$ valoresBool ? valoresTernarioMat : valoresTernarioMat  
+TernarioMat $\rightarrow$ valoresBool ? valoresTernarioMat : valoresTernarioMat  
 
 \hspace{15mm}$|$ expBool ? valoresTernarioMat : valoresTernarioMat
   
