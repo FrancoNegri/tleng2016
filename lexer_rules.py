@@ -91,7 +91,7 @@ def t_BOOL(token) :
 def t_FLOAT(token):
     r"[-]?[0-9] \. [0-9]*"
     atributos = {}
-    atributos["type"] = "int"
+    atributos["type"] = "float"
     atributos["value"] = token.value
     token.value = atributos
     return token
