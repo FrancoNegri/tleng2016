@@ -15,10 +15,446 @@ Traceback (most recent call last):
     ast = parser.parse(text, lexer,debug=0)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
     return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:ID
+value:{'var': 'texto', 'type': 'noType', 'value': 'texto'}
+line:3
+position:5
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:COMMENT
+value:# Comentario con codigo: if (c) then ... else ...
+line:13
+position:177
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:ELSE
+value:{'var': 'else', 'type': 'noType', 'value': 'else'}
+line:1
+position:0
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:ELSE
+value:{'var': 'else', 'type': 'noType', 'value': 'else'}
+line:1
+position:0
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:ELSE
+value:{'var': 'else', 'type': 'noType', 'value': 'else'}
+line:1
+position:20
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:,
+value:,
+line:1
+position:18
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 499, in p_funcString
+    chequearTipo([subexpressions[3]], ["string"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo string
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:12
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:18
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 511, in p_funcBool
+    chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo vec
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:,
+value:,
+line:1
+position:22
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:11
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 488, in p_funcInt2
+    chequearTipo([subexpressions[3]],["string","vec"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo string o vec
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:,
+value:,
+line:1
+position:14
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:7
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:29
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 477, in p_funcInt1
+    chequearTipo([subexpressions[5]],["int"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo int
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 477, in p_funcInt1
+    chequearTipo([subexpressions[5]],["int"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo int
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
+    p.callable(pslice)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 528, in p_param1
+    chequearTipo([subexpressions[2]],["bool"])
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1390, in chequearTipo
+    raise Exception(message)
+Exception: Se esperaba tipo bool
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:)
+value:)
+line:1
+position:22
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:,
+value:,
+line:1
+position:7
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:;
+value:;
+line:3
+position:28
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:AND
+value:{'var': 'AND', 'type': 'noType', 'value': 'AND'}
+line:1
+position:0
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:BEGIN
+value:{'var': 'begin', 'type': 'noType', 'value': 'begin'}
+line:1
+position:0
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1181, in parseopt_notrack
+    tok = call_errorfunc(self.errorfunc, errtoken, self)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 193, in call_errorfunc
+    r = errorfunc(token)
+  File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1282, in p_error
+    raise Exception(message)
+Exception: [Syntax error]
+type:=
+value:=
+line:3
+position:29
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1049, in parseopt_notrack
+    lookahead = get_token()     # Get the next token
+  File "/usr/local/lib/python2.7/dist-packages/ply/lex.py", line 363, in token
+    func.__name__, newtok.type), lexdata[lexpos:])
+ply.lex.LexError: /home/nico/Desktop/tLeng2016(posta)/tleng2016/lexer_rules.py:107: Rule 't_ID' returned an unknown token type 'None'
+Traceback (most recent call last):
+  File "parser.py", line 50, in <module>
+    ast = parser.parse(text, lexer,debug=0)
+  File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 331, in parse
+    return self.parseopt_notrack(input, lexer, debug, tracking, tokenfunc)
   File "/usr/local/lib/python2.7/dist-packages/ply/yacc.py", line 1106, in parseopt_notrack
     p.callable(pslice)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 607, in p_vecVal2
     chequearAccesoVector(subexpressions)
   File "/home/nico/Desktop/tLeng2016(posta)/tleng2016/parser_rules.py", line 1482, in chequearAccesoVector
     tipoVariable1 = variables[nombreVar1]["type"]
-KeyError: 'Para ejecucion'
+KeyError: 'doublelist'
