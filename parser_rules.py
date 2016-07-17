@@ -667,7 +667,7 @@ def p_vecVal2(subexpressions):
 
 
   # Para la asignacion y varOps
-  print(tipoElemento)
+  #print(tipoElemento)
   # if tipoElemento != "vec":
   #   raise Exception("Solo se puede acceder con indice en valores de tipo vector")
 
@@ -1524,8 +1524,8 @@ def chequeadorTernario(subexpressions):
         if subexpressions[1]["type"] != "bool":
             message = "La condicion del operador ? tiene que ser de tipo Bool"
             message += "\n se encontro tipo " + subexpressions[1]["type"]
-            print message
-            #raise Exception(message)
+            #print message
+            raise Exception(message)
 
         if (subexpressions[3]["type"], subexpressions[5]["type"]) in [("int", "float"),  ("float", "int")]:
             return
@@ -1533,8 +1533,8 @@ def chequeadorTernario(subexpressions):
         if subexpressions[3]["type"] != subexpressions[5]["type"]:
             message = "Los valores de retorno del operador ? tiene que ser del mismo tipo"
             message += "\n se encontro tipos " + subexpressions[3]["type"] + " y " + subexpressions[5]["type"]
-            print message
-            #raise Exception(message)
+            #print message
+            raise Exception(message)
 
 def chequeadorSuma(subexpressions):
   if len(subexpressions) == 4:
