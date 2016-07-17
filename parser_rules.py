@@ -622,6 +622,7 @@ def p_vecVal1(subexpressions):
   '''vecVal : ID '[' expresion ']'
   | vec '[' expresion ']'
   | vecVal '[' expresion ']'
+  | atributos '[' expresion ']'
   '''
   chequearAccesoVector(subexpressions)
 
@@ -641,6 +642,7 @@ def p_vecVal2(subexpressions):
   '''vecVal : ID '[' INT ']'
   | vec '[' INT ']'
   | vecVal '[' INT ']'
+  | atributos '[' INT ']'
   '''
   chequearAccesoVector(subexpressions)
 
@@ -655,10 +657,16 @@ def p_vecVal2(subexpressions):
     setVariable(subexpressions, "Para ejecucion")
     return
 
-  elementosVector = vectores[variableVector]["elems"]
+  if variableVector == None:
+    elementosVector = subexpressions[1]["elems"]
+  else:
+    elementosVector = vectores[variableVector]["elems"]
   # Convierto el indice en int (el valor esta guardado en string) y obtengo el tipo correspondiente
 
   indice = int(subexpressions[3]["value"]) -1
+  if indice > len(elementosVector)-1:
+    raise Exception("indice demasiado grande")
+    
   tipoElemento = elementosVector[indice]
 
   setTipo(subexpressions, tipoElemento) 
@@ -669,9 +677,6 @@ def p_vecVal2(subexpressions):
 
 
   # Para la asignacion y varOps
-  #print(tipoElemento)
-  # if tipoElemento != "vec":
-  #   raise Exception("Solo se puede acceder con indice en valores de tipo vector")
 
   variable = "Para ejecucion"
   variableInicial = subexpressions[1].get("varAsig")
@@ -679,7 +684,7 @@ def p_vecVal2(subexpressions):
     variable = variablesVector[variableInicial][indice]
 
   setVariable(subexpressions, variable)
-  subexpressions[0]["varAsig"] = subexpressions[1]["var"]
+  subexpressions[0]["varAsig"] = subexpressions[1].get("var")
   subexpressions[0]["indice"] = indice
 
 def p_expresion(subexpressions):
@@ -748,7 +753,13 @@ def p_campos(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   subexpressions[0]["campos"] = []
-  tupla = (subexpressions[1]["var"], subexpressions[3]["type"])
+  nombreCampo = subexpressions[1]["var"]
+  tipoCampo = subexpressions[3]["type"]
+
+  # Por si el campo es un vector
+  variableDelVector = subexpressions[3]["var"]
+
+  tupla = (subexpressions[1]["var"], subexpressions[3]["type"], variableDelVector)
 
   if len(subexpressions) != 4:
     subexpressions[0]["campos"] = subexpressions[5]["campos"]
@@ -761,12 +772,14 @@ def p_atributos(subexpressions):
   
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  setVariable(subexpressions, None) 
-  nombreReg = subexpressions[1]["var"]
-  for  tupla in registros[nombreReg]["campos"]:
+  varReg = subexpressions[1]["var"]
+  nombreCampo = subexpressions[3]["campo"]
+  for (campoReg, tipoCampoReg, varVecReg) in registros[varReg]["campos"]:
     #print(tupla[0])
-    if tupla[0] == subexpressions[3]["var"]:
-      setTipo(subexpressions, tupla[1])
+    if campoReg == nombreCampo:
+      setTipo(subexpressions, tipoCampoReg)
+      if tipoCampoReg == "vec":
+        setVariable(subexpressions, varVecReg)
       return
 
   raise Exception("El campo no esta definido para ese registro")   
@@ -776,19 +789,35 @@ def p_atributos2(subexpressions):
   '''atributos : reg '.' valoresCampos '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = ""
-  #Aca falta 
+
+  nombreCampo = subexpressions[3]["campo"]
+  camposRegistro = subexpressions[1]["campos"]
+  for (campoReg, tipoCampoReg, varVecReg) in camposRegistro:
+    #print(tupla[0])
+    if campoReg == nombreCampo:
+      setTipo(subexpressions, tipoCampoReg)
+      if tipoCampoReg == "vec":
+        setVariable(subexpressions, varVecReg)
+      return
+
+  raise Exception("El campo no esta definido para ese registro")   
 
 
 def p_valoresCampos(subexpressions):
-  '''valoresCampos : varYVals
-  | END
-  | BEGIN'''
+  '''valoresCampos : ID
+  | end
+  | begin'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["var"] = subexpressions[1]["var"]
+  subexpressions[0]["campo"] = subexpressions[1]["var"]
 
+def p_end(subexpressions):
+  '''end : END'''
+  subexpressions[0]["var"] = "end"
 
+def p_begin(subexpressions):
+  '''begin : BEGIN'''
+  subexpressions[0]["var"] = "begin"
 
 #--------------------------------------------------------------------------------------
 # Operadores ternarios
@@ -1039,8 +1068,8 @@ def p_varAsig(subexpressions):
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
 
   if tipoValor == "reg":
-    nombreReg = subexpressions[1]["var"]
-    registros[nombreReg]["campos"] = subexpressions[3].get("campos")
+    varReg = subexpressions[1]["var"]
+    registros[varReg]["campos"] = subexpressions[3].get("campos")
     subexpressions[0]["campos"] = subexpressions[3].get("campos")
 
   if subexpressions[1].get("var") == "Para ejecucion":
@@ -1559,12 +1588,8 @@ def chequearUnicoTerminal(subexpressions, tipos):
 
 def chequearAccesoVector(subexpressions):
   global vectores, variables
-  nombreVar1 = subexpressions[1]["var"]
 
-  if nombreVar1 == "Para ejecucion":
-    return
-
-  tipoVariable1 = variables[nombreVar1]["type"]
+  tipoVariable1 = getTipoExpresion(subexpressions[1])
 
   if tipoVariable1 != "vec" and tipoVariable1 != "Para ejecucion":
     raise Exception("El operador [i] solo se puede usar con variables de tipo vector")
@@ -1576,7 +1601,6 @@ def chequearAccesoVector(subexpressions):
     tipoVariable2 = subexpressions[3]["type"]
 
   if tipoVariable2 != "int" and tipoVariable2 != "Para ejecucion":
-    #print(tipoVariable2)
     raise Exception("El indice de un vector solo se puede ser de tipo int") 
 
 def chequearOperadorIncDec(subexpressions, tipo):
