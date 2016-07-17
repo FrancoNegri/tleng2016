@@ -500,6 +500,15 @@ def p_funcInt1(subexpressions):
   setTipo(subexpressions, "vec")
   setVector(subexpressions, 3)
   chequearTipo([subexpressions[3]],["vec"])
+  #Esto lo hago a mano porque chequear tipos recibe una subexpresion, pero los tipos del vector estan en una lista.
+  if subexpressions[3]["var"] in variables:
+    listaTipos = vectores[subexpressions[3]["var"]]["elems"]
+  else:
+    listaTipos = subexpressions[3].get("elems")
+
+  for tipo in listaTipos:
+    if tipo not in ["int","float"]:
+      raise Exception ("Se esperaba vector numerico")
   #Aca quiero chequear que sea numerico, pero me tirar error
   #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
   chequearTipo([subexpressions[5]],["int"])
