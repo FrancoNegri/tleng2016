@@ -1,0 +1,200 @@
+\section{Implementacion Del Lexer}
+
+Para la construccion del lexer se definió un conjunto de literales con operadores y otros simbolos propios del lenguaje.
+
+\textbf{literals} = $[+,- , * , / , ^ ,\% , < , > , = , ! , \{\ , \}\ , ( , ) , [ , ] , ? , \textbf{:} , \textbf{;} , \textbf{,} , \textbf{.} ]$
+
+A su vez, utilizamos otra funcionalidad de ply para definir las palabras reservadas del lenguaje: \\
+
+\textbf{reserved} = $\{$
+'begin' : 'BEGIN', 'end' : 'END', 'while' : 'WHILE', 'for' : 'FOR',
+
+'if' : 'IF', 'else' : 'ELSE','do' : 'DO', 'res' : 'RES', 'return' : 'RETURN',
+
+'AND' : 'AND', 'OR' : 'OR', 'NOT' : 'NOT', 'print' : 'PRINT',
+
+'multiplicacionEscalar': 'MULTIESCALAR', 'capitalizar': 'CAPITALIZAR', 
+
+'colineales': 'COLINEALES', 'print': 'PRINT', 'length': 'LENGTH',
+$\}$ \\
+
+Esto permitió evitar tener que definir demasiadas reglas simples para este tipo de operadores o palabras claves.
+
+Para el resto de los tokens definidos, fue necesario utilizar expresiones regulares, se muestra mas abajo como se definieron cada una de ellos: (Por claridad, se omite el resto del codigo para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
+
+\begin{multicols}{2}
+
+t\_EQEQ = r"=="
+
+t\_DISTINTO = r"!="
+
+t\_MENOSEQ = r"-="
+
+t\_MASEQ = r"$\setminus$+="
+
+t\_MULEQ = r"$\setminus$*="
+
+t\_DIVEQ = r"/="
+
+t\_MASMAS = r"$\setminus$+$\setminus$+"
+
+t\_MENOSMENOS = r"--"
+
+\columnbreak
+
+def t\_STRING(token):
+
+\hspace{5mm}    r' ' ' " .*? " ' ' '
+    
+\hspace{5mm}    atributos = $\{ \} $
+    
+\hspace{5mm}    atributos["type"] = "string"
+    
+\hspace{5mm}    atributos["value"] = token.value
+    
+\hspace{5mm}    token.value = atributos
+    
+\hspace{5mm}    return token
+ 
+\end{multicols} 
+    
+   
+\begin{multicols}{2}   
+
+def t\_BOOL(token) : 
+
+\hspace{5mm}    r"true $|$ false"
+    
+    
+def t\_FLOAT(token):
+
+\hspace{5mm}    r"[-]?[0-9] 
+    
+def t\_INT(token) : 
+
+\hspace{5mm}    r"[-]?[1-9][0-9]* | 0"
+    
+\columnbreak
+
+def t\_ID(token):
+
+\hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
+    
+\hspace{5mm}    token.type = reserved.get(token.value,'ID')
+
+
+def t\_NEWLINE(token):
+
+\hspace{5mm}  r"$\setminus$n+"
+  
+\hspace{5mm}  token.lexer.lineno += len(token.value)
+  
+\end{multicols}
+
+\begin{multicols}{2}
+
+def t\_error(token):
+
+ \hspace{2mm}message = "Token desconocido:"
+    
+\hspace{2mm}message += "$\setminus$n type:" + token.type
+    
+\hspace{2mm}message += "$\setminus$n value:" + str(token.value)
+    
+\hspace{2mm}message += "$\setminus$n line:" + str(token.lineno)
+    
+\hspace{2mm}message += "$\setminus$n position:"+str(token.lexpos)
+    
+\hspace{2mm}raise Exception(message)
+  
+
+\columnbreak
+
+def t\_COMMENT(token):
+
+\hspace{2mm}    r'$\#.*$'
+
+t\_ignore  = ' $\setminus$ t'
+
+\end{multicols}
+
+\section{Implementacion Del Parser}
+
+La implementación del parser consistió en transcribir la gramatica final del apartado $2$ a la sintaxis de ply.
+
+De esta manera, dada una producción:
+
+$$Valores \rightarrow ExpresionMatematica$$
+
+Fue necesario reescribirla como:
+
+
+$def\; p\_valores(subexpressions):$
+
+$\quad'''\; valores\; :\; ExpresionMatematica\;'''$
+
+
+Ademas contamos con la funcionalidad de ply que, una vez que se a utlizado una producción permite ejecutar codigo adicional. Siguiendo el ejemplo anterior, suponiendo que cada vez que el parser utiliza la producciòn antedicha deseo imprimirla, puedo escribir:
+\\
+
+$def\; p\_valores(subexpressions):$
+
+$\quad'''\; valores\; :\; ExpresionMatematica\;'''$
+
+$\quad print\; subexpressions[1]$
+
+
+Esto lo utilizamos tanto para escribir el output formateado con la salida correcta como para realizar el chequeo de tipos.
+
+\subsection{Chequeo de tipos}
+
+\subsubsection{Resumen atributos}
+
+Para el chequeo de tipos utilizamos atributos sintetizados que se enumeran a continuación:
+
+\begin{itemize}
+\item var : Denota la variable de la expresión (si es que hay solo una variable).
+\item type : Denota el tipo de la expresión.
+\item elems : Si la expresión es de tipo vector, denota los tipos de los elementos del vector.
+\item varsVec : Si la expresión es de tipo vector, denota las variables de los elementos del vector (si tienen alguna).
+\item regs:
+\item campo: denota el valor de un campo de un registro.
+\item varAsig e indice : denota la variable y el indice en asignaciones como a[i] = 1, 
+en donde la expresión a la derecha del "$=$" \textbf{no} es un valor.
+\end{itemize}
+
+\subsubsection{Asignación con variables, vectores y registros}
+Los tipos posibles en el atributo \textit{type} son: string, float, int, bool, vec y reg. En algunas producciones se usan como simples atributos sintetizados, en el caso de que una expresión sea una variable se necesita saber que tipo tuvo esa variable cuando se inicializó. 
+
+Para esto se cuenta con el diccionario global \textit{variables} que tiene de claves a las variables y de valor su tipo (con fines declarativos hay otro diccionario dentro del valor, que tiene una clave "type" y el valor es el tipo de la variable).
+
+Algo similar ocurre con variables que referencian a  vectores. Se agrega un diccionario global \textit{vectores} en donde se guarda la variable como clave y una lista de tipos como valor, que denotan los tipos de las respectivas posiciones del vector.
+
+Para los vectores de vectores hay un diccionario global \textit{variablesVector} que guarda como clave a la variable correspondiente al vector de vectores y como valor una lista de variables que se corresponden con las variables de los vectores dentro del vector.
+
+Como se pueden hacer operaciones tales como [1,2,3][0] en donde no se involucra ninguna variable, se agrego el atributo \textit{elems} que se encarga de obtener esa lista de tipos del vector. Observar que, como no existe referencia a este vector, no es necesario guardarlo en el diccionario \textit{vectores} ya que no se utilizará en otro lugar.
+
+En caso de los registros se guarda un atributo \textit{campos} en donde se guardan los campos del registro. En el se guarda una lista de tuplas, donde la primer coordenada corresponde al nombre del campo, la segunda al tipo del campo y la tercera a la variable del vector si tuviera un campo de tipo vector.
+
+En caso de las asignaciones se guarda en un diccionario global \textit{registros} la variable correspondiente al registro y los campos obtenidos a través del atributos \textit{campos}.
+
+
+\section{Implementacion Salida}
+
+Para la implementación de la salida cada producción de la gramatica tendrá un atributo sintetizado "value" en el que se guardará el texto de salida basandose en el valor de cada uno de los terminales y no terminales que lo compenen. Esto es relativamente sencillo para las sentencias que solo requieren escribir sus terminales y no terminales seguidos de un salto de linea, pero requerirá un cuidado especial para el caso de los condicionales y los loops, ya que estos necesitan saltos de linea en lugares intermedios y una indentación adecuada.
+\\
+Para ejemplificar que debemos hacer utilizamos la produccón:
+
+$$lAbierta \rightarrow IF\; (\; cosaBooleana\; )\; COMMENT\; com\; lCerrada\; ELSE\; \{\; g\; \}$$ 
+
+como caso de estudio.
+\\
+Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Notese aquí que cosaBolleana es un conjunto de simbolos que que deben reducir como ultima instancia a una Expresón Booleana. queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles terminos que se encuentren presentes.
+
+Esto estará seguido de un salto de linea, seguido de un comentario (con un tab) y un salto de linea, luego un no terminal que contendrá cero o uno o varios comentarios (todos conteniendo su indentación apropiada), otro salto de linea con una palabra reservada else, unas llaves que abren y una o varias sentencias indentadas un corchete que cierra.
+\\
+En primera instancia, la salida que nos dará este if es la deseada, sin embargo puede que ocurra el caso donde tenemos dos ifs anidados. En este caso lo esperable es que el segudo if (el interno) este indentado y que las sentencias dentro de ese if tengan dos tabs en vez de uno. Luego, no es suficiente con agregar tabs en los lugares adecuados, tambien necesitamos señalizar donde comienza una nueva linea y en el caso de que sea necesario agregar varios tabs, que se pueda recorrer la salida agregandolos donde se necesite.
+\\
+Para el manejos de la indentación utilizaremos al comienzo de cada nueva linea.
+
+
