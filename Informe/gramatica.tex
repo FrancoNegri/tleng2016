@@ -19,7 +19,7 @@ Después de leer la documentación de ply\footnote{ \url{http://www.dabeaz.com/p
 
 Si bien esto solucionó todos los conflictos de una manera sencilla, por desgracia, nos comunicaron que lo que se pedía era una gramática \textbf{no} ambigua. Por lo tanto decidimos tirar la gramática y comenzar de nuevo.
 
-Con el tiempo contado y sin ideas mejores nos dimos cuenta de que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos. Dicha gramática se encuentra definida en la seccion \textbf{5}
+Con el tiempo contado y sin ideas mejores nos dimos cuenta de que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos. Dicha gramática se encuentra definida en la sección \textbf{5}
 
 \subsection{Descripción de la gramática implementada:}
 
@@ -30,7 +30,7 @@ $Valores \rightarrow ExpresionMatematica \  | \  ExpresionBooleana \  | \ Expres
 
 Donde cada producción que empieza con $Expresion$ denota una expresión de un tipo determinado que también puede generar los valores primitivos (bool, string, float, bool, int, vec, reg), variables (id) y además funciones que retornen valores a su tipo correspondiente (por ejemplo $capitalizar$ en $Expresionstring$). $OperacionVariables$ genera las expresiones que usan operaciones de variables (asignación, incremento, decremento, etc). 
 
-El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} (es decir, hay mas de una posible derivacion mas a la izquierda para la cadena \textit{id}) y, por lo tanto, hay conflictos (la gramática es ambigua). 
+El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} (es decir, hay mas de una posible derivación mas a la izquierda para la cadena \textit{id}) y, por lo tanto, hay conflictos (la gramática es ambigua). 
 
 Por lo tanto decidimos sacar a \textbf{id} de cada producción. El problema es que se tiene que seguir produciendo expresiones complejas con \textbf{id} (por ejemplo $id$ $and$ $id$).
 
@@ -117,12 +117,12 @@ Por ejemplo:
 
 if cond1 then if cond2 then sentencia1 else sentencia2 \\
 
-La ambiguedad surge de no poder decidir si la sentencia2 se ejecuta como rama alternativo a cond1( es decir, cuando esta condicion es falsa), o bien como la rama alternativa del \textit{if} asociado a \textbf{cond2}. Esto último es posible ya que el \textit{if} de \textbf{cond1} puede prescindir del bloque \textit{else}.
-Para solucionar esto, construimos una solucion basada en el concepto de lineas abiertas o cerradas. La primera, son todas aquellas que contienen al menos un \textit{if} que no tiene un \textit{else} correspondiente o bien un bucle con linea abierta. La segunda mencionada, son aquellas que resultan de tener sentencias simples, comentarios, o bien: \\
+La ambigüedad surge de no poder decidir si la sentencia2 se ejecuta como rama alternativo a cond1( es decir, cuando esta condición es falsa), o bien como la rama alternativa del \textit{if} asociado a \textbf{cond2}. Esto último es posible ya que el \textit{if} de \textbf{cond1} puede prescindir del bloque \textit{else}.
+Para solucionar esto, construimos una solución basada en el concepto de lineas abiertas o cerradas. La primera, son todas aquellas que contienen al menos un \textit{if} que no tiene un \textit{else} correspondiente o bien un bucle con linea abierta. La segunda mencionada, son aquellas que resultan de tener sentencias simples, comentarios, o bien: \\
 
 if (cond1) bloqueCerrado else bloqueCerrado \\
 
-Donde bloqueCerrado puede ser cualquier conjunto de sentencias escritas entre llaves, sentencias simples o , razonando inductivamente, lineas cerradas. Tambien se incluyen los bucles con lineas cerrados. Finalmente, la situación se complejizó un poco ya que hay que considerar las distintas combinaciones recién mencionadas, sumando la posibilidad de tener, o no, comentarios en cada uno de estos bloques.
+Donde bloqueCerrado puede ser cualquier conjunto de sentencias escritas entre llaves, sentencias simples o , razonando inductivamente, lineas cerradas. También se incluyen los bucles con lineas cerrados. Finalmente, la situación se complejizó un poco ya que hay que considerar las distintas combinaciones recién mencionadas, sumando la posibilidad de tener, o no, comentarios en cada uno de estos bloques.
 
 
 \subsection{Gramática Final}
