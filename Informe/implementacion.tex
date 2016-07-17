@@ -146,4 +146,24 @@ $\quad print\; subexpressions[1]$
 
 Esto lo utilizamos tanto para escribir el output formateado con la salida correcta como para realizar el chequeo de tipos.
 
-\subsection{Implementacion Del Chequeo de Tipos}
+\subsubsection{Implementacion Salida}
+
+Para la implementación de la salida cada producción de la gramatica tendrá un atributo sintetizado "value" en el que se guardará el texto de salida basandose en el valor de cada uno de los terminales y no terminales que lo compenen. Esto es relativamente sencillo para las sentencias que solo requieren escribir sus terminales y no terminales seguidos de un salto de linea, pero requerirá un cuidado especial para el caso de los condicionales y los loops, ya que estos necesitan saltos de linea en lugares intermedios y una indentación adecuada.
+\\
+Para ejemplificar que debemos hacer utilizamos la produccón:
+
+$$lAbierta \rightarrow IF\; (\; cosaBooleana\; )\; COMMENT\; com\; lCerrada\; ELSE\; \{\; g\; \}$$ 
+
+como caso de estudio.
+\\
+Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Notese aquí que cosaBolleana es un conjunto de simbolos que que deben reducir como ultima instancia a una Expresón Booleana. queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles terminos que se encuentren presentes.
+
+Esto estará seguido de un salto de linea, seguido de un comentario (con un tab) y un salto de linea, luego un no terminal que contendrá cero o uno o varios comentarios (todos conteniendo su indentación apropiada), otro salto de linea con una palabra reservada else, unas llaves que abren y una o varias sentencias indentadas un corchete que cierra.
+\\
+En primera instancia, la salida que nos dará este if es la deseada, sin embargo puede que ocurra el caso donde tenemos dos ifs anidados. En este caso lo esperable es que el segudo if (el interno) este indentado y que las sentencias dentro de ese if tengan dos tabs en vez de uno. Luego, no es suficiente con agregar tabs en los lugares adecuados, tambien necesitamos señalizar donde comienza una nueva linea y en el caso de que sea necesario agregar varios tabs, que se pueda recorrer la salida agregandolos donde se necesite.
+\\
+Para el manejos de la indentación utilizaremos al comienzo de cada nueva linea.
+
+\subsubsection{Implementacion Del Chequeo de Tipos}
+
+
