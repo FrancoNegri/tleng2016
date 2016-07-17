@@ -19,11 +19,18 @@ d += e;
 e = d;
 e = d + e;
 
-#Casos como if (cond) a = 2 ; else a = "asd"; no esan soportados
-
 g = [1,2,3];
 f = [4,5,6];
 
 g[0] = 2;
-
 b = g[0]++;
+
+#Las variables pueden cambiar "dinamicante" su tipo
+a = "sd";
+#Los vectores no
+g[0] += 1;
+g[0] *= 2;
+
+t = ["a","b","c"];
+t += t[0] + t[1];
+

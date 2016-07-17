@@ -1638,22 +1638,27 @@ def chequearOperadorIncDec(subexpressions, tipo):
 def chequearAsignacion(subexpressions):
   global variables
 
-  if subexpressions[1].get("var") == None:
-    raise Exception("Solo se puede asignar valores a variables")
+  #Si el lado izquierdo de la asignacion se refiere a una posicion de vector, se chequea estrictamente que se le asigne algo del tipo original.
+  #Es decir, si es un vector de ints, solo se puede asignar ints.
+  if subexpressions[1].get("indice") != None:
+    if subexpressions[3].get("type") != subexpressions[1].get("type"):
+      raise Exception ("No coinciden los tipos!")
+  #Casos de asignacion a variables,  en asignaciones no se verifica el tipo!
+  else:
+    if subexpressions[1].get("var") == None:
+      raise Exception("Solo se puede asignar valores a variables")
 
-  operador = subexpressions[2]
-  if operador not in ["=", "+="]:
-    chequearTipo([subexpressions[3]], ["int", "float"])
+    operador = subexpressions[2]
+    if operador not in ["=", "+="]:
+      chequearTipo([subexpressions[3]], ["int", "float"])
 
-  if operador == "+=":
-    chequearTipo([subexpressions[3]], ["int", "float", "string"])
-  nombreVar = subexpressions[1].get("var")
-    
-  if operador == "=" and variables[nombreVar] != {}:
+    if operador == "+=":
+      chequearTipo([subexpressions[3]], ["int", "float", "string"])
+    nombreVar = subexpressions[1].get("var")
+      
+  # if operador == "=" and variables[nombreVar] != {}:
     # if subexpressions[3].get("indice") == None and subexpressions[1].get("indice") == None:
     #   chequearTipo([subexpressions[3]],[variables[nombreVar].get("type")])
     # else:
-      if subexpressions[1].get("indice") != None:
-        if subexpressions[3].get("type") != subexpressions[1].get("type"):
-          raise Exception ("No coinciden los tipos!")
+ 
 
