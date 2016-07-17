@@ -84,7 +84,9 @@ def p_lAbierta1(subexpressions):
 def p_lAbierta1p(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' COMMENT com linea '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:7])
+  subexpressions[0]["value"] = toString(subexpressions[:5])
+  subexpressions[0]["value"] += "\n\ttabing" + subexpressions[5]
+  subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[7])
   subexpressions[0]["var"] = "" 
 
