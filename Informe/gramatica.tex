@@ -1,129 +1,5 @@
-\section{Descripción del lexer:}
-
-Para la construccion del lexer, además de dar las expresiones regular en python para ciertos \textit{tokens}, se definió un conjunto de literales con operadores y otros simbolos propios del lenguaje.
-
-\textbf{literals} = $[+,- , * , / , ^ ,\% , < , > , = , ! , \{\ , \}\ , ( , ) , [ , ] , ? , \textbf{:} , \textbf{;} , \textbf{,} , \textbf{.} ]$
-
-A su vez, utilizamos otra funcionalidad de ply para definir las palabras reservadas del lenguaje: \\
-
-\textbf{reserved} = $\{$
-'begin' : 'BEGIN', 'end' : 'END', 'while' : 'WHILE', 'for' : 'FOR',
-
-'if' : 'IF', 'else' : 'ELSE','do' : 'DO', 'res' : 'RES', 'return' : 'RETURN',
-
-'AND' : 'AND', 'OR' : 'OR', 'NOT' : 'NOT', 'print' : 'PRINT',
-
-'multiplicacionEscalar': 'MULTIESCALAR', 'capitalizar': 'CAPITALIZAR', 
-
-'colineales': 'COLINEALES', 'print': 'PRINT', 'length': 'LENGTH',
-$\}$ \\
-
-Esto permitió evitar tener que definir demasiadas reglas simples para este tipo de operadores o palabras claves.
-
-Finalmente, el resto de los tokens definidos junto con sus reglas se muestra a continuacion (Por claridad, se omite el resto del codigo para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
-
-\begin{multicols}{2}
-
-t\_EQEQ = r"=="
-
-t\_DISTINTO = r"!="
-
-t\_MENOSEQ = r"-="
-
-t\_MASEQ = r"$\setminus$+="
-
-t\_MULEQ = r"$\setminus$*="
-
-t\_DIVEQ = r"/="
-
-t\_MASMAS = r"$\setminus$+$\setminus$+"
-
-t\_MENOSMENOS = r"--"
-
-\columnbreak
-
-def t\_STRING(token):
-
-\hspace{5mm}    r' ' ' " .*? " ' ' '
-    
-\hspace{5mm}    atributos = $\{ \} $
-    
-\hspace{5mm}    atributos["type"] = "string"
-    
-\hspace{5mm}    atributos["value"] = token.value
-    
-\hspace{5mm}    token.value = atributos
-    
-\hspace{5mm}    return token
- 
-\end{multicols} 
-    
-   
-\begin{multicols}{2}   
-
-def t\_BOOL(token) : 
-
-\hspace{5mm}    r"true $|$ false"
-    
-    
-def t\_FLOAT(token):
-
-\hspace{5mm}    r"[-]?[0-9] 
-    
-def t\_INT(token) : 
-
-\hspace{5mm}    r"[-]?[1-9][0-9]* | 0"
-    
-\columnbreak
-
-def t\_ID(token):
-
-\hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
-    
-\hspace{5mm}    token.type = reserved.get(token.value,'ID')
-
-
-def t\_NEWLINE(token):
-
-\hspace{5mm}  r"$\setminus$n+"
-  
-\hspace{5mm}  token.lexer.lineno += len(token.value)
-  
-\end{multicols}
-
-\begin{multicols}{2}
-
-def t\_error(token):
-
- \hspace{2mm}message = "Token desconocido:"
-    
-\hspace{2mm}message += "$\setminus$n type:" + token.type
-    
-\hspace{2mm}message += "$\setminus$n value:" + str(token.value)
-    
-\hspace{2mm}message += "$\setminus$n line:" + str(token.lineno)
-    
-\hspace{2mm}message += "$\setminus$n position:"+str(token.lexpos)
-    
-\hspace{2mm}raise Exception(message)
-  
-
-\columnbreak
-
-def t\_COMMENT(token):
-
-\hspace{2mm}    r'$\#.*$'
-
-t\_ignore  = ' $\setminus$ t'
-
-\end{multicols}
-
-
-
-
-\section{Desarrollo de la gramática:}
-
-\subsection{Gramática inicial}
+\subsection{Descripción General}
+\subsubsection{Gramática inicial}
 Comenzamos el armado de la gramática definiendo los tipos básicos que debíamos aceptar en nuestro lenguaje.
 \\
 Así definimos los tipos Bool, String, Float, Bool, Int, Vector, Registro. De allí el siguiente paso fue ver que operaciones se le podía realizar a cada uno de ellos.
@@ -133,21 +9,21 @@ Mientras realizábamos esto empezamos a notar que necesitaríamos determinar la 
 
 Una vez que todas las expresiones del lenguaje estaban completas, lo pasamos a código Python usando la herramienta $PLY$. Ya terminado el código, nos encontramos con que la gramática tenía muchos mas conflictos que los que se podía ver a simple vista y por lo tanto no era LALR. 
 
-\subsection{Gramática ambigua}
+\subsubsection{Gramática ambigua}
 
 Luego de resolver algunos conflictos, nos dimos cuenta de que era un proceso complicado pues cada conflicto implicaba añadir mas reglas a la gramática haciendo que sea mas compleja y difícil de entender.
 
 Después de leer la documentación de ply\footnote{ \url{http://www.dabeaz.com/ply/ply.html}} y observar que ply puede encargarse de los conflictos de una gramática ambigua usando reglas de asociatividad y precedencia, decidimos hacer una gramática ambigua sencilla y aprovechar esta característica de ply.
 
-\subsection{Gramática no ambigua}
+\subsubsection{Gramática no ambigua}
 
 Si bien esto solucionó todos los conflictos de una manera sencilla, por desgracia, nos comunicaron que lo que se pedía era una gramática \textbf{no} ambigua. Por lo tanto decidimos tirar la gramática y comenzar de nuevo.
 
 Con el tiempo contado y sin ideas mejores nos dimos cuenta de que la gramática inicial no estaba tan mal, tenía toda la precedencia definida de las expresiones y que una solución rápida era hacer la gramática menos restrictiva, es decir, que acepte mas cadenas de lo que se pida y rechazar las que no pertenecen al lenguaje mediante atributos. La tarea de los atributos (además de armar el código indentado) es chequear los tipos de las expresiones para que, si una operación acepta unos tipos determinados y se le pasa una expresión de otro tipo, lance una excepción de error de tipos. Dicha gramática se encuentra definida en la seccion \textbf{5}
 
-\section{Descripción de la gramática implementada:}
+\subsection{Descripción de la gramática implementada:}
 
-\subsection{Valores}
+\subsubsection{Valores}
 Los valores son cualquier expresión que denote un valor (por ejemplo 3 * 4 + 3). La primer idea era definir valores como \textbf{cualquier} expresión (para poder usarla como valor en asignaciones, en funciones como parámetro, etc.):
 
 $Valores \rightarrow ExpresionMatematica \  | \  ExpresionBooleana \  | \ ExpresionString  \ | \ ExpresionVector \ | \ \\ ExpresionRegistro \ | \ OperacionVariables $
@@ -171,7 +47,7 @@ $FuncReturn \rightarrow FuncInt \ | \ FuncString \ | \ FuncBool \ | \ FuncVector
 $Ternario \rightarrow  \ TernarioMat \ | \ TernarioBool \ | \ TernarioString \ | \ TernarioVector \ | \ TernarioRegistro $
 
 
-\subsection{Expresiones Matemáticas}
+\subsubsection{Expresiones Matemáticas}
 Para las expresiones matemáticas consideramos la siguiente tabla de precedencia:
 
 \begin{table}[htbp]
@@ -221,10 +97,10 @@ $C \rightarrow (A) | int | float | id$
 Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático. Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
 también se generarían en las expresiones de los otros tipos. Ver explicación en \textbf{4.1}
 
-\subsection{Expresiones booleanas}
+\subsubsection{Expresiones booleanas}
 Las expresiones booleanas también se soluciona de la misma manera que las expresiones matemáticas. Para mas información ver sección 5.
 
-\subsection{Expresiones de string}
+\subsubsection{Expresiones de string}
 En principio consideramos la siguiente gramática:
 
 $ExpresionString \rightarrow ExpresionString + ExpresionString \ | \ string$ \\
@@ -233,7 +109,7 @@ Esta gramática nos planteó un problema en el parser debido a que comparte un o
 
 Por lo tanto decidimos fusionar a las expresiones de string con las expresiones matemáticas y restringir (mediante chequeo de tipos) que un string no se le puede hacer otra operación que no sea la suma.
 
-\subsection{Problema del ``Dangling else'':}
+\subsubsection{Problema del ``Dangling else'':}
 
 Otro problema que encontramos ya avanzados en el proceso de desarrollo de la gramática fue el problema del ``Dangling else'' \footnote{\url{https://en.wikipedia.org/wiki/Dangling_else}} que consiste en que los else opcionales en un if hacen que la gramática sea ambigua. 
 \\
@@ -249,7 +125,7 @@ if (cond1) bloqueCerrado else bloqueCerrado \\
 Donde bloqueCerrado puede ser cualquier conjunto de sentencias escritas entre llaves, sentencias simples o , razonando inductivamente, lineas cerradas. Tambien se incluyen los bucles con lineas cerrados. Finalmente, la situación se complejizó un poco ya que hay que considerar las distintas combinaciones recién mencionadas, sumando la posibilidad de tener, o no, comentarios en cada uno de estos bloques.
 
 
-\section{Gramática Final}
+\subsection{Gramática Final}
 A continuación se define la gramática utilizada para construir el parser. La misma es \textbf{no ambigua} y \textbf{LALR}. La garantía de esto es que ply acepta gramáticas de este tipo, y nuestra implementación no arroja conflictos \textbf{shift/reduce} o \textbf{reduce/reduce} \\
 
 \linespread{1.125}\selectfont

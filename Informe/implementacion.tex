@@ -1,1 +1,149 @@
-\section{Información y requerimientos:}
+\subsection{Implementacion Del Lexer}
+
+Para la construccion del lexer se definió un conjunto de literales con operadores y otros simbolos propios del lenguaje.
+
+\textbf{literals} = $[+,- , * , / , ^ ,\% , < , > , = , ! , \{\ , \}\ , ( , ) , [ , ] , ? , \textbf{:} , \textbf{;} , \textbf{,} , \textbf{.} ]$
+
+A su vez, utilizamos otra funcionalidad de ply para definir las palabras reservadas del lenguaje: \\
+
+\textbf{reserved} = $\{$
+'begin' : 'BEGIN', 'end' : 'END', 'while' : 'WHILE', 'for' : 'FOR',
+
+'if' : 'IF', 'else' : 'ELSE','do' : 'DO', 'res' : 'RES', 'return' : 'RETURN',
+
+'AND' : 'AND', 'OR' : 'OR', 'NOT' : 'NOT', 'print' : 'PRINT',
+
+'multiplicacionEscalar': 'MULTIESCALAR', 'capitalizar': 'CAPITALIZAR', 
+
+'colineales': 'COLINEALES', 'print': 'PRINT', 'length': 'LENGTH',
+$\}$ \\
+
+Esto permitió evitar tener que definir demasiadas reglas simples para este tipo de operadores o palabras claves.
+
+Para el resto de los tokens definidos, fue necesario utilizar expresiones regulares, se muestra mas abajo como se definieron cada una de ellos: (Por claridad, se omite el resto del codigo para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
+
+\begin{multicols}{2}
+
+t\_EQEQ = r"=="
+
+t\_DISTINTO = r"!="
+
+t\_MENOSEQ = r"-="
+
+t\_MASEQ = r"$\setminus$+="
+
+t\_MULEQ = r"$\setminus$*="
+
+t\_DIVEQ = r"/="
+
+t\_MASMAS = r"$\setminus$+$\setminus$+"
+
+t\_MENOSMENOS = r"--"
+
+\columnbreak
+
+def t\_STRING(token):
+
+\hspace{5mm}    r' ' ' " .*? " ' ' '
+    
+\hspace{5mm}    atributos = $\{ \} $
+    
+\hspace{5mm}    atributos["type"] = "string"
+    
+\hspace{5mm}    atributos["value"] = token.value
+    
+\hspace{5mm}    token.value = atributos
+    
+\hspace{5mm}    return token
+ 
+\end{multicols} 
+    
+   
+\begin{multicols}{2}   
+
+def t\_BOOL(token) : 
+
+\hspace{5mm}    r"true $|$ false"
+    
+    
+def t\_FLOAT(token):
+
+\hspace{5mm}    r"[-]?[0-9] 
+    
+def t\_INT(token) : 
+
+\hspace{5mm}    r"[-]?[1-9][0-9]* | 0"
+    
+\columnbreak
+
+def t\_ID(token):
+
+\hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
+    
+\hspace{5mm}    token.type = reserved.get(token.value,'ID')
+
+
+def t\_NEWLINE(token):
+
+\hspace{5mm}  r"$\setminus$n+"
+  
+\hspace{5mm}  token.lexer.lineno += len(token.value)
+  
+\end{multicols}
+
+\begin{multicols}{2}
+
+def t\_error(token):
+
+ \hspace{2mm}message = "Token desconocido:"
+    
+\hspace{2mm}message += "$\setminus$n type:" + token.type
+    
+\hspace{2mm}message += "$\setminus$n value:" + str(token.value)
+    
+\hspace{2mm}message += "$\setminus$n line:" + str(token.lineno)
+    
+\hspace{2mm}message += "$\setminus$n position:"+str(token.lexpos)
+    
+\hspace{2mm}raise Exception(message)
+  
+
+\columnbreak
+
+def t\_COMMENT(token):
+
+\hspace{2mm}    r'$\#.*$'
+
+t\_ignore  = ' $\setminus$ t'
+
+\end{multicols}
+
+\subsection{Implementacion Del Parser}
+
+La implementación del parser consistió en transcribir la gramatica final del apartado $2$ a la sintaxis de ply.
+
+De esta manera, dada una producción:
+
+$$Valores \rightarrow ExpresionMatematica$$
+
+Fue necesario reescribirla como:
+
+
+$def\; p\_valores(subexpressions):$
+
+$\quad'''\; valores\; :\; ExpresionMatematica\;'''$
+
+
+Ademas contamos con la funcionalidad de ply que, una vez que se a utlizado una producción permite ejecutar codigo adicional. Siguiendo el ejemplo anterior, suponiendo que cada vez que el parser utiliza la producciòn antedicha deseo imprimirla, puedo escribir:
+\\
+
+$def\; p\_valores(subexpressions):$
+
+$\quad'''\; valores\; :\; ExpresionMatematica\;'''$
+
+$\quad print\; subexpressions[1]$
+
+
+Esto lo utilizamos tanto para escribir el output formateado con la salida correcta como para realizar el chequeo de tipos.
+
+\subsection{Implementacion Del Chequeo de Tipos}

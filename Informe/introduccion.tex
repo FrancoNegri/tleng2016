@@ -1,7 +1,8 @@
-\section{Introducción}
 El objetivo del presente trabajo práctico es la realización de un analizador léxico y sintáctico para un lenguaje de scripting, mediante el uso de una gramática LALR y la herramienta para generar analizadores sintácticos \textbf{PLY}.
 
-El analizador tendrá como objetivo aceptar cadenas que corresponden a programas estilo c++.
+Esperamos que al final del trabajo el analizador sea capaz de reconocer cadenas de caracteres similares a las del lenguaje C++.
 
-Ademas dado un lenguaje de entrada, que el analizador sintáctico lo acepta, se retorna una salida correspondiente con la correcta indentación del código.
+Para ello comenzaremos generando una gramatica que cumpla con las reglas del lenguaje. Luego procederemos a implementar esto y a desarrollar un chequeo de tipos que permita filtrar programas que si bien son sintacticamente validos, posean una semantica invalida (por ejemplo, multiplicar una cadena de caracteres con otra).
+
+Ademas, dado un texto valido querremos guardarlo en un archivo nuevo indentandolo de manera correcta automatica, agregando o quitando espacios, tabs, saltos de linea donde sea necesario.
 
