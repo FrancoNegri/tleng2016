@@ -667,8 +667,9 @@ def p_vecVal2(subexpressions):
 
 
   # Para la asignacion y varOps
-  if tipoElemento != "vec":
-    raise Exception("Solo se puede acceder con indice en valores de tipo vector")
+  print(tipoElemento)
+  # if tipoElemento != "vec":
+  #   raise Exception("Solo se puede acceder con indice en valores de tipo vector")
 
   variable = "Para ejecucion"
   variableInicial = subexpressions[1].get("varAsig")
@@ -1623,13 +1624,10 @@ def chequearAsignacion(subexpressions):
   nombreVar = subexpressions[1].get("var")
     
   if operador == "=" and variables[nombreVar] != {}:
-    if subexpressions[3].get("indice") == None and subexpressions[1].get("indice") == None:
-      chequearTipo([subexpressions[3]],[variables[nombreVar].get("type")])
-    else:
-      if subexpressions[1].get("indice") == None:
-        if subexpressions[3].get("type") != variables[nombreVar].get("type"):
-          raise Exception ("No coinciden los tipos!")
-      else:
+    # if subexpressions[3].get("indice") == None and subexpressions[1].get("indice") == None:
+    #   chequearTipo([subexpressions[3]],[variables[nombreVar].get("type")])
+    # else:
+      if subexpressions[1].get("indice") != None:
         if subexpressions[3].get("type") != subexpressions[1].get("type"):
           raise Exception ("No coinciden los tipos!")
 
