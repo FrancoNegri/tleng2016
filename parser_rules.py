@@ -1102,8 +1102,8 @@ def p_varAsig(subexpressions):
   if subexpressions[1].get("indice") == None:
     if nombreVar in variables and variables[nombreVar]!= {}:
       chequearAsignacion(subexpressions)
+      variables[nombreVar]["type"] = tipoValor
       #chequearTipo([subexpressions[3]],[variables[nombreVar]["type"]])
-
     else:
       variables[nombreVar]["type"] = tipoValor
       vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
@@ -1684,7 +1684,12 @@ def chequearAsignacion(subexpressions):
       chequearTipo([subexpressions[3]], ["int", "float"])
 
     if operador == "+=":
-      chequearTipo([subexpressions[3]], ["int", "float", "string"])
+      #Asumimos que previamente se inicializo la variable
+      if subexpressions[1].get("type") == "string":
+        chequearTipo([subexpressions[3]], ["string"])
+      else:
+        chequearTipo([subexpressions[3]], ["int", "float"])
+      
     nombreVar = subexpressions[1].get("var")
       
   # if operador == "=" and variables[nombreVar] != {}:
