@@ -96,7 +96,7 @@ def p_lAbierta1p(subexpressions):
 def p_lAbierta2(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' '{' g '}' ELSE lAbierta''' 
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:6])
+  subexpressions[0]["value"] = toString(subexpressions[:5])+ subexpressions[5] 
   subexpressions[0]["value"] += "\n" + toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:9])
   subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[9])
@@ -131,7 +131,7 @@ def p_lAbierta3p(subexpressions):
 def p_lAbierta4(subexpressions):
   '''lAbierta : IF '(' cosaBooleana ')' '{' g '}' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:6])
+  subexpressions[0]["value"] = toString(subexpressions[:5]) + subexpressions[5] 
   subexpressions[0]["value"] += "\n" + toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:])
 
@@ -181,11 +181,11 @@ def p_com2(subexpressions):
 def p_lCerrada3(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE '{' g '}' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:6])
+  subexpressions[0]["value"] = toString(subexpressions[:5]) + subexpressions[5]
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[6:10])
+  subexpressions[0]["value"] += toString(subexpressions[6:9]) + subexpressions[9]
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[9:11]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing"
@@ -201,7 +201,7 @@ def p_lCerrada12(subexpressions):
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[5])
   subexpressions[0]["value"] += "\ntabing"
-  subexpressions[0]["value"] += toString(subexpressions[5:10])
+  subexpressions[0]["value"] += toString(subexpressions[5:9]) + subexpressions[9]
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[9:11]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing"
@@ -217,7 +217,7 @@ def p_lCerrada6(subexpressions):
   subexpressions[0]["value"] += "\n\ttabing" + subexpressions[5] + "\n"
   subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[7])
-  subexpressions[0]["value"] += "\ntabing" + subexpressions[8] + subexpressions[9]
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[8] + " " + subexpressions[9]
   subexpressions[0]["value"] += toString(subexpressions[9:11]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing" + subexpressions[11]
 
@@ -226,7 +226,7 @@ def p_lCerrada6(subexpressions):
 def p_lCerrada13(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE lCerrada '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions[:6]) + "\n"
+  subexpressions[0]["value"] = toString(subexpressions[:5]) + subexpressions[5] + "\n"
   subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:9])
   subexpressions[0]["value"] += "\n" + toStringLineaCerrada(subexpressions[9])
@@ -328,7 +328,7 @@ def p_lCerrada5(subexpressions):
   '''lCerrada : DO '{' g '}' WHILE '(' valores ')' ';' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
-  subexpressions[0]["value"] += toString(subexpressions[:3])
+  subexpressions[0]["value"] += toString(subexpressions[:2])[:-1] + " " + subexpressions[2]
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing"
