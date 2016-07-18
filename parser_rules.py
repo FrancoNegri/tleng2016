@@ -474,6 +474,7 @@ def p_func1(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   setVariable(subexpressions, None)
+  subexpressions[0]["elems"] = subexpressions[1].get("elems")
 
 def p_func2(subexpressions):
   '''func : funcVoid'''
@@ -491,12 +492,14 @@ def p_funcReturn(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] =  toString(subexpressions)
   setTipo(subexpressions, 1) 
+  subexpressions[0]["elems"] = subexpressions[1].get("elems")
 
 #-----------------------------------------------------------------------------
 #funcInt -> MULTIESCALAR( valores, valores param)
 
 def p_funcInt1(subexpressions):
   '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
+  global vectores,variables
   subexpressions[0] = {}
   subexpressions[0]["value"] = toStringNoParen(subexpressions[:3])
   subexpressions[0]["value"] += toString(subexpressions[2:])
@@ -516,6 +519,11 @@ def p_funcInt1(subexpressions):
   #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
   chequearTipo([subexpressions[5]],["int"])
   setVariable(subexpressions, None) 
+  nombreVec = subexpressions[3].get("var")
+  if nombreVec in vectores:
+    subexpressions[0]["elems"] = vectores[nombreVec]["elems"]
+  else:
+    subexpressions[0]["elems"] = subexpressions[3].get("elems")
 
 #-----------------------------------------------------------------------------
 #funcInt -> LENGTH( valores)
@@ -552,6 +560,15 @@ def p_funcBool(subexpressions):
   setTipo(subexpressions, "bool")
   setVariable(subexpressions, None) 
   chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
+  #Chequeo que sean numericos:
+  if subexpressions[3]["var"] in variables:
+    listaTipos = vectores[subexpressions[3]["var"]]["elems"]
+  else:
+    listaTipos = subexpressions[3].get("elems")
+
+  for tipo in listaTipos:
+    if tipo not in ["int","float"]:
+      raise Exception ("Se esperaba vector numerico")
 
 #-----------------------------------------------------------------------------
 # FuncVoid -> print(Valores) 
@@ -1109,7 +1126,6 @@ def p_varAsig(subexpressions):
       vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
       vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
   
-
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
