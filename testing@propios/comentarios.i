@@ -39,7 +39,7 @@ do{
 do
 a++;
 #comentario
-while(true)
+while(true);
 
 
 
