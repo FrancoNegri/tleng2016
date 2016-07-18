@@ -371,7 +371,7 @@ def p_lCerrada10(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions[:2])
-  subexpressions[0]["value"] += "\ntabing" + subexpressions[2]
+  subexpressions[0]["value"] += "\n\ttabing" + subexpressions[2] + "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[4])
   subexpressions[0]["value"] += "\ntabing"
@@ -389,10 +389,10 @@ def p_lCerrada10p(subexpressions):
   '''lCerrada :  DO  lCerrada COMMENT com WHILE '(' valores ')' ';'  '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
-  subexpressions[0]["value"] += toString(subexpressions[:2])
-  subexpressions[0]["value"] += "\ntabing" + subexpressions[2]
-  subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[4])
+  subexpressions[0]["value"] += toString(subexpressions[:2]) +"\n"
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[2])
+  subexpressions[0]["value"] += "\n\ttabing" + subexpressions[3]
+  subexpressions[0]["value"] += toString(subexpressions[3:5]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\ntabing"
   subexpressions[0]["value"] += toString(subexpressions[4:])
   subexpressions[0]["var"] = "" 
