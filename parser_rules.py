@@ -291,7 +291,7 @@ def p_lCerrada4(subexpressions):
   '''lCerrada : loop '{' g '}' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
-  subexpressions[0]["value"] += toString(subexpressions[:3])
+  subexpressions[0]["value"] += toString(subexpressions[:2]) + subexpressions[2]
   subexpressions[0]["value"] += "\n"
   subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += "\n"
@@ -428,7 +428,9 @@ def p_loop1(subexpressions):
 def p_loop3(subexpressions):
   '''loop : FOR '(' primParam ';' valores ';' tercerParam ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toString(subexpressions[:5]) + " "
+  subexpressions[0]["value"] += toString(subexpressions[4:7])  + " "
+  subexpressions[0]["value"] += toString(subexpressions[6:])
   subexpressions[0]["var"] = "" 
   chequearTipo([subexpressions[5]],["bool"],". El segundo parametro debe ser un booleano")
 
@@ -496,7 +498,8 @@ def p_funcReturn(subexpressions):
 def p_funcInt1(subexpressions):
   '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions[:3])
+  subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "vec")
   setVector(subexpressions, 3)
   chequearTipo([subexpressions[3]],["vec"])
@@ -511,7 +514,8 @@ def p_funcInt1(subexpressions):
 def p_funcInt2(subexpressions):
   '''funcInt : LENGTH '(' valores ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions[:3]) 
+  subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "int")
   chequearTipo([subexpressions[3]],["string","vec"])
   setVariable(subexpressions, None)
@@ -522,7 +526,8 @@ def p_funcInt2(subexpressions):
 def p_funcString(subexpressions):
   '''funcString : CAPITALIZAR '(' valores ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions[:3]) 
+  subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "string")
   chequearTipo([subexpressions[3]], ["string"])
   setVariable(subexpressions, None) 
@@ -533,7 +538,8 @@ def p_funcString(subexpressions):
 def p_funcBool(subexpressions):
   '''funcBool : COLINEALES '(' valores ',' valores ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions[:3]) 
+  subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "bool")
   setVariable(subexpressions, None) 
   chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
@@ -544,7 +550,8 @@ def p_funcBool(subexpressions):
 def p_funcVoid(subexpressions):
   '''funcVoid : PRINT '(' valores ')' '''
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions[:3]) 
+  subexpressions[0]["value"] += toString(subexpressions[2:])
   setVariable(subexpressions, None) 
 
 #-----------------------------------------------------------------------------
@@ -993,11 +1000,12 @@ def p_varsOps1(subexpressions):
   | MASMAS variable '''
   chequearOperadorIncDec(subexpressions, "prefijo")
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions)
   setTipo(subexpressions, 2)
   setVariable(subexpressions, 2)
   setVector(subexpressions, 2)
   subexpressions[0]["indice"] = subexpressions[2].get("indice")
+
 
 def p_varsOps2(subexpressions):
   '''varsOps : variable MASMAS 
@@ -1005,7 +1013,7 @@ def p_varsOps2(subexpressions):
   #print subexpressions[1]
   chequearOperadorIncDec(subexpressions, "postfijo")
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = subexpressions[1]["value"][:-1] + subexpressions[2]
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
@@ -1208,11 +1216,12 @@ def p_iSing(subexpressions):
   chequearUnicoTerminal(subexpressions, ["int", "float"] )
   chequeadorUnarioPrefijo(subexpressions, ["int", "float"])
   subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
+  subexpressions[0]["value"] = toStringNoParen(subexpressions)
   if len(subexpressions) == 3:
     setTipo(subexpressions, 2)
   else:
     setTipo(subexpressions, 1)
+
 
 #Paren -> (EMat) | int | VarYVals | float | VarsOps| FuncInt
 def p_paren1(subexpressions):
@@ -1389,15 +1398,28 @@ def toString(subexpressions):
       else:
         res += str(exp["value"]) + " "
     except TypeError:
-      if(exp == ";" or exp == "[" or exp == "("):
+      if(exp == ";" or exp == "[" or exp == "{"or exp == ":" or exp == "." ):
         res = res[:-1]
         res += str(exp)
       else:
-        if(exp == "]" or exp == "," or exp == ")"):
+        if(exp == "]" or exp == "," or exp == ")"or exp == "}"):
           res = res[:-1]
           res += str(exp) + " "
         else:
-          res += str(exp) + " "
+          if(exp == "("):
+            res += str(exp)
+          else:
+            res += str(exp) + " "
+  return res
+
+
+def toStringNoParen(subexpressions):
+  res = ""
+  for exp in subexpressions[1:]:
+    try:
+      res += str(exp["value"])
+    except TypeError:
+      res += str(exp)
   return res
 
 # Dado una lista de subexpresiones, asigna los elementos del indice indiceFuente a la produccion
