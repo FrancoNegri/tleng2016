@@ -233,6 +233,20 @@ def p_lCerrada13(subexpressions):
 
 #-----------------------------------------------------------------------------
 
+#ESTA FALTABA!!!
+
+#-----------------------------------------------------------------------------
+
+def p_lCerrada13p(subexpressions):
+  '''lCerrada : IF '(' cosaBooleana ')' '{' g '}' ELSE COMMENT com lCerrada '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions[:5]) + subexpressions[5] + "\n"
+  subexpressions[0]["value"] += toString(subexpressions[5:7]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += "\ntabing" + toString(subexpressions[6:9])
+  subexpressions[0]["value"] += "\n" + toStringLineaCerrada(subexpressions[9])
+
+#-----------------------------------------------------------------------------
+
 def p_lCerrada14(subexpressions):
   '''lCerrada : IF '(' cosaBooleana ')' lCerrada ELSE lCerrada '''
   subexpressions[0] = {}
@@ -354,6 +368,25 @@ def p_lCerrada9(subexpressions):
 
 def p_lCerrada10(subexpressions):
   '''lCerrada :  DO COMMENT com lCerrada WHILE '(' valores ')' ';'  '''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = ""
+  subexpressions[0]["value"] += toString(subexpressions[:2])
+  subexpressions[0]["value"] += "\ntabing" + subexpressions[2]
+  subexpressions[0]["value"] += toString(subexpressions[2:4]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[4])
+  subexpressions[0]["value"] += "\ntabing"
+  subexpressions[0]["value"] += toString(subexpressions[4:])
+  subexpressions[0]["var"] = "" 
+  chequearTipo([subexpressions[7]],["bool"],". La guarda debe ser un booleano")
+
+#-----------------------------------------------------------------------------
+
+#Este tambien faltaba!!
+
+#----------------------------------------------------------------------------- 
+
+def p_lCerrada10p(subexpressions):
+  '''lCerrada :  DO  lCerrada COMMENT com WHILE '(' valores ')' ';'  '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = ""
   subexpressions[0]["value"] += toString(subexpressions[:2])
