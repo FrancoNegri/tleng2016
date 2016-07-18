@@ -8,9 +8,7 @@ multiplicacionEscalar([1.2,2.3,3.3],4);
 multiplicacionEscalar([1.2,2.3,3.3],4,(NOT false));	
 multiplicacionEscalar(vec,1);
 vec2 = multiplicacionEscalar(vec,1);
-
-#Esto NO anda, pero deberia. El tema es que habria que conseguir el vector de parametro de la funcion como para guardar los tipos por ejemmplo. NO estoy muy seguro
-#vec2[1] = 2;
+vec2[1] = 2;
 
 #Capitalizar:
 a = capitalizar("asd");
@@ -18,6 +16,7 @@ a += "d";
 b = "asd";
 a = capitalizar(b);
 a = capitalizar(vec1[0]);
+g =  "asd" + capitalizar("asd");
 
 #Colineales:
 
@@ -27,6 +26,7 @@ vec4 = [1.2];
 t = colineales(vec4,vec2);
 a = t OR false;
 a = NOT(t OR false) == true;
+a = colineales(multiplicacionEscalar([1,2],2),multiplicacionEscalar([2,2],2));
 
 #Print:
 
