@@ -73,5 +73,22 @@ else{
 	print("gg");
 }
 
+if (true)
+	#asd
+	a = 2;
+else
+	if(true)
+		a = 2;
+
+
+
+if (true)
+	#asd
+	a = 2;
+else
+	#asd
+	if(true)
+		a = 2;
+
 
 
