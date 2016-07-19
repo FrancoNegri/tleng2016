@@ -141,6 +141,7 @@ def p_lAbierta4(subexpressions):
 
 def p_lAbierta5(subexpressions):
   '''lAbierta : loop  lAbierta  '''
+  subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions[:2])
   subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[2])
   subexpressions[0]["var"] = "" 
