@@ -18,11 +18,10 @@ while((2 > 3 ? true : false)){
  
 #Esto esta explotando tambien con algo del out
 
-#while(NOT true OR false)
-#	if(true){	
-#		a = 3;
-#	}
-	
+while(NOT true OR false)
+	if(true){	
+		a = 3;
+	}
 #Do:
 
 do a = 2; while(true);
