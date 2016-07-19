@@ -1,6 +1,6 @@
-\subsection{Implementacion Del Lexer}
+\subsection{Implementación Del Lexer}
 
-Para la construccion del lexer se definió un conjunto de literales con operadores y otros simbolos propios del lenguaje.
+Para la construcción del lexer se definió un conjunto de literales con operadores y otros símbolos propios del lenguaje.
 
 \textbf{literals} = $[+,- , * , / , ^ ,\% , < , > , = , ! , \{\ , \}\ , ( , ) , [ , ] , ? , \textbf{:} , \textbf{;} , \textbf{,} , \textbf{.} ]$
 
@@ -20,7 +20,7 @@ $\}$ \\
 
 Esto permitió evitar tener que definir demasiadas reglas simples para este tipo de operadores o palabras claves.
 
-Para el resto de los tokens definidos, fue necesario utilizar expresiones regulares, se muestra mas abajo como se definieron cada una de ellos: (Por claridad, se omite el resto del codigo para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
+Para el resto de los tokens definidos, fue necesario utilizar expresiones regulares, se muestra mas abajo como se definieron cada una de ellos: (Por claridad, se omite el resto del código para la regla de los tipos,ya que  es análoga a la de \textbf{string}):
 
 \begin{multicols}{2}
 
@@ -120,7 +120,7 @@ t\_ignore  = ' $\setminus$ t'
 
 \subsection{Implementacion Del Parser}
 
-La implementación del parser consistió en transcribir la gramatica final del apartado $2$ a la sintaxis de ply.
+La implementación del parser consistió en transcribir la gramática final del apartado $2$ a la sintaxis de ply.
 
 De esta manera, dada una producción:
 
@@ -134,7 +134,7 @@ $def\; p\_valores(subexpressions):$
 $\quad'''\; valores\; :\; ExpresionMatematica\;'''$
 
 
-Ademas contamos con la funcionalidad de ply que, una vez que se a utlizado una producción permite ejecutar codigo adicional. Siguiendo el ejemplo anterior, suponiendo que cada vez que el parser utiliza la producciòn antedicha deseo imprimirla, puedo escribir:
+Ademas contamos con la funcionalidad de ply que, una vez que se a utilizado una producción permite ejecutar código adicional. Siguiendo el ejemplo anterior, suponiendo que cada vez que el parser utiliza la producción antedicha deseo imprimirla, puedo escribir:
 \\
 
 $def\; p\_valores(subexpressions):$
@@ -146,24 +146,98 @@ $\quad print\; subexpressions[1]$
 
 Esto lo utilizamos tanto para escribir el output formateado con la salida correcta como para realizar el chequeo de tipos.
 
-\subsubsection{Implementacion Salida}
+\subsubsection{Implementación Salida}
 
-Para la implementación de la salida cada producción de la gramatica tendrá un atributo sintetizado "value" en el que se guardará el texto de salida basandose en el valor de cada uno de los terminales y no terminales que lo compenen. Esto es relativamente sencillo para las sentencias que solo requieren escribir sus terminales y no terminales seguidos de un salto de linea, pero requerirá un cuidado especial para el caso de los condicionales y los loops, ya que estos necesitan saltos de linea en lugares intermedios y una indentación adecuada.
+Para la implementación de la salida cada producción de la gramática tendrá un atributo sintetizado "value" en el que se guardará el texto de salida basándose en el valor de cada uno de los terminales y no terminales que lo componen. Esto es relativamente sencillo para las sentencias que solo requieren escribir sus terminales y no terminales seguidos de un salto de linea, pero requerirá un cuidado especial para el caso de los condicionales y los loops, ya que estos necesitan saltos de linea en lugares intermedios y una indentación adecuada.
 \\
-Para ejemplificar que debemos hacer utilizamos la produccón:
+Para ejemplificar que debemos hacer utilizamos la producción:
 
 $$lAbierta \rightarrow IF\; (\; cosaBooleana\; )\; COMMENT\; com\; lCerrada\; ELSE\; \{\; g\; \}$$ 
 
 como caso de estudio.
 \\
-Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Notese aquí que cosaBolleana es un conjunto de simbolos que que deben reducir como ultima instancia a una Expresón Booleana. queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles terminos que se encuentren presentes.
+Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Nótese aquí que cosaBolleana es un conjunto de símbolos que que deben reducir como ultima instancia a una Expresión Booleana. queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles términos que se encuentren presentes.
 
 Esto estará seguido de un salto de linea, seguido de un comentario (con un tab) y un salto de linea, luego un no terminal que contendrá cero o uno o varios comentarios (todos conteniendo su indentación apropiada), otro salto de linea con una palabra reservada else, unas llaves que abren y una o varias sentencias indentadas un corchete que cierra.
 \\
-En primera instancia, la salida que nos dará este if es la deseada, sin embargo puede que ocurra el caso donde tenemos dos ifs anidados. En este caso lo esperable es que el segudo if (el interno) este indentado y que las sentencias dentro de ese if tengan dos tabs en vez de uno. Luego, no es suficiente con agregar tabs en los lugares adecuados, tambien necesitamos señalizar donde comienza una nueva linea y en el caso de que sea necesario agregar varios tabs, que se pueda recorrer la salida agregandolos donde se necesite.
+En primera instancia, la salida que nos dará este if es la deseada, sin embargo puede que ocurra el caso donde tenemos dos ifs anidados. En este caso lo esperable es que el segundo if (el interno) este indentado y que las sentencias dentro de ese if tengan dos tabs en vez de uno. Luego, no es suficiente con agregar tabs en los lugares adecuados, también necesitamos señalizar donde comienza una nueva linea y en el caso de que sea necesario agregar varios tabs, que se pueda recorrer la salida agregándolos donde se necesite.
 \\
 Para el manejos de la indentación utilizaremos al comienzo de cada nueva linea.
 
 \subsubsection{Implementacion Del Chequeo de Tipos}
+
+\subsubsection{Resumen atributos}
+
+Para el chequeo de tipos utilizamos atributos sintetizados que se enumeran a continuación:
+
+\begin{itemize}
+\item var : Denota la variable de la expresión (si es que hay solo una variable).
+\item type : Denota el tipo de la expresión.
+\item elems : Si la expresión es de tipo vector, denota los tipos de los elementos del vector.
+\item varsVec : Si la expresión es de tipo vector, denota las variables de los elementos del vector (si tienen alguna) para la asignación.
+\item regs: Si la expresión es de tipo vector de registros, denota los registros para la asignación.
+\item campo: denota el valor de un campo de un registro.
+\item varAsig e indice : denota la variable y el indice en asignaciones como a[i] = 1, 
+en donde la expresión a la derecha del "$=$" \textbf{no} es un valor.
+\end{itemize}
+
+\subsubsection{Asignación con variables, vectores y registros}
+Los tipos posibles en el atributo \textit{type} son: string, float, int, bool, vec y reg. En algunas producciones se usan como simples atributos sintetizados, en el caso de que una expresión sea una variable se necesita saber que tipo tuvo esa variable cuando se inicializó. 
+
+Para esto se cuenta con el diccionario global \textit{variables} que tiene de claves a las variables y de valor su tipo (con fines declarativos hay otro diccionario dentro del valor, que tiene una clave "type" y el valor es el tipo de la variable).
+
+Algo similar ocurre con variables que referencian a  vectores. Se agrega un diccionario global \textit{vectores} en donde se guarda la variable como clave y una lista de tipos como valor, que denotan los tipos de las respectivas posiciones del vector.
+
+Para los vectores de vectores hay un diccionario global \textit{variablesVector} que guarda como clave a la variable correspondiente al vector de vectores y como valor una lista de variables que se corresponden con las variables de los vectores dentro del vector.
+
+Como se pueden hacer operaciones tales como [1,2,3][0] en donde no se involucra ninguna variable, se agrego el atributo \textit{elems} que se encarga de obtener esa lista de tipos del vector. Observar que, como no existe referencia a este vector, no es necesario guardarlo en el diccionario \textit{vectores} ya que no se utilizará en otro lugar.
+
+En caso de los registros se guarda un atributo \textit{campos} en donde se guardan los campos del registro. En el se guarda una lista de tuplas, donde la primer coordenada corresponde al nombre del campo, la segunda al tipo del campo y la tercera a la variable del vector si tuviera un campo de tipo vector.
+
+En caso de las asignaciones se guarda en un diccionario global \textit{registros} la variable correspondiente al registro y los campos obtenidos a través del atributos \textit{campos}.
+
+\subsection{Para ejecución}
+Cuando se establece en un atributo type o var el string "Para ejecucion" significa que el parser admite la cadena pero se tiene que chequear en tiempo de ejecución su tipo. 
+
+La siguiente tabla muestra las operaciones donde se delega el chequeo de tipos a tiempo de ejecución:
+
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Descripción & Ejemplo \\
+\hline
+chequear que el indice del operador [] (acceso a vector)	& a[4+5*3] \\
+ sea entero en expresiones complejas	& a[b $<$ 2 ? 1 : 2] \\
+  										& a[b] \\
+\hline
+Acceso a vectores de mas de 2 dimensiones & a[4][5][1] \\
+\hline
+Cadenas de acceso de registros y vectores de mas de 3 subexpresiones & a.campo1[5].campo2[3] \\
+										& a[5].campo1[4].campo2[4] \\
+\hline
+Decidir un tipo para una operación donde un operando es algunos  & a[6][6][6] + 2 \\
+de los casos anteriores  & not a[b]\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Valores de vector y asignaciones}
+VecVal es la regla que permite crear accesos a vectores (por ejemplo a[5]). Esta regla chequea que el indice sea menor que el tamaño del vector si el indice viene dado por un entero, en caso de cualquier otra expresión (variable, suma, etc) no se chequea nada. También setea el tipo correspondiente a la posición del vector y su variable si es que existe.
+
+Consideremos el siguiente ejemplo:
+
+$a[1] = b[2];$
+
+La expresión de la derecha viene de VecVal y también la de la izquierda. El problema es que estas dos expresiones tienen distinto significado. La de la derecha corresponde a un valor de un vector, no interesa el índice ni que tipos tiene el vector. La de la izquierda, en cambio, refiere a la posición del vector y por lo tanto se requiere saber el índice y la variable a la cual se refiere.
+
+Para solucionar esto creamos un no terminal nuevo llamado \textbf{Variable} donde se encarga de establecer tanto la variable como el índice del no terminal \textbf{VecVal}. También en VecVal guardamos la información del índice y de la variable en los atributos \textit{indice} y \textit{varAsig} respectivamente.
+
+Si VecVal no tiene un atributo "var" entonces tira una excepción "Solo se puede acceder a variables.
+
+Ademas en operaciones como \textit{(a = 2) ? 5 : 2}, se establece como tipo de la asignación el tipo de la derecha y como variable el atributo var de la expresión de la izquierda.
 
 
