@@ -157,7 +157,15 @@ linea $\rightarrow$ lAbierta $|$ lCerrada \\
 
 lAbierta $\rightarrow$ IF (cosaBooleana) linea $|$
 
-\hspace{15mm}$|$ IF (cosasBooleana) $\{$ g $\}$ ELSE lAbierta
+\hspace{15mm}$|$ IF (cosasBooleana) COMMENT com linea 
+
+\hspace{15mm}$|$ IF (cosasBooleana) COMMENT com lCerrada ELSE lAbierta 
+
+\hspace{15mm}$|$ IF (cosasBooleana) COMMENT com lCerrada ELSE COMMENT com lAbierta 
+
+\hspace{15mm}$|$ IF (cosasBooleana) lCerrada ELSE lAbierta
+
+\hspace{15mm}$|$ IF (cosasBooleana) lCerrada ELSE COMMENT com lAbierta 
 
 \hspace{15mm}$|$ IF (cosasBooleana) $\{$ g $\}$ ELSE lAbierta
 
@@ -182,6 +190,8 @@ lCerrada $\rightarrow$ sentencia
 
 \hspace{15mm}$|$ IF ( cosaBooleana ) $\{$ g $\}$ ELSE lCerrada 
 
+\hspace{15mm}$|$ IF ( cosaBooleana ) $\{$ g $\}$ ELSE lCerrada 
+
 \hspace{15mm}$|$ IF ( cosaBooleana ) lCerrada ELSE lCerrada 
 
 \hspace{15mm}$|$ IF ( cosaBooleana ) COMMENT com lCerrada ELSE lCerrada 
@@ -201,6 +211,8 @@ lCerrada $\rightarrow$ sentencia
 \hspace{15mm}$|$ DO lCerrada WHILE ( valores ) ;  
   
 \hspace{15mm}$|$  DO COMMENT com lCerrada WHILE ( valores ) ;
+
+\hspace{15mm}$|$  DO lCerrada COMMENT com  WHILE ( valores ) ;
 
 com $\rightarrow$  COMMENT com $|$ $\lambda$ \\
 
@@ -244,7 +256,9 @@ vec $\rightarrow$ [elem]
 
 elem $\rightarrow$ valores,elem $|$ valores
 
-vecval $\rightarrow$ id [expresion] $|$ vec [expresion] $|$ vecVal [expresion] $|$ ID[INT]
+vecval $\rightarrow$ id [expresion] $|$ vec [expresion] $|$ vecVal [expresion] $|$ atributos [expresion]
+
+\hspace{15mm}$|$ id [INT] $|$ vec [INT] $|$ vecVal [INT] $|$ atributos [INT]
 
 expresion $\rightarrow$ eMat
 $|$  expBool
@@ -274,7 +288,11 @@ $|$  FLOAT
  
 atributos $\rightarrow$ ID.valoresCampos $|$ reg.valoresCampos
 
-valoresCampos $\rightarrow$ varYVals $|$ END $|$ BEGIN \\
+valoresCampos $\rightarrow$ ID $|$ end $|$ begin
+
+end $\rightarrow$ END
+
+begin $\rightarrow$ BEGIN\\
 
 \textbf{Operadores ternarios:}
 
@@ -337,10 +355,11 @@ campos $\rightarrow$ ID:valores, campos $|$ ID:valores \\
 
 \textbf{Operadores de variables:}
 
-varsOps$\rightarrow$ MENOSMENOS varYVals $|$ MASMAS varYVals
+varsOps$\rightarrow$ MENOSMENOS variable $|$ MASMAS variable
 
-\hspace{15mm}$|$ varYVals MASMAS $|$ varYVals MENOSMENOS \\
+\hspace{15mm}$|$ variable MASMAS $|$ variable MENOSMENOS
 
+variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVALS  \\
 
 \textbf{Asignaciones:} 
 
@@ -348,8 +367,6 @@ varsOps$\rightarrow$ MENOSMENOS varYVals $|$ MASMAS varYVals
   
   \hspace{15mm}$|$ variable MENOSEQ valores $|$ variable = valores$|$ ID . ID = valores 
 
-
-variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVals  \\
 
 
 \textbf{Operaciones binarias enteras:} 

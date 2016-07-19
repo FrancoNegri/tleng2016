@@ -80,18 +80,28 @@ def t\_ID(token):
 
 \hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
     
-\hspace{5mm}    token.type = reserved.get(token.value,'ID')
+\hspace{5mm}tipo = reserved.get(token.value) 
 
+\hspace{5mm}if t.lower() not in reserved and t.upper() 
+
+\hspace{5mm}not in reserved and t != 
+
+\hspace{5mm}"multiplicacionEscalar":
+
+\hspace{10mm}tipo = 'ID'
+
+\hspace{5mm}token.type = tipo
+  
+\end{multicols}
+
+\begin{multicols}{2}
 
 def t\_NEWLINE(token):
 
 \hspace{5mm}  r"$\setminus$n+"
   
 \hspace{5mm}  token.lexer.lineno += len(token.value)
-  
-\end{multicols}
 
-\begin{multicols}{2}
 
 def t\_error(token):
 
