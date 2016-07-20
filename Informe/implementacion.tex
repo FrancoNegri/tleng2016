@@ -78,7 +78,9 @@ def t\_INT(token) :
 
 def t\_ID(token):
 
-\hspace{5mm}    r"[a-zA-Z\_][a-zA-Z\_0-9]*"
+\hspace{5mm}r"[a-zA-Z\_][a-zA-Z\_0-9]*"
+
+\hspace{5mm}t = token.value
     
 \hspace{5mm}tipo = reserved.get(token.value) 
 
@@ -166,13 +168,13 @@ $$lAbierta \rightarrow IF\; (\; cosaBooleana\; )\; COMMENT\; com\; lCerrada\; EL
 
 como caso de estudio.
 \\
-Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Nótese aquí que cosaBolleana es un conjunto de símbolos que que deben reducir como ultima instancia a una Expresión Booleana. queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles términos que se encuentren presentes.
+Lo que querremos guardar en el atributo value de lAbierta es primero un $IF\; (\; cosaBooleana\; )\;$. Nótese aquí que cosaBooleana es un conjunto de símbolos que que deben reducir como ultima instancia a una Expresión Booleana. Queda a cargo de cosaBooleana la responsabilidad de saber como imprimir cada uno de esos posibles términos que se encuentren presentes.
 
 Esto estará seguido de un salto de linea, seguido de un comentario (con un tab) y un salto de linea, luego un no terminal que contendrá cero o uno o varios comentarios (todos conteniendo su indentación apropiada), otro salto de linea con una palabra reservada else, unas llaves que abren y una o varias sentencias indentadas un corchete que cierra.
 \\
 En primera instancia, la salida que nos dará este if es la deseada, sin embargo puede que ocurra el caso donde tenemos dos ifs anidados. En este caso lo esperable es que el segundo if (el interno) este indentado y que las sentencias dentro de ese if tengan dos tabs en vez de uno. Luego, no es suficiente con agregar tabs en los lugares adecuados, también necesitamos señalizar donde comienza una nueva linea y en el caso de que sea necesario agregar varios tabs, que se pueda recorrer la salida agregándolos donde se necesite.
 \\
-Para el manejos de la indentación utilizaremos al comienzo de cada nueva linea.
+Para el manejo de la indentación utilizaremos el comienzo de cada nueva linea.
 
 \subsubsection{Implementacion Del Chequeo de Tipos}
 
@@ -209,11 +211,9 @@ En caso de las asignaciones se guarda en un diccionario global \textit{registros
 \subsection{Para ejecución}
 Cuando se establece en un atributo type o var el string "Para ejecucion" significa que el parser admite la cadena pero se tiene que chequear en tiempo de ejecución su tipo. 
 
-La siguiente tabla muestra las operaciones donde se delega el chequeo de tipos a tiempo de ejecución:
-
-
-
-\begin{table}[H]
+La siguiente tabla muestra las operaciones donde se delega el chequeo de tipos a tiempo de ejecución:\\
+\vspace{4mm}
+\begin{table}[ht]
 \begin{center}
 \begin{tabular}{|l|l|}
 \hline
@@ -235,6 +235,7 @@ de los casos anteriores  & not a[b]\\
 \end{center}
 \end{table}
 
+\pagebreak
 \subsection{Valores de vector y asignaciones}
 VecVal es la regla que permite crear accesos a vectores (por ejemplo a[5]). Esta regla chequea que el indice sea menor que el tamaño del vector si el indice viene dado por un entero, en caso de cualquier otra expresión (variable, suma, etc) no se chequea nada. También setea el tipo correspondiente a la posición del vector y su variable si es que existe.
 
@@ -244,7 +245,10 @@ $a[1] = b[2];$
 
 La expresión de la derecha viene de VecVal y también la de la izquierda. El problema es que estas dos expresiones tienen distinto significado. La de la derecha corresponde a un valor de un vector, no interesa el índice ni que tipos tiene el vector. La de la izquierda, en cambio, refiere a la posición del vector y por lo tanto se requiere saber el índice y la variable a la cual se refiere.
 
-Para solucionar esto creamos un no terminal nuevo llamado \textbf{Variable} donde se encarga de establecer tanto la variable como el índice del no terminal \textbf{VecVal}. También en VecVal guardamos la información del índice y de la variable en los atributos \textit{indice} y \textit{varAsig} respectivamente.
+Para solucionar esto creamos un no terminal nuevo llamado \textbf{Variable} donde se encarga de establecer tanto la variable como el índice del no terminal \textbf{VecVal}.
+También en VecVal guardamos la información del índice y de la variable en los atributos \textit{indice} y \textit{varAsig} respectivamente.
+Por último, se chequea que cualquier asignación que se le haga a una variable que tenga el atributo índice definido(es decir,como la del ejemplo) tenga el tipo adecuado.
+Por ejemplo, si $a[1]$ se corresponde con la primera posición de un vector de enteros, $b[2]$ debe ser necesariamente un entero o se levantará una excepción.
 
 Si VecVal no tiene un atributo "var" entonces tira una excepción "Solo se puede acceder a variables.
 

@@ -32,7 +32,7 @@ Donde cada producción que empieza con $Expresion$ denota una expresión de un t
 
 El problema con esto es que \textbf{id} se puede generar en todas las expresiones salvo en la última. Si se tiene una producción $A \rightarrow Valores$, entonces se puede llegar de 5 maneras distintas a \textbf{id} (es decir, hay mas de una posible derivación mas a la izquierda para la cadena \textit{id}) y, por lo tanto, hay conflictos (la gramática es ambigua). 
 
-Por eso decidimos sacar a \textbf{id} de cada producción. El problema es que se tiene que seguir produciendo expresiones complejas con \textbf{id} (por ejemplo $id$ $and$ $id$).
+Por lo tanto decidimos sacar a \textbf{id} de cada producción. El problema es que se tiene que seguir produciendo expresiones complejas con \textbf{id} (por ejemplo $id$ $and$ $id$).
 
 Para solucionar esto, decidimos sacar todos los valores primitivos de cada expresión y colocarlo en $Valores$. Además hay que observar que una función de un determinado tipo puede devolver una variable de ese tipo, por lo que decidimos sacar también a esas funciones. Lo mismo pasa con los operadores ternarios. De esta forma, cada producción $Expresion$ genera expresiones con al menos un operador de su tipo:
 
@@ -94,10 +94,11 @@ $B \rightarrow B * C$ \\
 $C \rightarrow (A) | int | float | id$ 
 \end{center}
 
-Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático. Esto se hizo asi para evitar ambiguedades en la generacion de una variable(ID). Ver explicacion mas detallada en  \textbf{4.1}
+Para evitar problemas de ambigüedad, decidimos hacer que eMat devuelva expresiones con al menos un operador matemático. Esto es por que en la producción valores se tienen las variables (correspondientes al token ID) y estas
+también se generarían en las expresiones de los otros tipos. Ver explicación en \textbf{4.1}
 
 \subsubsection{Expresiones booleanas}
-Las expresiones booleanas también se solucionaron de la misma manera que las expresiones matemáticas. Para mas información ver \textbf{sección 5.}
+Las expresiones booleanas también se soluciona de la misma manera que las expresiones matemáticas. Para mas información ver sección 5.
 
 \subsubsection{Expresiones de string}
 En principio consideramos la siguiente gramática:
@@ -116,7 +117,7 @@ Por ejemplo:
 
 if cond1 then if cond2 then sentencia1 else sentencia2 \\
 
-La ambigüedad surge de no poder decidir si la sentencia2 se ejecuta como rama alternativa a cond1( es decir, cuando esta condición es falsa), o bien como la rama alternativa del \textit{if} asociado a \textbf{cond2}. Esto último es posible ya que el \textit{if} de \textbf{cond1} puede prescindir del bloque \textit{else}.
+La ambigüedad surge de no poder decidir si la sentencia2 se ejecuta como rama alternativo a cond1( es decir, cuando esta condición es falsa), o bien como la rama alternativa del \textit{if} asociado a \textbf{cond2}. Esto último es posible ya que el \textit{if} de \textbf{cond1} puede prescindir del bloque \textit{else}.
 Para solucionar esto, construimos una solución basada en el concepto de lineas abiertas o cerradas. La primera, son todas aquellas que contienen al menos un \textit{if} que no tiene un \textit{else} correspondiente o bien un bucle con linea abierta. La segunda mencionada, son aquellas que resultan de tener sentencias simples, comentarios, o bien: \\
 
 if (cond1) bloqueCerrado else bloqueCerrado \\
@@ -129,7 +130,7 @@ A continuación se define la gramática utilizada para construir el parser. La m
 
 \linespread{1.125}\selectfont
 
-$G$ $=<V_{t}$, $V_{nt}$, $g$, $P>$
+$G$|$<V_{t}$, $V_{nt}$, $g$, $P>$
 
 $V_{t}$ es el conjunto de símbolos terminales dado por los símbolos en \textbf{mayúsculas} que aparecen 
 
@@ -142,7 +143,7 @@ en \textbf{minúsculas} que aparecen en las producciones.
 
 
 
-$P$ es el conjunto de producciones dadas a continuación\\
+$P$ es el conjunto de producciones dadas a continuación$|$\\
 
 
 \textbf{Sentencias y estructura general} \\
@@ -287,11 +288,7 @@ $|$  FLOAT
  
 atributos $\rightarrow$ ID.valoresCampos $|$ reg.valoresCampos
 
-valoresCampos $\rightarrow$ ID $|$ end $|$ begin
-
-end $\rightarrow$ END
-
-begin $\rightarrow$ BEGIN\\
+valoresCampos $\rightarrow$ ID $|$ END $|$ BEGIN \\
 
 \textbf{Operadores ternarios:}
 
@@ -323,19 +320,19 @@ ternarioVars $\rightarrow$ valoresBool ? valoresTernarioVars : valoresTernarioVa
   
 valoresTernarioVars $\rightarrow$ reg $|$ vec $|$ ternarioVars $|$ (ternarioVars) $|$ atributos 
 
-\hspace{30mm}$|$ varsOps  $|$ varYVals $|$ RES
+\hspace{15mm}$|$ varsOps  $|$ varYVals $|$ RES
 
 TernarioMat $\rightarrow$ valoresBool ? valoresTernarioMat : valoresTernarioMat  
 
-\hspace{30mm}$|$ expBool ? valoresTernarioMat : valoresTernarioMat
+\hspace{15mm}$|$ expBool ? valoresTernarioMat : valoresTernarioMat
   
 valoresTernarioMat $\rightarrow$ INT $|$ FLOAT $|$ funcInt $|$ STRING $|$ eMAt 
 
-\hspace{30mm}$|$ ternarioMat $|$ (ternarioMat)
+\hspace{15mm}$|$ ternarioMat $|$ (ternarioMat)
 
 ternarioBool $\rightarrow$ valoresBool ? valoresTernarioBool : valoresTernarioBool  
 
-\hspace{30mm}$|$ expBool ? valoresTernarioBool : valoresTernarioBool
+\hspace{15mm}$|$ expBool ? valoresTernarioBool : valoresTernarioBool
   
 valoresTernarioBool $\rightarrow$ BOOL $|$ funcBool $|$ ternarioBool $|$ ( ternarioBool )$|$ expBool \\
    
@@ -354,11 +351,10 @@ campos $\rightarrow$ ID:valores, campos $|$ ID:valores \\
 
 \textbf{Operadores de variables:}
 
-varsOps$\rightarrow$ MENOSMENOS variable $|$ MASMAS variable
+varsOps$\rightarrow$ MENOSMENOS varYVals $|$ MASMAS varYVals
 
-\hspace{15mm}$|$ variable MASMAS $|$ variable MENOSMENOS
+\hspace{15mm}$|$ varYVals MASMAS $|$ varYVals MENOSMENOS \\
 
-variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVALS  \\
 
 \textbf{Asignaciones:} 
 
@@ -366,6 +362,8 @@ variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVALS  \\
   
   \hspace{15mm}$|$ variable MENOSEQ valores $|$ variable = valores$|$ ID . ID = valores 
 
+
+variable $\rightarrow$ ID $|$ vecVal $|$ vecVal.varYVals  \\
 
 
 \textbf{Operaciones binarias enteras:} 
