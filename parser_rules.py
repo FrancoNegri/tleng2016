@@ -564,33 +564,19 @@ def p_funcReturn(subexpressions):
 #-----------------------------------------------------------------------------
 #funcInt -> MULTIESCALAR( valores, valores param)
 
+# NO VA ACA, retorna tipo vector
 def p_funcInt1(subexpressions):
   '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
-  global vectores,variables
+  global vectores, variables
   subexpressions[0] = {}
   subexpressions[0]["value"] = toStringNoParen(subexpressions[:3])
   subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "vec")
   setVector(subexpressions, 3)
-  chequearTipo([subexpressions[3]],["vec"])
-  #Esto lo hago a mano porque chequear tipos recibe una subexpresion, pero los tipos del vector estan en una lista.
-  if subexpressions[3]["var"] in variables:
-    listaTipos = vectores[subexpressions[3]["var"]]["elems"]
-  else:
-    listaTipos = subexpressions[3].get("elems")
 
-  for tipo in listaTipos:
-    if tipo not in ["int","float"]:
-      raise Exception ("Se esperaba vector numerico")
-  #Aca quiero chequear que sea numerico, pero me tirar error
-  #chequearTipo([subexpressions[3].get("elems")],["int","float"],"se esperaba vector numerico")
+  chequearTipo([subexpressions[3]],["vec"])
+  chequearVectorNumerico(subexpressions[3])
   chequearTipo([subexpressions[5]],["int"])
-  setVariable(subexpressions, None) 
-  nombreVec = subexpressions[3].get("var")
-  if nombreVec in vectores:
-    subexpressions[0]["elems"] = vectores[nombreVec]["elems"]
-  else:
-    subexpressions[0]["elems"] = subexpressions[3].get("elems")
 
 #-----------------------------------------------------------------------------
 #funcInt -> LENGTH( valores)
@@ -627,15 +613,11 @@ def p_funcBool(subexpressions):
   setTipo(subexpressions, "bool")
   setVariable(subexpressions, None) 
   chequearTipo([subexpressions[3],subexpressions[5]], ["vec"])  
-  #Chequeo que sean numericos:
-  if subexpressions[3]["var"] in variables:
-    listaTipos = vectores[subexpressions[3]["var"]]["elems"]
-  else:
-    listaTipos = subexpressions[3].get("elems")
+  vector1 = subexpressions[3]
+  vector2 = subexpressions[5]
+  chequearVectorNumerico(vector1)
+  chequearVectorNumerico(vector2)
 
-  for tipo in listaTipos:
-    if tipo not in ["int","float"]:
-      raise Exception ("Se esperaba vector numerico")
 
 #-----------------------------------------------------------------------------
 # FuncVoid -> print(Valores) 
