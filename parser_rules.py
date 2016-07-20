@@ -540,7 +540,7 @@ def p_func1(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   setVariable(subexpressions, None)
-  subexpressions[0]["elems"] = subexpressions[1].get("elems")
+  
 
 def p_func2(subexpressions):
   '''func : funcVoid'''
@@ -554,24 +554,25 @@ def p_func2(subexpressions):
 def p_funcReturn(subexpressions):
   '''funcReturn : funcInt
   | funcString
-  | funcBool'''
+  | funcBool
+  | funcVec'''
   subexpressions[0] = {}
   subexpressions[0]["value"] =  toString(subexpressions)
   setTipo(subexpressions, 1) 
-  subexpressions[0]["elems"] = subexpressions[1].get("elems")
+  subexpressions[0]["typeVec"] = subexpressions[1].get("typeVec")
 
 #-----------------------------------------------------------------------------
 #funcInt -> MULTIESCALAR( valores, valores param)
 
-# NO VA ACA, retorna tipo vector
-def p_funcInt1(subexpressions):
-  '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
+def p_funcVec(subexpressions):
+  '''funcVec : MULTIESCALAR '(' valores ',' valores   param ')' '''
   global variables
   subexpressions[0] = {}
   subexpressions[0]["value"] = toStringNoParen(subexpressions[:3])
   subexpressions[0]["value"] += toString(subexpressions[2:])
   setTipo(subexpressions, "vec")
   setVector(subexpressions, 3)
+  subexpressions[0]["typeVec"] = "float"
 
   chequearTipo([subexpressions[3]],["vec"])
   chequearVectorNumerico(subexpressions[3])
@@ -580,7 +581,7 @@ def p_funcInt1(subexpressions):
 #-----------------------------------------------------------------------------
 #funcInt -> LENGTH( valores)
 
-def p_funcInt2(subexpressions):
+def p_funcInt(subexpressions):
   '''funcInt : LENGTH '(' valores ')' '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toStringNoParen(subexpressions[:3]) 
@@ -714,9 +715,19 @@ def p_vecVal1(subexpressions):
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  # Se deja el chequeo de estos atributos para tiempo de ejecucion
-  setTipo(subexpressions, "Para ejecucion") 
+  nombreVar = subexpressions[1].get("var")
+
+  if nombreVar == "Para ejecucion":
+    tipoRetorno = "Para ejecucion"
+  else:
+    if nombreVar == None:
+      tipoRetorno = subexpressions[1]["typeVec"]
+    else:
+      tipoRetorno = variables[nombreVar]["typeVec"]
+
+  setTipo(subexpressions, tipoRetorno) 
   setVariable(subexpressions, "Para ejecucion")
+
   # Para que la asignacion (por ejemplo a[5] = 3) tenga la variable del vector para chequear tipos
   variable = subexpressions[1].get("var")
   if variable != None:
@@ -728,9 +739,19 @@ def p_vecVal2(subexpressions):
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  # Se deja el chequeo de estos atributos para tiempo de ejecucion
-  setTipo(subexpressions, "Para ejecucion") 
+  nombreVar = subexpressions[1]["var"]
+
+  if nombreVar == "Para ejecucion":
+    tipoRetorno = "Para ejecucion"
+  else:
+    if nombreVar == None:
+      tipoRetorno = subexpressions[1]["typeVec"]
+    else:
+      tipoRetorno = variables[nombreVar]["typeVec"]
+
+  setTipo(subexpressions, tipoRetorno) 
   setVariable(subexpressions, "Para ejecucion")
+
   # Se deja el chequeo de k.doublelist[0] para ejecucion
   subexpressions[0]["varAsig"] = "Para ejecucion"
 
@@ -756,6 +777,7 @@ def p_valores(subexpressions):
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
   tipoValor = subexpressions[1].get("type")
+  subexpressions[0]["typeVec"] = subexpressions[1].get("typeVec")
 
   if subexpressions[1].get("type") == "reg": 
     subexpressions[0]["campos"] = subexpressions[1].get("campos")
@@ -798,6 +820,7 @@ def p_atributos(subexpressions):
     raise Exception("El campo no esta definido para ese registro") 
 
   setTipo(subexpressions, tipoRes)
+  setVariable(subexpressions, "Para ejecucion")
 
 def p_atributos2(subexpressions):
   '''atributos : reg '.' valoresCampos '''
@@ -812,6 +835,7 @@ def p_atributos2(subexpressions):
     raise Exception("El campo no esta definido para ese registro")  
 
   setTipo(subexpressions, tipoCampoReg)
+  setVariable(subexpressions, "Para ejecucion")
 
 def p_valoresCampos(subexpressions):
   '''valoresCampos : ID
@@ -972,7 +996,11 @@ def p_varYVals2(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   # Pues vecVal se deja para tiempo de ejecucion
-  setTipo(subexpressions, "Para ejecucion") 
+  if len(subexpressions) == 2:  
+    setTipo(subexpressions, 1) 
+  else:
+    setTipo(subexpressions, "Para ejecucion") 
+
   setVariable(subexpressions, "Para ejecucion")
   subexpressions[0]["varAsig"] = subexpressions[1].get("varAsig")
 
@@ -1025,6 +1053,7 @@ def p_variable(subexpressions):
   else:
     setVariable(subexpressions, nombreVar) 
 
+  # print subexpressions[1]["type"]
   setTipo(subexpressions, 1)
 
   if nombreVar not in variables:
@@ -1059,6 +1088,12 @@ def p_varAsig(subexpressions):
     registros[nombreVarDestino]["campos"] = subexpressions[3].get("campos")
 
   nombreVarFuente = subexpressions[3].get("var")
+
+  # Si se tiene a[6] = 5 entonces no se actualiza nada (a ya tiene su informacion de tipos)
+  esVector = subexpressions[1].get("esVector")
+  if esVector:
+    return
+
   # Por si la fuente es una variable
   # a = b
   if nombreVarFuente != None and nombreVarFuente != "Para ejecucion":
@@ -1078,21 +1113,14 @@ def p_varAsig(subexpressions):
 
     # Si es un vector explicito (no una variable) 
     # a = [3,2,2] (tiene typeVec y type == "vec")
-    
     if tipoValorFuente == "vec":
+      
       tipoVectorFuente = subexpressions[3]["typeVec"]
       variables[nombreVarDestino]["typeVec"] = tipoVectorFuente
       variables[nombreVarDestino]["type"] = "vec"
       return
 
-    # Si se tiene a[6] = 5 entonces no se actualiza nada (a ya tiene su informacion de tipos)
-    esVector = subexpressions[1].get("esVector")
-    if esVector:
-      return
-
     variables[nombreVarDestino]["type"] = tipoValorFuente
-
-  
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
@@ -1662,7 +1690,15 @@ def chequearOperadorIncDec(subexpressions, tipo):
     raise Exception("Variable no inicializada previamente")
 
   tipoVariable = variables[nombreVar]["type"]
+  if tipoVariable == "vec":
+    tipoVariable = subexpressions[1].get("typeVec")
+    if tipoVariable == None:
+      nombreVar = subexpressions[1].get("var")
+      if nombreVar == None:
+        raise Exception("Variable no inicializada")
+      tipoVariable = variables[nombreVar]["typeVec"]
 
+  # print tipoVariable
   if tipoVariable not in ["int", "float", "Para ejecucion"]:
     raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
@@ -1678,6 +1714,8 @@ def chequearAsignacion(subexpressions):
   #Es decir, si es un vector de ints, solo se puede asignar ints.
   tipoDestino = getTipoExpresion(subexpressions[3])
   tipoVariable = variables[nombreVar].get("type")
+  if tipoVariable == "vec":
+    tipoVariable = variables[nombreVar].get("typeVec")
 
   if tipoVariable == "vec":
     tipoFuente = variables[nombreVar]["typeVec"]
@@ -1687,7 +1725,6 @@ def chequearAsignacion(subexpressions):
   esVector = subexpressions[1].get("esVector")
   # En caso de que la variable a asignar es un vector
   if esVector != None:
-    print tipoFuente
     if "Para ejecucion" not in [tipoVariable, tipoDestino]:
       if tipoFuente != tipoDestino and tipoVariable != None:
         if (tipoFuente, tipoDestino) not in [("float", "int"), ("int", "float")]:
@@ -1701,7 +1738,6 @@ def chequearAsignacion(subexpressions):
   operador = subexpressions[2]
   if operador not in ["=", "+="]:
     chequearTipo([subexpressions[3]], ["int", "float"])
-
   if operador == "+=":
     if tipoVariable == "string":
       chequearTipo([subexpressions[3]], ["string"])
