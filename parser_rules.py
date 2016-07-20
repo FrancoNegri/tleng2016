@@ -666,130 +666,74 @@ def p_vec(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   setTipo(subexpressions, "vec") 
   setVector(subexpressions, 2)
-  subexpressions[0]["regs"] = subexpressions[2]["regs"]
 
-i = 0
 #Elem-> Valores, Elem | Valores
-def p_elem(subexpressions):
-  '''elem : valores ',' elem
-  | valores'''
-  global variablesVector, i
+def p_elem1(subexpressions):
+  '''elem : valores ',' elem'''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  setTipo(subexpressions, 1)
-  if len(subexpressions) == 2:
-    i = 0
-    subexpressions[0]["elems"] = []
-    subexpressions[0]["regs"] = []
-    varsVec = {}
-  else:
-    setVector(subexpressions, 3)
-    subexpressions[0]["regs"] = subexpressions[3].get("regs")
-    ++i
-    varsVec = subexpressions[1].get("varsVec", {})
-
-  if getTipoExpresion(subexpressions[1]) == "vec":
-    subexpressions[0]["varsVec"] = {}
-    subexpressions[0]["varsVec"][i] = subexpressions[1]["var"]
-
-  tipoElem = getTipoExpresion(subexpressions[1])
-  campos = subexpressions[1].get("campos")
+  setTipo(subexpressions, "vec")
   
-  subexpressions[0]["elems"].insert(1, tipoElem)
-  subexpressions[0]["regs"].insert(1,campos)
+  tipoAnteriores = subexpressions[3]["typeVec"]
+  tipoActual = getTipoExpresion(subexpressions[1])
+  setVector(subexpressions, tipoActual)
+
+  if tipoActual == "Para ejecucion":
+    setVector(subexpressions, tipoAnteriores)
+    return
+
+  if tipoAnteriores == "Para ejecucion":
+    setVector(subexpressions, tipoActual)
+    return
+
+  if (tipoActual, tipoAnteriores) in [("float", "int"), ("int", "float")]:
+    setVector(subexpressions, "float")
+    return
+
+  if tipoAnteriores != tipoActual:
+    raise Exception("El vector tiene que ser de un solo tipo")
+
+  
+
+  
+
+def p_elem2(subexpressions):
+  '''elem :  valores'''
+  subexpressions[0] = {}
+  subexpressions[0]["value"] = toString(subexpressions)
+  tipoValor = getTipoExpresion(subexpressions[1])
+  setVector(subexpressions, tipoValor)
 
 #VecVal ->  var M
 
 def p_vecVal1(subexpressions):
-  '''vecVal : ID '[' expresion ']'
-  | vec '[' expresion ']'
-  | vecVal '[' expresion ']'
-  | atributos '[' expresion ']'
+  '''vecVal : ID '[' valores ']'
+  | vec '[' valores ']'
+  | vecVal '[' valores ']'
   '''
   chequearAccesoVector(subexpressions)
 
-  # Si el indice es una expresion o una variable se chequea en ejecucion
-  # Si es un token INT, entonces se chequea en compilacion
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  # Para que no tire excepcion cuando se hace a[g[b[1]]], esto se chequea en ejecucion
+  # Se deja el chequeo de estos atributos para tiempo de ejecucion
   setTipo(subexpressions, "Para ejecucion") 
-  # Como es entero, no tiene elementos
-  subexpressions[0]["elems"] = None
-  # Para que no explote en la asignacion. Dejo el chequeo de si, por ejemplo a[2*3 + 4], 
-  # es una variable para ejecucion
   setVariable(subexpressions, "Para ejecucion")
+  # Para que la asignacion (por ejemplo a[5] = 3) tenga la variable del vector para chequear tipos
+  variable = subexpressions[1].get("var")
+  if variable != None:
+    subexpressions[0]["varAsig"] = variable
 
 def p_vecVal2(subexpressions):
-  '''vecVal : ID '[' INT ']'
-  | vec '[' INT ']'
-  | vecVal '[' INT ']'
-  | atributos '[' INT ']'
-  '''
+  '''vecVal : atributos '[' valores ']' '''
   chequearAccesoVector(subexpressions)
 
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-
-  # Obtengo los tipos de los elementos del vector
-  variableVector = subexpressions[1].get("var")
-
-  if variableVector == "Para ejecucion":
-    setTipo(subexpressions, "Para ejecucion") 
-    setVariable(subexpressions, "Para ejecucion")
-    return
-
-  if variableVector == None:
-    elementosVector = subexpressions[1]["elems"]
-  else:
-    elementosVector = vectores[variableVector]["elems"]
-  # Convierto el indice en int (el valor esta guardado en string) y obtengo el tipo correspondiente
-
-  indice = int(subexpressions[3]["value"]) -1
-  if indice > len(elementosVector)-1:
-    raise Exception("indice demasiado grande")
-    
-  tipoElemento = elementosVector[indice]
-
-  setTipo(subexpressions, tipoElemento) 
-  # Dejo del chequeo de a[3][5][4] para tiempo de ejecucion, seteo elems y var por default
-
-  subexpressions[0]["elems"] = None
-  # Para que en la asignacion tenga una variable para instanciar[]
-
-
-  # Para la asignacion y varOps
-
-  variable = "Para ejecucion"
-  variableInicial = subexpressions[1].get("varAsig")
-  if tipoElemento == "vec" and variableInicial != None:
-    variable = variablesVector[variableInicial][indice]
-
-  setVariable(subexpressions, variable)
-  subexpressions[0]["varAsig"] = subexpressions[1].get("var")
-  subexpressions[0]["indice"] = indice
-
-def p_expresion(subexpressions):
-  '''expresion : eMat
-  | expBool
-  | funcReturn
-  | reg
-  | FLOAT
-  | STRING
-  | BOOL
-  | varYVals
-  | varsOps
-  | vec
-  | ternario
-  | atributos
-  | RES
-  '''
-  subexpressions[0] = {}
-  subexpressions[0]["value"] = toString(subexpressions)
-
-  setTipo(subexpressions, 1)
-  setVariable(subexpressions, 1)
-  setVector(subexpressions, 1)
+  # Se deja el chequeo de estos atributos para tiempo de ejecucion
+  setTipo(subexpressions, "Para ejecucion") 
+  setVariable(subexpressions, "Para ejecucion")
+  # Se deja el chequeo de k.doublelist[0] para ejecucion
+  subexpressions[0]["varAsig"] = "Para ejecucion"
 
 def p_valores(subexpressions):
   '''valores : varYVals
