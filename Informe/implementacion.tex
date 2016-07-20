@@ -176,7 +176,7 @@ En primera instancia, la salida que nos dará este if es la deseada, sin embargo
 \\
 Para el manejo de la indentación utilizaremos el comienzo de cada nueva linea.
 
-\subsubsection{Implementacion Del Chequeo de Tipos}
+\subsubsection{Implementación Del Chequeo de Tipos}
 
 \subsubsection{Resumen atributos}
 
@@ -185,12 +185,11 @@ Para el chequeo de tipos utilizamos atributos sintetizados que se enumeran a con
 \begin{itemize}
 \item var : Denota la variable de la expresión (si es que hay solo una variable).
 \item type : Denota el tipo de la expresión.
-\item elems : Si la expresión es de tipo vector, denota los tipos de los elementos del vector.
-\item varsVec : Si la expresión es de tipo vector, denota las variables de los elementos del vector (si tienen alguna) para la asignación.
-\item regs: Si la expresión es de tipo vector de registros, denota los registros para la asignación.
+\item typeVec: Si la expresión es de tipo vector denota el tipo de sus elementos.
 \item campo: denota el valor de un campo de un registro.
-\item varAsig e indice : denota la variable y el indice en asignaciones como a[i] = 1, 
-en donde la expresión a la derecha del "$=$" \textbf{no} es un valor.
+\item campos: Denota los campos en un registro en forma de diccionario donde la clave es el nombre del campo y el valor es el tipo del campo.
+\item varAsig: Denota la variable en asignaciones como a[2] = 1, solo para chequear que el tipo de la variable es igual al valor asignado.
+\item esVector: Se utiliza en asignaciones para saber si la variable a asignar es de tipo vector (se explica mas adelante).
 \end{itemize}
 
 \subsubsection{Asignación con variables, vectores y registros}
@@ -198,60 +197,36 @@ Los tipos posibles en el atributo \textit{type} son: string, float, int, bool, v
 
 Para esto se cuenta con el diccionario global \textit{variables} que tiene de claves a las variables y de valor su tipo (con fines declarativos hay otro diccionario dentro del valor, que tiene una clave "type" y el valor es el tipo de la variable).
 
-Algo similar ocurre con variables que referencian a  vectores. Se agrega un diccionario global \textit{vectores} en donde se guarda la variable como clave y una lista de tipos como valor, que denotan los tipos de las respectivas posiciones del vector.
+Algo similar ocurre con variables que referencian a  vectores. Se agrega la variable del vector a \textit{variables} con un atributo adicional \textit{typeVec} que denota el tipo del vector.
 
-Para los vectores de vectores hay un diccionario global \textit{variablesVector} que guarda como clave a la variable correspondiente al vector de vectores y como valor una lista de variables que se corresponden con las variables de los vectores dentro del vector.
+En caso de los registros se guarda un atributo \textit{campos} en donde se guardan los campos del registro. En el se guarda un diccionario, donde la clave corresponde al nombre del campo y el valor al tipo del campo.
 
-Como se pueden hacer operaciones tales como [1,2,3][0] en donde no se involucra ninguna variable, se agrego el atributo \textit{elems} que se encarga de obtener esa lista de tipos del vector. Observar que, como no existe referencia a este vector, no es necesario guardarlo en el diccionario \textit{vectores} ya que no se utilizará en otro lugar.
-
-En caso de los registros se guarda un atributo \textit{campos} en donde se guardan los campos del registro. En el se guarda una lista de tuplas, donde la primer coordenada corresponde al nombre del campo, la segunda al tipo del campo y la tercera a la variable del vector si tuviera un campo de tipo vector.
-
-En caso de las asignaciones se guarda en un diccionario global \textit{registros} la variable correspondiente al registro y los campos obtenidos a través del atributos \textit{campos}.
+En caso de las asignaciones en variables de tipos registro se guarda, similar a \textit{variables}, un diccionario global \textit{registros} de igual manera al atributo \textit{campos} de los registros.
 
 \subsection{Para ejecución}
 Cuando se establece en un atributo type o var el string "Para ejecucion" significa que el parser admite la cadena pero se tiene que chequear en tiempo de ejecución su tipo. 
 
-La siguiente tabla muestra las operaciones donde se delega el chequeo de tipos a tiempo de ejecución:\\
-\vspace{4mm}
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-Descripción & Ejemplo \\
-\hline
-chequear que el indice del operador [] (acceso a vector)	& a[4+5*3] \\
- sea entero en expresiones complejas	& a[b $<$ 2 ? 1 : 2] \\
-  										& a[b] \\
-\hline
-Acceso a vectores de mas de 2 dimensiones & a[4][5][1] \\
-\hline
-Cadenas de acceso de registros y vectores de mas de 3 subexpresiones & a.campo1[5].campo2[3] \\
-										& a[5].campo1[4].campo2[4] \\
-\hline
-Decidir un tipo para una operación donde un operando es algunos  & a[6][6][6] + 2 \\
-de los casos anteriores  & not a[b]\\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+Las operaciones que se delega el chequeo de tipos a tiempo de ejecución son:
 
-\pagebreak
+\begin{itemize}
+\item Chequeo de que un indice en un acceso a vector este en rango.
+\item Chequeo de tipos en variables dentro de un vector o un registro (por ejemplo a = [b]; \\ a[0][1] = 1; c = \{vector: b\}; c.vector++;, donde b es de tipo vector).
+
+\end{itemize}
+
 \subsection{Valores de vector y asignaciones}
-VecVal es la regla que permite crear accesos a vectores (por ejemplo a[5]). Esta regla chequea que el indice sea menor que el tamaño del vector si el indice viene dado por un entero, en caso de cualquier otra expresión (variable, suma, etc) no se chequea nada. También setea el tipo correspondiente a la posición del vector y su variable si es que existe.
+VecVal es la regla que permite crear accesos a vectores (por ejemplo a[5]). Esta regla no realiza chequeo de indice. Establece el tipo de retorno al acceso del vector.
 
 Consideremos el siguiente ejemplo:
 
-$a[1] = b[2];$
+$ a[1] = [1,2,3];$
+$ c = b[1] $
 
-La expresión de la derecha viene de VecVal y también la de la izquierda. El problema es que estas dos expresiones tienen distinto significado. La de la derecha corresponde a un valor de un vector, no interesa el índice ni que tipos tiene el vector. La de la izquierda, en cambio, refiere a la posición del vector y por lo tanto se requiere saber el índice y la variable a la cual se refiere.
+Tanto $ a[1]$ como $ b[1]$ provienen de la producción \textbf{vecVal}. El problema es que estas dos expresiones tienen distinto significado. $ b[1]$ corresponde a un valor de un vector, no interesa la variable del vector. $ a[1]$, en cambio, refiere a la posición del vector y por lo tanto se requiere saber la variable de dicho vector para poder actualizar su tipo.
 
-Para solucionar esto creamos un no terminal nuevo llamado \textbf{Variable} donde se encarga de establecer tanto la variable como el índice del no terminal \textbf{VecVal}.
-También en VecVal guardamos la información del índice y de la variable en los atributos \textit{indice} y \textit{varAsig} respectivamente.
-Por último, se chequea que cualquier asignación que se le haga a una variable que tenga el atributo índice definido(es decir,como la del ejemplo) tenga el tipo adecuado.
-Por ejemplo, si $a[1]$ se corresponde con la primera posición de un vector de enteros, $b[2]$ debe ser necesariamente un entero o se levantará una excepción.
+Para solucionar esto creamos un no terminal nuevo llamado \textbf{Variable} el cual se encarga de establecer el nombre de la variable del vector y ademas guarda un booleano \textit{esVector} para saber si dicha expresión es un vector. También en VecVal guardamos la información de la variable en el atributos \textit{varAsig}.
 
-Si VecVal no tiene un atributo "var" entonces tira una excepción "Solo se puede acceder a variables.
+Si la expresión de la izquierda de la asignación no tiene un atributo "var" entonces tira una excepción "Solo se puede acceder a variables.
 
-Ademas en operaciones como \textit{(a = 2) ? 5 : 2}, se establece como tipo de la asignación el tipo de la derecha y como variable el atributo var de la expresión de la izquierda.
-
+Ademas en operaciones como \textit{(a = 2) ? 5 : 2}, se establece como tipo de la asignación el tipo de la derecha (en este caso es el tipo del número 2 que es \textit{int}) y como variable el atributo var de la expresión de la izquierda (en este caso \textit{a}).
 
