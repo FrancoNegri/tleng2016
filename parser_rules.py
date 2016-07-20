@@ -149,10 +149,10 @@ def p_lAbierta6(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions[:5]) + "\n"
   subexpressions[0]["value"] += toStringLineaCerrada(subexpressions[5]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += toStringTerminal(subexpressions[6]) + "\n"
-  subexpressions[0]["value"] += toStringTerminal(subexpressions[7]).replace("tabing", "tabing\t") + "\n"
+  subexpressions[0]["value"] += toStringTerminal(subexpressions[6]["value"])
+  subexpressions[0]["value"] += toStringTerminal(subexpressions[7]).replace("tabing", "tabing\t")
   subexpressions[0]["value"] += toString(subexpressions[7:9]).replace("tabing", "tabing\t")
-  subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[7]).replace("tabing", "tabing\t")
+  subexpressions[0]["value"] += toStringLineaAbierta(subexpressions[9])
 
 
 #-----------------------------------------------------------------------------
