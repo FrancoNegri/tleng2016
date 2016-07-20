@@ -303,7 +303,10 @@ def p_lCerrada15(subexpressions):
 def toStringLineaCerrada(subexpression):
   return "\ttabing" + subexpression["value"].replace("tabing", "tabing\t")
 def toStringTerminal(subexpression):
-  return "\ntabing" + subexpression
+  try:
+    return "\ntabing" + subexpression
+  except TypeError:
+    return "\ntabing" + subexpression["value"]
 
 #-----------------------------------------------------------------------------
 
