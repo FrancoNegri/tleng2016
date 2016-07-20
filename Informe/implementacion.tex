@@ -44,7 +44,7 @@ t\_MENOSMENOS = r"--"
 
 def t\_STRING(token):
 
-\hspace{5mm}    r' ' ' " .*? " ' ' '
+\hspace{5mm}    r' ' ' \" .*? \" ' ' '
     
 \hspace{5mm}    atributos = $\{ \} $
     
@@ -203,7 +203,7 @@ En caso de los registros se guarda un atributo \textit{campos} en donde se guard
 
 En caso de las asignaciones en variables de tipos registro se guarda, similar a \textit{variables}, un diccionario global \textit{registros} de igual manera al atributo \textit{campos} de los registros.
 
-\subsection{Para ejecución}
+\subsubsection{Para ejecución}
 Cuando se establece en un atributo type o var el string "Para ejecucion" significa que el parser admite la cadena pero se tiene que chequear en tiempo de ejecución su tipo. 
 
 Las operaciones que se delega el chequeo de tipos a tiempo de ejecución son:
@@ -214,7 +214,7 @@ Las operaciones que se delega el chequeo de tipos a tiempo de ejecución son:
 
 \end{itemize}
 
-\subsection{Valores de vector y asignaciones}
+\subsubsection{Valores de vector y asignaciones}
 VecVal es la regla que permite crear accesos a vectores (por ejemplo a[5]). Esta regla no realiza chequeo de indice. Establece el tipo de retorno al acceso del vector.
 
 Consideremos el siguiente ejemplo:
