@@ -1671,32 +1671,48 @@ def chequearOperadorIncDec(subexpressions, tipo):
 def chequearAsignacion(subexpressions):
   global variables
 
+  #Casos de asignacion a variables,  en asignaciones no se verifica el tipo!
+  nombreVar = subexpressions[1].get("var")
+  if nombreVar == None:
+    raise Exception("Solo se puede asignar valores a variables")
+
   #Si el lado izquierdo de la asignacion se refiere a una posicion de vector, se chequea estrictamente que se le asigne algo del tipo original.
   #Es decir, si es un vector de ints, solo se puede asignar ints.
-  if subexpressions[1].get("indice") != None:
-    if subexpressions[3].get("type") != subexpressions[1].get("type"):
-      raise Exception ("No coinciden los tipos!")
-  #Casos de asignacion a variables,  en asignaciones no se verifica el tipo!
+  tipoDestino = getTipoExpresion(subexpressions[3])
+  tipoVariable = variables[nombreVar].get("type")
+
+  if tipoVariable == "vec":
+    tipoFuente = variables[nombreVar]["typeVec"]
   else:
-    if subexpressions[1].get("var") == None:
-      raise Exception("Solo se puede asignar valores a variables")
+    tipoFuente = tipoVariable
 
-    operador = subexpressions[2]
-    if operador not in ["=", "+="]:
+  if "Para ejecucion" not in [tipoVariable, tipoDestino]:
+    if tipoFuente != tipoDestino and tipoVariable != None:
+      if (tipoFuente, tipoDestino) not in [("float", "int"), ("int", "float")]:
+        message = "En asignacion \n"
+        message += "El operando fuente es de tipo vector de "
+        message += tipoFuente
+        message += " y se encontro tipo "
+        message += tipoDestino
+        raise Exception (message)
+
+  operador = subexpressions[2]
+  if operador not in ["=", "+="]:
+    chequearTipo([subexpressions[3]], ["int", "float"])
+
+  if operador == "+=":
+    if tipoVariable == "string":
+      chequearTipo([subexpressions[3]], ["string"])
+    else:
       chequearTipo([subexpressions[3]], ["int", "float"])
-
-    if operador == "+=":
-      #Asumimos que previamente se inicializo la variable
-      if subexpressions[1].get("type") == "string":
-        chequearTipo([subexpressions[3]], ["string"])
-      else:
-        chequearTipo([subexpressions[3]], ["int", "float"])
-      
-    nombreVar = subexpressions[1].get("var")
-      
-  # if operador == "=" and variables[nombreVar] != {}:
-    # if subexpressions[3].get("indice") == None and subexpressions[1].get("indice") == None:
-    #   chequearTipo([subexpressions[3]],[variables[nombreVar].get("type")])
-    # else:
  
+def chequearVectorNumerico(vector):
+  nombreVar = vector.get("var")
+  if nombreVar == None:
+    tipoVec = vector["typeVec"]
+  else:
+    tipoVec = variables[nombreVar]["typeVec"]
 
+  tiposPermitidos = ["float", "int", "Para ejecucion"]
+  if tipoVec not in tiposPermitidos:
+    raise Exception ("Se esperaba vector numerico")
