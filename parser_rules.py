@@ -753,14 +753,14 @@ def p_valores(subexpressions):
   '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["indice"] = subexpressions[1].get("indice")
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
+  tipoValor = subexpressions[1].get("type")
+
   if subexpressions[1].get("type") == "reg": 
     subexpressions[0]["campos"] = subexpressions[1].get("campos")
-  if subexpressions[1].get("type") == "vec":
-    subexpressions[0]["regs"] = subexpressions[1].get("regs")
+
 #Registros:
 #Reg -> {U}
 def p_reg(subexpressions):
@@ -778,20 +778,14 @@ def p_campos(subexpressions):
   | ID ':' valores '''
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  subexpressions[0]["campos"] = []
+  subexpressions[0]["campos"] = {}
   nombreCampo = subexpressions[1]["var"]
   tipoCampo = subexpressions[3]["type"]
-
-  # Por si el campo es un vector
-  variableDelVector = subexpressions[3]["var"]
-
-  tupla = (subexpressions[1]["var"], subexpressions[3]["type"], variableDelVector)
 
   if len(subexpressions) != 4:
     subexpressions[0]["campos"] = subexpressions[5]["campos"]
 
-  subexpressions[0]["campos"].insert(1, tupla)
-  subexpressions[1]["type"] = subexpressions[3].get("type")
+  subexpressions[0]["campos"][nombreCampo] = tipoCampo
 
 def p_atributos(subexpressions):
   '''atributos : ID '.' valoresCampos'''
@@ -800,16 +794,11 @@ def p_atributos(subexpressions):
   subexpressions[0]["value"] = toString(subexpressions)
   varReg = subexpressions[1]["var"]
   nombreCampo = subexpressions[3]["campo"]
-  for (campoReg, tipoCampoReg, varVecReg) in registros[varReg]["campos"]:
-    #print(tupla[0])
-    if campoReg == nombreCampo:
-      setTipo(subexpressions, tipoCampoReg)
-      if tipoCampoReg == "vec":
-        setVariable(subexpressions, varVecReg)
-      return
+  tipoRes = registros[varReg]["campos"].get(nombreCampo)
+  if tipoRes == None:
+    raise Exception("El campo no esta definido para ese registro") 
 
-  raise Exception("El campo no esta definido para ese registro")   
-
+  setTipo(subexpressions, tipoRes)
 
 def p_atributos2(subexpressions):
   '''atributos : reg '.' valoresCampos '''
@@ -818,16 +807,12 @@ def p_atributos2(subexpressions):
 
   nombreCampo = subexpressions[3]["campo"]
   camposRegistro = subexpressions[1]["campos"]
-  for (campoReg, tipoCampoReg, varVecReg) in camposRegistro:
-    #print(tupla[0])
-    if campoReg == nombreCampo:
-      setTipo(subexpressions, tipoCampoReg)
-      if tipoCampoReg == "vec":
-        setVariable(subexpressions, varVecReg)
-      return
+  tipoCampoReg = camposRegistro.get(nombreCampo)
 
-  raise Exception("El campo no esta definido para ese registro")   
+  if tipoCampoReg == None:
+    raise Exception("El campo no esta definido para ese registro")  
 
+  setTipo(subexpressions, tipoCampoReg)
 
 def p_valoresCampos(subexpressions):
   '''valoresCampos : ID
@@ -986,28 +971,9 @@ def p_varYVals2(subexpressions):
   global registros, vectores
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
-  # Caso registros:
-  if len(subexpressions) == 4:
-    if subexpressions[1]["type"] == "Para ejecucion":
-      setTipo(subexpressions, "Para ejecucion") 
-      setVariable(subexpressions, "Para ejecucion")
-    else:
-      nombreVec = subexpressions[1]["varAsig"]
-      indice = subexpressions[1]["indice"]
-      listaCampos = vectores[nombreVec].get("regs")[indice]
-      nombreCampo = subexpressions[3]["var"]
-      tipo = None 
-      for tupla in listaCampos:
-        if tupla[0] == nombreCampo:
-          tipo = tupla[1]
-      setTipo(subexpressions, tipo)
-      #No estoy seguro que var ponerle aca (por ejemplo usuario.edad tendria var = edad)
-      setVariable(subexpressions, None)
-    
-  else:
-    setTipo(subexpressions, 1)
-    setVariable(subexpressions, 1)
-    setVector(subexpressions, 1) 
+  # Pues vecVal se deja para tiempo de ejecucion
+  setTipo(subexpressions, "Para ejecucion") 
+  setVariable(subexpressions, "Para ejecucion")
 
 
   
