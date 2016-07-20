@@ -1422,8 +1422,8 @@ def setVector(subexpressions, fuente):
     subexpressions[0]["typeVec"] = fuente
     return
 
-  elementos = subexpressions[fuente].get("elems")
-  subexpressions[0]["elems"] = elementos
+  tipoVector = subexpressions[fuente].get("typeVec")
+  subexpressions[0]["typeVec"] = tipoVector
   return
 
 # Dado una lista de subexpresiones, asigna la variables del indice indiceFuente a la produccion
@@ -1446,7 +1446,7 @@ def setTipoBinarioMat(subexpressions):
     tipo2 = getTipoExpresion(subexpressions[3])
     operador = subexpressions[2]
 
-    if (tipo1, tipo2) == ("Para ejecucion", "Para ejecucion"):
+    if (tipo1, tipo2) in [("Para ejecucion", "Para ejecucion"), ("Para ejecucion", "int"), ("int", "Para ejecucion")]:
       setTipo(subexpressions, "Para ejecucion")
       return
 
@@ -1454,7 +1454,7 @@ def setTipoBinarioMat(subexpressions):
       setTipo(subexpressions, "string")
       return
 
-    if (tipo1, tipo2) in [("int", "int"), ("Para ejecucion", "int"), ("int", "Para ejecucion")]:
+    if (tipo1, tipo2) in [("int", "int")]:
       setTipo(subexpressions, "int")
     else:
       setTipo(subexpressions, "float")
@@ -1477,7 +1477,6 @@ def setTipo(subexpressions, fuente):
   if nombreVariable != None and nombreVariable != "Para ejecucion":
     # Si el tipo viene dado por una variable
     if nombreVariable in variables and subexpressions[fuente].get("indice") == None:
-      setVariable(subexpressions, nombreVariable)
       tipo = variables[nombreVariable]["type"]
       subexpressions[0]["type"] = tipo
     else:
@@ -1491,6 +1490,10 @@ def setTipo(subexpressions, fuente):
 def getTipoExpresion(subexpression):
   nombreVariable =  subexpression.get("var")
   if nombreVariable != None and nombreVariable != "Para ejecucion" and nombreVariable != "":
+    variable = variables.get(nombreVariable)
+    if variable == None:
+      raise Exception("variable no inicializada")
+
     tipo = variables[nombreVariable]["type"]
   else:
     tipo = subexpression["type"]
@@ -1565,22 +1568,26 @@ def chequeadorUnarioPostfijo(subexpressions, tipos):
     pass
 
 def chequeadorTernario(subexpressions):
-    if len(subexpressions) == 6:
+  if len(subexpressions) == 6:
+    tipoCondicion = subexpressions[1]["type"]
+    if tipoCondicion not in ["bool", "Para ejecucion"]:
+      message = "La condicion del operador ? tiene que ser de tipo Bool"
+      message += "\n se encontro tipo " + subexpressions[1]["type"]
+      raise Exception(message)
 
-        if subexpressions[1]["type"] != "bool":
-            message = "La condicion del operador ? tiene que ser de tipo Bool"
-            message += "\n se encontro tipo " + subexpressions[1]["type"]
-            #print message
-            raise Exception(message)
+    tipoRet1 = subexpressions[3]["type"]
+    tipoRet2 = subexpressions[5]["type"]
 
-        if (subexpressions[3]["type"], subexpressions[5]["type"]) in [("int", "float"),  ("float", "int")]:
-            return
+    if (tipoRet1, tipoRet2) in [("int", "float"),  ("float", "int")]:
+      return
 
-        if subexpressions[3]["type"] != subexpressions[5]["type"]:
-            message = "Los valores de retorno del operador ? tiene que ser del mismo tipo"
-            message += "\n se encontro tipos " + subexpressions[3]["type"] + " y " + subexpressions[5]["type"]
-            #print message
-            raise Exception(message)
+    if "Para ejecucion" in [tipoRet1, tipoRet2]:
+      return
+
+    if tipoRet1 != tipoRet2:
+      message = "Los valores de retorno del operador ? tiene que ser del mismo tipo"
+      message += "\n se encontro tipos " + tipoRet1 + " y " + tipoRet2
+      raise Exception(message)
 
 def chequeadorSuma(subexpressions):
   if len(subexpressions) == 4:
@@ -1606,16 +1613,31 @@ def chequearAccesoVector(subexpressions):
 
   tipoVariable1 = getTipoExpresion(subexpressions[1])
 
+  nombreVar1 = subexpressions[1].get("var")
   if tipoVariable1 != "vec" and tipoVariable1 != "Para ejecucion":
-    raise Exception("El operador [i] solo se puede usar con variables de tipo vector")
+    message = "El operador [i] solo se puede usar con variables de tipo vector"
+    message += "\n Se encontro "
 
-  if subexpressions[3]["type"] == "var":
-    nombreVar2 = subexpressions[3]["var"]
+    if nombreVar1 == None:
+      message += "tipo "
+      message += tipoVariable1
+    else:
+      message += nombreVar1
+      message += " de tipo "
+      message += tipoVariable1
+
+    raise Exception(message)
+
+  nombreVar2 = subexpressions[3].get("var")
+  if nombreVar2 == "Para ejecucion":
+    return
+
+  if nombreVar2 != None:
     tipoVariable2 = variables[nombreVar2]["type"]
   else:
     tipoVariable2 = subexpressions[3]["type"]
 
-  if tipoVariable2 != "int" and tipoVariable2 != "Para ejecucion":
+  if tipoVariable2 not in ["int", "Para ejecucion"]:
     raise Exception("El indice de un vector solo se puede ser de tipo int") 
 
 def chequearOperadorIncDec(subexpressions, tipo):
@@ -1635,19 +1657,15 @@ def chequearOperadorIncDec(subexpressions, tipo):
     message += " a variables"
     raise Exception(message)
 
+  if nombreVar == "Para ejecucion":
+    return
+
   if nombreVar not in variables:
     raise Exception("Variable no inicializada previamente")
 
-  indice = variable.get("indice")
-  if indice != None:
-    tipoElemento = vectores[nombreVar]["elems"][indice]
-  else:
-    tipoElemento = variables[nombreVar]["type"]
+  tipoVariable = variables[nombreVar]["type"]
 
-  ##IF el vector en la posicion [i] no del tipo int o float... como se haria esto?
-  # RTA: a[1] es un valor, eso tiene un tipo asignado
-  # Si a[1] es de tipo vector tiene que explotar
-  if tipoElemento not in ["int", "float"]:
+  if tipoVariable not in ["int", "float", "Para ejecucion"]:
     raise Exception("El operador ++ solo se puede usar con variables de tipo float o int")
 
 def chequearAsignacion(subexpressions):
