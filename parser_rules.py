@@ -12,7 +12,6 @@ class Node:
 
 # Para guardar el tipo de las variables
 variables = {}
-vectores = {}
 registros = {}
 variablesVector = {}
 
@@ -567,7 +566,7 @@ def p_funcReturn(subexpressions):
 # NO VA ACA, retorna tipo vector
 def p_funcInt1(subexpressions):
   '''funcInt : MULTIESCALAR '(' valores ',' valores   param ')' '''
-  global vectores, variables
+  global variables
   subexpressions[0] = {}
   subexpressions[0]["value"] = toStringNoParen(subexpressions[:3])
   subexpressions[0]["value"] += toString(subexpressions[2:])
@@ -968,7 +967,7 @@ def p_varYVals2(subexpressions):
   '''varYVals : vecVal
   | vecVal '.' varYVals
   '''
-  global registros, vectores
+  global registros
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   # Pues vecVal se deja para tiempo de ejecucion
@@ -1028,8 +1027,6 @@ def p_variable(subexpressions):
 
   setTipo(subexpressions, 1)
 
-  if nombreVar not in vectores:
-    vectores[nombreVar] = {}
   if nombreVar not in variables:
     variables[nombreVar] = {}
   if nombreVar not in registros:
@@ -1043,7 +1040,7 @@ def p_varAsig(subexpressions):
   | variable MENOSEQ valores
   | variable '=' valores
   | ID '.' ID '=' valores'''
-  global variables, vectores, registros
+  global variables, registros
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
@@ -1609,7 +1606,7 @@ def chequearUnicoTerminal(subexpressions, tipos):
         chequearTipo(subexps, tipos)
 
 def chequearAccesoVector(subexpressions):
-  global vectores, variables
+  global variables
 
   tipoVariable1 = getTipoExpresion(subexpressions[1])
 
@@ -1686,15 +1683,18 @@ def chequearAsignacion(subexpressions):
   else:
     tipoFuente = tipoVariable
 
-  if "Para ejecucion" not in [tipoVariable, tipoDestino]:
-    if tipoFuente != tipoDestino and tipoVariable != None:
-      if (tipoFuente, tipoDestino) not in [("float", "int"), ("int", "float")]:
-        message = "En asignacion \n"
-        message += "El operando fuente es de tipo vector de "
-        message += tipoFuente
-        message += " y se encontro tipo "
-        message += tipoDestino
-        raise Exception (message)
+  esVector = subexpressions[1].get("esVector")
+  # En caso de que la variable a asignar es un vector
+  if esVector != None:
+    if "Para ejecucion" not in [tipoVariable, tipoDestino]:
+      if tipoFuente != tipoDestino and tipoVariable != None:
+        if (tipoFuente, tipoDestino) not in [("float", "int"), ("int", "float")]:
+          message = "En asignacion \n"
+          message += "El operando fuente es de tipo vector de "
+          message += tipoFuente
+          message += " y se encontro tipo "
+          message += tipoDestino
+          raise Exception (message)
 
   operador = subexpressions[2]
   if operador not in ["=", "+="]:
