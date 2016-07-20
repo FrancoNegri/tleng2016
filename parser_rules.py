@@ -989,33 +989,29 @@ def p_varsOps1(subexpressions):
   setTipo(subexpressions, 2)
   setVariable(subexpressions, 2)
   setVector(subexpressions, 2)
-  subexpressions[0]["indice"] = subexpressions[2].get("indice")
 
 
 def p_varsOps2(subexpressions):
   '''varsOps : variable MASMAS 
   | variable MENOSMENOS'''
-  #print subexpressions[1]
   chequearOperadorIncDec(subexpressions, "postfijo")
   subexpressions[0] = {}
   subexpressions[0]["value"] = subexpressions[1]["value"][:-1] + subexpressions[2]
   setTipo(subexpressions, 1)
   setVariable(subexpressions, 1)
   setVector(subexpressions, 1)
-  subexpressions[0]["indice"] = subexpressions[1].get("indice")  
 #-----------------------------------------------------------------------------
 #Asignaciones:
 
 #Dejo las asignaciones no ambiguas como estaban antes
 #Aca pongo varYvals por este caso g[a] = b;
 def p_variable(subexpressions):
-  '''variable : ID
-  | vecVal
-  | vecVal '.' varYVals'''
+  '''variable : varYVals'''
 
   # No hace falta, se pisa el valor de antes pues es una asignacion
   # if nombreVec not in vectores:
   # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
+
   if subexpressions[1].get("var") == None:
     raise Exception("Solo se puede asignar valores a variables")
 
@@ -1025,11 +1021,11 @@ def p_variable(subexpressions):
   variableVector = subexpressions[1].get("varAsig")
 
   if variableVector != None:
-    setVariable(subexpressions, variableVector) 
+    setVariable(subexpressions, variableVector)
+    subexpressions[0]["esVector"] = True
   else:
     setVariable(subexpressions, nombreVar) 
 
-  subexpressions[0]["indice"] = subexpressions[1].get("indice")
   setTipo(subexpressions, 1)
 
   if nombreVar not in vectores:
@@ -1039,6 +1035,7 @@ def p_variable(subexpressions):
   if nombreVar not in registros:
     registros[nombreVar] = {}
 
+
 def p_varAsig(subexpressions):
   '''varAsig : variable MULEQ valores
   | variable DIVEQ valores
@@ -1046,7 +1043,7 @@ def p_varAsig(subexpressions):
   | variable MENOSEQ valores
   | variable '=' valores
   | ID '.' ID '=' valores'''
-  global variables, vectores, registros, variablesVector
+  global variables, vectores, registros
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
 
@@ -1055,36 +1052,49 @@ def p_varAsig(subexpressions):
   setVariable(subexpressions, 1)
   setVector(subexpressions, 3)
 
-  nombreVar = subexpressions[1]["var"]
-  tipoValor = getTipoExpresion(subexpressions[3])
+  nombreVarDestino = subexpressions[1]["var"]
+  tipoValorFuente = getTipoExpresion(subexpressions[3])
 
-  # En caso de que tenga una expresion como indice en un vector (Ver vecVal)
-
-  if tipoValor == "reg":
-    varReg = subexpressions[1]["var"]
-    registros[varReg]["campos"] = subexpressions[3].get("campos")
-    subexpressions[0]["campos"] = subexpressions[3].get("campos")
-
-  if subexpressions[1].get("var") == "Para ejecucion":
+  if nombreVarDestino == "Para ejecucion":
     return
 
-  varsVec = subexpressions[1].get("varsVec")
-  if tipoValor == "vec":
-    subexpressions[0]["varsVec"] = varsVec
-    if varsVec != None:
-      variablesVector[nombreVar] = varsVec
+  if tipoValorFuente == "reg":
+    registros[nombreVarDestino]["campos"] = subexpressions[3].get("campos")
 
-  #Esto lo hago para que no le cambie el tipo a g[0] = 2; por int y lo deje en vec.
-  if subexpressions[1].get("indice") == None:
-    if nombreVar in variables and variables[nombreVar]!= {}:
-      chequearAsignacion(subexpressions)
-      variables[nombreVar]["type"] = tipoValor
-      #chequearTipo([subexpressions[3]],[variables[nombreVar]["type"]])
-    else:
-      variables[nombreVar]["type"] = tipoValor
-      vectores[nombreVar]["elems"] = subexpressions[3].get("elems")
-      vectores[nombreVar]["regs"] = subexpressions[3].get("regs")
-  
+  nombreVarFuente = subexpressions[3].get("var")
+  # Por si la fuente es una variable
+  # a = b
+  if nombreVarFuente != None and nombreVarFuente != "Para ejecucion":
+    variable = variables[nombreVarFuente]
+    tipoVarFuente = variable["type"]
+    # Por si la fuente es un vector
+    # a = b, b de tipo vector
+    if tipoVarFuente == "vec":
+      tipoVectorFuente = variable["typeVec"]
+      variables[nombreVarDestino]["typeVec"] = tipoVectorFuente
+      setTipo(subexpressions, "vec")
+
+    variables[nombreVarDestino]["type"] = tipoValorFuente
+
+  else:
+    # Si la fuente no es una variable
+
+    # Si es un vector explicito (no una variable) 
+    # a = [3,2,2] (tiene typeVec y type == "vec")
+    
+    if tipoValorFuente == "vec":
+      tipoVectorFuente = subexpressions[3]["typeVec"]
+      variables[nombreVarDestino]["typeVec"] = tipoVectorFuente
+      variables[nombreVarDestino]["type"] = "vec"
+      return
+
+    # Si se tiene a[6] = 5 entonces no se actualiza nada (a ya tiene su informacion de tipos)
+    esVector = subexpressions[1].get("esVector")
+    if esVector:
+      return
+
+    variables[nombreVarDestino]["type"] = tipoValorFuente
+
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
@@ -1140,7 +1150,6 @@ def p_eMat1(subexpressions):
 
   setTipoBinarioMat(subexpressions)
     
-
 def p_eMat2(subexpressions):
   '''eMat : eMat '-' p
   | valoresMat '-' p
@@ -1409,8 +1418,8 @@ def toStringNoParen(subexpressions):
 # Dado una lista de subexpresiones, asigna los elementos del indice indiceFuente a la produccion
 # Si la fuente no tiene elementos, asigna None
 def setVector(subexpressions, fuente):
-  if isinstance(fuente, list):
-    elementos = fuente
+  if fuente == None or isinstance(fuente, str):
+    subexpressions[0]["typeVec"] = fuente
     return
 
   elementos = subexpressions[fuente].get("elems")
