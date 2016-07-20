@@ -962,6 +962,7 @@ def p_varYVals1(subexpressions):
   setVariable(subexpressions, 1) 
   setTipo(subexpressions, 1)
   setVector(subexpressions, 1) 
+  subexpressions[0]["varAsig"] = subexpressions[1].get("varAsig")
 
 def p_varYVals2(subexpressions):
   '''varYVals : vecVal
@@ -973,7 +974,7 @@ def p_varYVals2(subexpressions):
   # Pues vecVal se deja para tiempo de ejecucion
   setTipo(subexpressions, "Para ejecucion") 
   setVariable(subexpressions, "Para ejecucion")
-
+  subexpressions[0]["varAsig"] = subexpressions[1].get("varAsig")
 
   
 #-----------------------------------------------------------------------------
@@ -1018,7 +1019,6 @@ def p_variable(subexpressions):
   subexpressions[0] = {}
   subexpressions[0]["value"] = toString(subexpressions)
   variableVector = subexpressions[1].get("varAsig")
-
   if variableVector != None:
     setVariable(subexpressions, variableVector)
     subexpressions[0]["esVector"] = True
@@ -1092,6 +1092,7 @@ def p_varAsig(subexpressions):
 
     variables[nombreVarDestino]["type"] = tipoValorFuente
 
+  
 
   # Si es un vector tengo que obtener el tipo de sus elementos y asignarle a elems de varYVals
   #Aca agrego que solo se haga en caso de hacer la asignacion por primera vez... tal vez haga falta algo mas
@@ -1686,6 +1687,7 @@ def chequearAsignacion(subexpressions):
   esVector = subexpressions[1].get("esVector")
   # En caso de que la variable a asignar es un vector
   if esVector != None:
+    print tipoFuente
     if "Para ejecucion" not in [tipoVariable, tipoDestino]:
       if tipoFuente != tipoDestino and tipoVariable != None:
         if (tipoFuente, tipoDestino) not in [("float", "int"), ("int", "float")]:
